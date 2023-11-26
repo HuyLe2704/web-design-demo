@@ -1,0 +1,51 @@
+.wrapper {
+    display: flex;
+
+    .carouselContainer {
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+        line-height: 0;
+        max-height: 235px;
+    }
+}
+
+.salePicture {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 4px;
+    max-height: 235px;
+    min-width: 400px;
+
+    & a {
+        color: rgba(0, 0, 0, 0.87);
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+
+        & div {
+            height: 100%;
+            background-color: #fafafa;
+
+            & img {
+                object-fit: cover;
+                object-position: bottom;
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+
+    & a + a {
+        margin-top: 4px;
+    }
+}
+
+.btn-prev {
+    left: 0;
+}
+.btn-next {
+    right: 0;
+}
