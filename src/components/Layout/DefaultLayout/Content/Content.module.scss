@@ -615,3 +615,48 @@
         width: 960px !important;
     }
 }
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    // Category items list
+    .wrapper__promotional-icon {
+        width: 720px;
+        min-height: 250px;
+        flex-wrap: wrap;
+
+        a {
+            flex-basis: calc(25%);
+        }
+
+        .icon-wrapper {
+            margin-left: 34px;
+        }
+    }
+
+    .category__main-wrapper {
+        .main {
+            width: 960px;
+        }
+    }
+
+    .home-category-list {
+        height: 307px !important;
+    }
+
+    .image-carousel__item-list {
+        height: 252px !important;
+    }
+
+    .image-carousel__item {
+        width: 96px !important;
+        height: 126px !important;
+    }
+
+    // Flash sale items
+    .flashSale-wrapper {
+        width: 960px !important;
+    }
+
+    // Shopee items
+    .shopee-stack-wrapper {
+    }
+}
