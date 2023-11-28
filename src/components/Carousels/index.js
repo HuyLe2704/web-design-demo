@@ -43,10 +43,8 @@ function Carousels() {
                                     <div className={classFirstSlide}>
                                         <img
                                             src={item.img}
-                                            className={cx('d-block')}
+                                            className={cx('d-block', 'carousel-images')}
                                             alt={item.alt}
-                                            width={796}
-                                            height={235}
                                         />
                                     </div>
                                 </Fragment>

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
@@ -6,11 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import Tippy from '@tippyjs/react/headless';
 import { supportNav } from '~/data';
-import { faAngleDown, faCartShopping, faMagnifyingGlass, faShop } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faBars, faCartShopping, faMagnifyingGlass, faShop } from '@fortawesome/free-solid-svg-icons';
 import Button from '~/components/Button';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import SearchKeyWords from '~/components/SearchKeyWords';
 import { keywords, removeVietnameseTones, suggestHeaderData } from '~/data';
+import Navbar from '../Navbar';
 
 const cx = classNames.bind(styles);
 
@@ -18,12 +20,13 @@ function Header() {
     const [searchResult, setSearchResult] = useState([]);
     const [searchKeyWords, setSearchKeyWords] = useState('');
     const [isTippyVisible, setIsTippyVisible] = useState(false);
+    const [showNav, setShowNav] = useState(false);
 
     useEffect(() => {
         if (searchResult.length > 0) {
-            setIsTippyVisible(true); // Hiển thị Tippy khi có kết quả tìm kiếm
+            setIsTippyVisible(true);
         } else {
-            setIsTippyVisible(false); // Ẩn Tippy khi không có kết quả tìm kiếm
+            setIsTippyVisible(false);
         }
     }, [searchResult]);
 
@@ -42,6 +45,10 @@ function Header() {
             setSearchResult(filterResults);
         }
     }
+
+    const handleToggle = () => {
+        setShowNav((prev) => !prev);
+    };
 
     return (
         <header className={cx('wrapper', 'wrapper-sticky')}>
@@ -91,15 +98,23 @@ function Header() {
                             </a>
                         </div>
                     </div>
+
                     <div className={cx('navbar__spacer')}></div>
+                    <Button
+                        primary
+                        className={cx('bars-icon')}
+                        icon={<FontAwesomeIcon icon={faBars} style={{ fontSize: '2.6rem' }} />}
+                        onClick={() => handleToggle()}
+                    ></Button>
+                    {showNav && <Navbar />}
                     <ul className={cx('navbar__links', 'd-flex', 'justify-content-between')}>
                         {supportNav.map((item, index) => {
-                            let classNames = cx('navbar__link', 'd-flex');
+                            let classNames = cx('navbar__link', 'd-flex', 'mt-1');
                             let notifyPopover = null;
                             let languesWrapper = null;
 
                             if (index === 0) {
-                                classNames = cx('navbar__link', 'd-flex', 'notify-navbar');
+                                classNames = cx('navbar__link', 'd-flex', 'notify-navbar', 'mt-1');
                                 notifyPopover = (
                                     <div className={cx('notify-popover-wrapper')}>
                                         <div className={cx('popover_arrow')}>
@@ -130,7 +145,7 @@ function Header() {
                                     </div>
                                 );
                             } else if (index === 2) {
-                                classNames = cx('navbar__link', 'd-flex', 'langues');
+                                classNames = cx('navbar__link', 'd-flex', 'langues', 'mt-1');
                                 languesWrapper = (
                                     <div className={cx('langues-popover-wrapper')}>
                                         <div className={cx('popover_arrow2')}>
@@ -169,11 +184,11 @@ function Header() {
                                 </li>
                             );
                         })}
-                        <Link to="/register" className={cx('navbar__link--signup', 'mt-1')} style={{ color: '#fff' }}>
+                        <Link to="/register" className={cx('navbar__link--signup', 'mt-2')} style={{ color: '#fff' }}>
                             Đăng ký
                         </Link>
                         <div className={cx('navbar__link-separator')}></div>
-                        <Link to="/register" className={cx('navbar__link--login', 'mt-1')} style={{ color: '#fff' }}>
+                        <Link to="/register" className={cx('navbar__link--login', 'mt-2')} style={{ color: '#fff' }}>
                             Đăng nhập
                         </Link>
                     </ul>

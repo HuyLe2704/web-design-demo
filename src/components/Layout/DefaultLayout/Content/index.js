@@ -59,7 +59,7 @@ function Content() {
                         );
                     })}
                 </div>
-                <div style={{ backgroundColor: '#f5f5f5' }}>
+                <div className={cx('category__main-wrapper')} style={{ backgroundColor: '#f5f5f5' }}>
                     <div style={{ height: '20px' }}></div>
                     <div className={cx('main', 'container-all')}>
                         <CarouselWrapper>
@@ -113,7 +113,10 @@ function Content() {
                     <div className={cx('flashSale-wrapper', 'container-all')}>
                         <FlashSaleListItems />
                     </div>
-                    <div className={cx('container-all')} style={{ height: '110px', marginTop: '20px' }}>
+                    <div
+                        className={cx('container-all', 'shopee-stack-wrapper')}
+                        style={{ height: '110px', marginTop: '20px' }}
+                    >
                         <div>
                             <div className={cx('shopee-stack-banner')}>
                                 <ul className={cx('stack-banner__banner-list')}>

@@ -10,7 +10,7 @@ function CategoryListItems() {
         <>
             {categoryItems.map((item) => {
                 return (
-                    <li key={item.id} className={cx('image-carousel-item')}>
+                    <li key={item.id} className={cx('image-carousel__item')}>
                         <Link to="/products" className={cx('home-category-list__category-grid')}>
                             <div className={cx('home-category-list__wrapper')}>
                                 <div className={cx('home-category-list__image-wrapper')}>

@@ -8,6 +8,11 @@
     }
 }
 
+.carousel-images {
+    width: 796px;
+    height: 235px;
+}
+
 .salePicture {
     flex-grow: 1;
     flex-shrink: 1;
@@ -48,4 +53,38 @@
 }
 .btn-next {
     right: 0;
+}
+
+// responsive
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .wrapper {
+        width: 1000px !important;
+    }
+
+    .carousel-images {
+        width: 595px;
+    }
+
+    .salePicture {
+        flex-grow: 1;
+
+        a {
+            height: 116px !important;
+            width: 100% !important;
+        }
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .wrapper {
+        width: 960px !important;
+    }
+
+    .carousel-images {
+        width: 555px;
+    }
+
+    .salePicture {
+        flex-grow: 1;
+    }
 }

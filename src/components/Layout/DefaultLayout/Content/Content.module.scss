@@ -1,7 +1,7 @@
 .wrapper__promotional-icon {
     display: flex;
     justify-content: space-around;
-    background-color: #fff;
+    background-color: var(--white-color);
     width: 1200px;
     margin: 10px auto 0;
     min-height: 108px;
@@ -51,13 +51,13 @@
 
 .main {
     opacity: 1;
-    background-color: #fff;
+    background-color: var(--white-color);
 }
 
 .section-below-the-flow {
     .home-category-list {
-        min-height: 363px;
-        background-color: #fff;
+        height: 362px;
+        background-color: var(--white-color);
 
         .shopee-header-section {
             padding-top: 0;
@@ -66,7 +66,7 @@
 }
 
 .shopee-header-section__header {
-    background: #fff;
+    background: var(--white-color);
     height: 60px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     padding: 0 20px;
@@ -80,138 +80,9 @@
     }
 }
 
-.image-carousel {
-    width: 100%;
-    height: 100%;
-    position: relative;
-
-    .image-carousel__item-list-wrapper {
-        height: 100%;
-        touch-action: pan-y;
-        transition: transform 0.5s ease-in-out;
-    }
-}
-
-.image-carousel__item-list {
-    width: 135%;
-    height: 302px;
-    margin: 0;
-    padding: 0;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    display: flex;
-    position: relative;
-    transform: translate(0px, 0px);
-    transition: transform 0.5s ease;
-}
-
-.image-carousel-item {
-    padding: 0px;
-    float: none;
-    height: 151px;
-    width: 120px !important;
-    overflow-x: unset !important;
-    list-style: none;
-    touch-action: pan-y;
-}
-
-.home-category-list__category-grid {
-    -webkit-user-drag: none;
-    text-decoration: none;
-    color: rgba(0, 0, 0, 0.87);
-    border-right: 1px solid rgba(0, 0, 0, 0.05);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    text-align: center;
-    background-color: #fff;
-    display: block;
-    position: relative;
-    transition: transform 0.1s cubic-bezier(0.4, 0, 0.6, 1), box-shadow 0.1s cubic-bezier(0.4, 0, 0.6, 1);
-
-    &::before {
-        content: '';
-        display: block;
-        padding-top: 126%;
-    }
-}
-
-.home-category-list__wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    .home-category-list__image-wrapper {
-        flex-shrink: 1;
-        width: 70%;
-        height: 70%;
-        margin-top: 10%;
-
-        .home-category-list__image {
-            height: 100%;
-            position: relative;
-        }
-    }
-}
-
-.category-image {
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 100%;
-}
-
-.category-name-wrapper {
-    width: 90%;
-    height: 6rem;
-    text-align: center;
-
-    .category-name {
-        color: rgba(0, 0, 0, 0.8);
-        font-size: 1.4rem;
-        text-decoration: none;
-        line-height: 1.8rem;
-        height: 4rem;
-        margin-bottom: 10px;
-        overflow: hidden;
-        display: -webkit-box;
-        text-overflow: ellipsis;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        text-align: center;
-    }
-}
-
-.category_btn-prev,
-.category_btn-next {
-    position: absolute;
-    transform: translateY(-50%);
-    z-index: 10;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    top: 50%;
-
-    &:hover {
-        transform: translateY(-50%) scale(2);
-    }
-}
-
-.category_btn-prev {
-    left: 14px;
-}
-
-.category_btn-next {
-    right: 14px;
-}
-
 .flashSale-wrapper {
     margin-top: 20px;
-    background: #fff;
+    background: var(--white-color);
 
     .flashSale-logo-wrapper {
         display: flex;
@@ -287,7 +158,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
+    background-color: var(--white-color);
 }
 
 .image-container {
@@ -322,7 +193,7 @@
 
 .sale-status-position-wrapper {
     position: relative;
-    background-color: #fff;
+    background-color: var(--white-color);
     width: 100%;
     height: 100%;
 
@@ -372,7 +243,7 @@
     }
 
     span {
-        color: #fff;
+        color: var(--white-color);
         font-size: 1.2rem;
         line-height: 1.4rem;
         width: 100%;
@@ -469,7 +340,7 @@
     top: 0;
     height: inherit;
     width: inherit;
-    color: #fff;
+    color: var(--white-color);
     font-size: 1.2rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -498,6 +369,139 @@
     left: 0;
     top: 0;
     height: inherit;
+}
+
+.image-carousel {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    .image-carousel__item-list-wrapper {
+        height: 100%;
+        touch-action: pan-y;
+        transition: transform 0.5s ease-in-out;
+    }
+}
+
+.image-carousel__item-list {
+    width: 135%;
+    height: 302px;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    display: flex;
+    position: relative;
+    transform: translate(0px, 0px);
+    transition: transform 0.5s ease;
+}
+
+.image-carousel__item,
+.image-carousel__item-flashSale {
+    padding: 0px;
+    float: none;
+    overflow-x: unset !important;
+    list-style: none;
+    touch-action: pan-y;
+}
+
+.image-carousel__item {
+    width: 120px !important;
+    height: 151px;
+}
+
+.home-category-list__category-grid {
+    -webkit-user-drag: none;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.87);
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    text-align: center;
+    background-color: var(--white-color);
+    display: block;
+    position: relative;
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.6, 1), box-shadow 0.1s cubic-bezier(0.4, 0, 0.6, 1);
+
+    &::before {
+        content: '';
+        display: block;
+        padding-top: 126%;
+    }
+}
+
+.home-category-list__wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .home-category-list__image-wrapper {
+        flex-shrink: 1;
+        width: 70%;
+        height: 70%;
+        margin-top: 10%;
+
+        .home-category-list__image {
+            height: 100%;
+            position: relative;
+        }
+    }
+}
+
+.category-image {
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+.category-name-wrapper {
+    width: 90%;
+    height: 6rem;
+    text-align: center;
+
+    .category-name {
+        color: rgba(0, 0, 0, 0.8);
+        font-size: 1.4rem;
+        text-decoration: none;
+        line-height: 1.8rem;
+        height: 4rem;
+        margin-bottom: 10px;
+        overflow: hidden;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        text-align: center;
+    }
+}
+
+.category_btn-prev,
+.category_btn-next {
+    position: absolute;
+    transform: translateY(-50%);
+    z-index: 10;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    top: 50%;
+
+    &:hover {
+        transform: translateY(-50%) scale(2);
+    }
+}
+
+.category_btn-prev {
+    left: 14px;
+}
+
+.category_btn-next {
+    right: 14px;
 }
 
 .shopee-stack-banner {
@@ -537,4 +541,77 @@
     top: 0px;
     left: 0px;
     cursor: pointer;
+}
+
+// responsive
+@media (min-width: 1200px) and (max-width: 1439px) {
+    // Category items list
+    .wrapper__promotional-icon {
+        width: 1000px;
+    }
+
+    .category__main-wrapper {
+        .main {
+            width: 1000px;
+        }
+    }
+
+    .home-category-list {
+        height: 312px !important;
+    }
+
+    .image-carousel__item-list {
+        height: 252px !important;
+    }
+
+    .image-carousel__item {
+        width: 100px !important;
+        height: 126px !important;
+    }
+
+    // Flash sale items
+    .flashSale-wrapper {
+        width: 1000px !important;
+    }
+
+    // Shopee items
+    .shopee-stack-wrapper {
+        width: 1000px !important;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+    // Category items list
+    .wrapper__promotional-icon {
+        width: 960px;
+    }
+
+    .category__main-wrapper {
+        .main {
+            width: 960px;
+        }
+    }
+
+    .home-category-list {
+        height: 307px !important;
+    }
+
+    .image-carousel__item-list {
+        height: 252px !important;
+    }
+
+    .image-carousel__item {
+        width: 96px !important;
+        height: 126px !important;
+    }
+
+    // Flash sale items
+    .flashSale-wrapper {
+        width: 960px !important;
+    }
+
+    // Shopee items
+    .shopee-stack-wrapper {
+        width: 960px !important;
+    }
 }

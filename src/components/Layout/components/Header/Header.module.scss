@@ -25,7 +25,7 @@
     .navbar {
         color: var(--white-color);
         align-items: center;
-        max-width: 1200px;
+        margin-bottom: 6px;
     }
 
     .container {
@@ -138,6 +138,7 @@
 
 .navbar__links {
     align-items: center;
+    margin-bottom: 0;
 
     .navbar__link {
         position: relative;
@@ -183,8 +184,10 @@
 
     .navbar__link-separator {
         border-right: 1px solid hsla(0, 0%, 100%, 0.4);
-        height: 1.3rem;
+        height: 1.4rem;
         margin: 6px;
+        position: relative;
+        top: 2px;
     }
 }
 
@@ -228,6 +231,10 @@
             }
         }
     }
+}
+
+.bars-icon {
+    display: none !important;
 }
 
 .header-with-search__search-section {
@@ -519,4 +526,78 @@
 .langues:hover > .langues-popover-wrapper {
     display: flex;
     animation: fadeInScaleUp 0.3s forwards;
+}
+
+// Responsive
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .navbar {
+        max-width: 1000px;
+    }
+
+    .header-with-search-wrapper {
+        .header-with-search {
+            width: 1010px !important;
+        }
+    }
+
+    .header-with-search__search-section {
+        width: 744px;
+    }
+
+    .header-with-search__cart-wrapper {
+        margin-left: 38px;
+        margin-right: 0;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .navbar {
+        max-width: 960px;
+    }
+
+    .header-with-search-wrapper {
+        .header-with-search {
+            width: 970px !important;
+        }
+    }
+
+    .header-with-search__search-section {
+        width: 700px;
+    }
+
+    .header-with-search__cart-wrapper {
+        margin-left: 38px;
+        margin-right: 0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .navbar {
+        max-width: 940px;
+    }
+    .header-with-search-wrapper {
+        .header-with-search {
+            width: 700px !important;
+        }
+    }
+
+    .header-with-search__cart-wrapper {
+        margin-left: 38px;
+        margin-right: 0;
+    }
+
+    .bars-icon {
+        height: 30px;
+        position: absolute;
+        right: 24px;
+        margin-top: 4px;
+        display: block !important;
+    }
+    .navbar__links {
+        visibility: hidden;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
 }

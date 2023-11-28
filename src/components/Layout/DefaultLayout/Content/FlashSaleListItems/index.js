@@ -117,7 +117,11 @@ function FlashSaleListItems() {
                     >
                         {flashSaleCategoryItems.map((item) => {
                             return (
-                                <li key={item.id} className={cx('image-carousel__item')} style={{ padding: '0px' }}>
+                                <li
+                                    key={item.id}
+                                    className={cx('image-carousel__item-flashSale')}
+                                    style={{ padding: '0px' }}
+                                >
                                     <div style={{ height: '100%' }}>
                                         <div className={cx('carousel__item')}>
                                             <Link to="/products">
