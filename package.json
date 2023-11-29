@@ -2,7 +2,7 @@
     "name": "shopee-ui",
     "version": "0.1.0",
     "private": true,
-    "homepage": "https://github.com/HuyLe2704/web-design-demo.git",
+    "homepage": "https://huyle2704.github.io/web-design-demo/",
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^6.4.2",
         "@fortawesome/free-brands-svg-icons": "^6.4.2",
