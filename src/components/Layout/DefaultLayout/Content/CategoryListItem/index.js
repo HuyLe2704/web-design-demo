@@ -2,15 +2,16 @@ import { categoryItems } from '~/data';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from '../Content.module.scss';
+import { forwardRef } from 'react';
 
 const cx = classNames.bind(styles);
 
-function CategoryListItems() {
+function CategoryListItems(props, ref) {
     return (
         <>
             {categoryItems.map((item) => {
                 return (
-                    <li key={item.id} className={cx('image-carousel__item')}>
+                    <li key={item.id} ref={ref} className={cx('image-carousel__item')}>
                         <Link to="/products" className={cx('home-category-list__category-grid')}>
                             <div className={cx('home-category-list__wrapper')}>
                                 <div className={cx('home-category-list__image-wrapper')}>
@@ -35,4 +36,4 @@ function CategoryListItems() {
     );
 }
 
-export default CategoryListItems;
+export default forwardRef(CategoryListItems);

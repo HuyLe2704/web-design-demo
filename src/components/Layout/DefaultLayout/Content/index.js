@@ -6,20 +6,31 @@ import { Link } from 'react-router-dom';
 import { promotionalIcons } from '~/data';
 import CategoryListItems from './CategoryListItem';
 import { default as CarouselWrapper } from '~/components/CarouselListItem';
-import { useState } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import FlashSaleListItems from './FlashSaleListItems';
 import MallListItems from './MallListItems';
+import Context from '~/store/Context';
 
 const cx = classNames.bind(styles);
-const total_items = 23;
-const visible_items = 20;
+let total_items = 27;
+let visibleItems;
+let totalPages;
 
-function Content() {
+const Content = () => {
+    const { flashSaleRef } = useContext(Context);
+
     const [currentPage, setCurrentPage] = useState(0);
-    const totalPages = Math.ceil(total_items / visible_items);
+
+    const mainCategoryRef = useRef();
+    const categoryItemsRef = useRef();
+
+    useEffect(() => {
+        visibleItems = (mainCategoryRef.current.clientWidth / categoryItemsRef.current.clientWidth) * 2;
+        totalPages = Math.ceil(total_items / visibleItems);
+    }, [mainCategoryRef]);
 
     const handleNext = () => {
         if (currentPage < totalPages - 1) {
@@ -34,7 +45,7 @@ function Content() {
     };
 
     const transform = {
-        transform: `translateX(-${currentPage * 40}%)`,
+        transform: `translateX(-${currentPage * ((100 / visibleItems) * (visibleItems - 12))}%)`,
     };
     return (
         <>
@@ -61,7 +72,7 @@ function Content() {
                 </div>
                 <div className={cx('category__main-wrapper')} style={{ backgroundColor: '#f5f5f5' }}>
                     <div style={{ height: '20px' }}></div>
-                    <div className={cx('main', 'container-all')}>
+                    <div ref={mainCategoryRef} className={cx('main', 'container-all')}>
                         <CarouselWrapper>
                             <div className={cx('section-below-the-flow')}>
                                 <div className={cx('home-category-list')}>
@@ -88,7 +99,7 @@ function Content() {
                                                     style={transform}
                                                 >
                                                     <ul className={cx('image-carousel__item-list')}>
-                                                        <CategoryListItems />
+                                                        <CategoryListItems ref={categoryItemsRef} />
                                                     </ul>
                                                 </div>
                                                 <Button
@@ -110,7 +121,7 @@ function Content() {
                             </div>
                         </CarouselWrapper>
                     </div>
-                    <div className={cx('flashSale-wrapper', 'container-all')}>
+                    <div ref={flashSaleRef} className={cx('flashSale-wrapper', 'container-all')}>
                         <FlashSaleListItems />
                     </div>
                     <div
@@ -141,6 +152,6 @@ function Content() {
             </div>
         </>
     );
-}
+};
 
 export default Content;

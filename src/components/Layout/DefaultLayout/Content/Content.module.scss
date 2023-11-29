@@ -634,26 +634,30 @@
 
     .category__main-wrapper {
         .main {
-            width: 960px;
+            width: 760px;
         }
     }
 
     .home-category-list {
-        height: 307px !important;
+        height: 298px !important;
     }
 
     .image-carousel__item-list {
-        height: 252px !important;
+        height: 240px !important;
     }
 
     .image-carousel__item {
-        width: 96px !important;
-        height: 126px !important;
+        width: 95px !important;
+        height: 120px !important;
     }
 
     // Flash sale items
     .flashSale-wrapper {
-        width: 960px !important;
+        width: 760px !important;
+    }
+
+    .carousel__item {
+        width: 190px;
     }
 
     // Shopee items

@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from '../Content.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBoltLightning,
@@ -12,18 +12,27 @@ import { Link } from 'react-router-dom';
 import { default as CarouselWrapper } from '~/components/CarouselListItem';
 import { flashSaleCategoryItems } from '~/data';
 import Button from '~/components/Button';
+import Context from '~/store/Context';
 
 const cx = classNames.bind(styles);
-const total_items = 15;
-const visible_items = 6;
+const total_items = 16;
+let visibleItems;
+let totalPages;
 
-function FlashSaleListItems() {
+function FlashSaleListItems(props) {
+    const { flashSaleRef } = useContext(Context);
+    const itemWidthRef = useRef();
+
     const [hours, setHours] = useState('12');
     const [minutes, setMinutes] = useState('00');
     const [seconds, setSeconds] = useState('00');
 
     const [currentPage, setCurrentPage] = useState(0);
-    const totalPages = Math.ceil(total_items / visible_items);
+
+    useEffect(() => {
+        visibleItems = flashSaleRef.current.clientWidth / itemWidthRef.current.clientWidth;
+        totalPages = Math.ceil(total_items / visibleItems);
+    }, [flashSaleRef]);
 
     const handleNext = () => {
         if (currentPage < totalPages - 1) {
@@ -38,7 +47,7 @@ function FlashSaleListItems() {
     };
 
     const transform = {
-        transform: `translateX(-${currentPage * 83}%)`,
+        transform: `translateX(-${currentPage * ((100 / visibleItems) * (visibleItems - 1))}%)`,
     };
 
     useEffect(() => {
@@ -123,7 +132,7 @@ function FlashSaleListItems() {
                                     style={{ padding: '0px' }}
                                 >
                                     <div style={{ height: '100%' }}>
-                                        <div className={cx('carousel__item')}>
+                                        <div ref={itemWidthRef} className={cx('carousel__item')}>
                                             <Link to="/products">
                                                 <div className={cx('image-container', 'p-relative')}>
                                                     <div className={cx('sale-price-wrapper')}>
