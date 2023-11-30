@@ -543,6 +543,182 @@
     cursor: pointer;
 }
 
+.homepage-mall-section {
+    margin-top: 20px;
+}
+
+.shopee-header-section--simple {
+    padding-top: 0;
+
+    .shopee-header-section__header {
+        background: #fff;
+        height: 61px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 0 20px;
+    }
+}
+
+.shopee-header-section__header__title {
+    font-size: 1.6rem;
+    color: rgba(0, 0, 0, 0.54);
+    font-weight: 500;
+    text-transform: uppercase;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 20px;
+}
+
+.shopee-header__title-link {
+    display: block;
+    text-decoration: none !important;
+    color: #d0011b;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.7rem;
+    align-self: center;
+}
+
+.shopee-header__title-desc-wrapper {
+    flex: 1;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin-left: 15px;
+    padding-left: 15px;
+    border-left: 1px solid #d8d8d8;
+    display: flex;
+
+    .shopee-header__title-desc {
+        display: flex;
+        align-items: center;
+        margin-right: 15px;
+        color: #333;
+        white-space: nowrap;
+        height: 20px;
+
+        .shopee-header__title-icon {
+            height: 17px;
+            width: 17px;
+            margin-right: 6px;
+        }
+    }
+}
+
+.shopee-header-section__header-link {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.87);
+    display: block;
+
+    .shopee-header-section__header-btn {
+        text-transform: capitalize;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.shop-mall__open {
+    color: #d0011b;
+    height: 20px;
+    font-weight: 300;
+}
+
+.shopee-header-section__content {
+    display: flex;
+    background-color: #fff;
+    .shopee-header-section__content-img-wrapper {
+        width: 390px;
+        height: 452px;
+        display: inline-block;
+        padding: 10px 0 10px 10px;
+        vertical-align: top;
+    }
+}
+
+.stardust-carousel__item-list-wrapper {
+    box-sizing: border-box;
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.shopee-header-section__items {
+    overflow: unset;
+    width: 800px;
+    display: inline-block;
+}
+
+.shopee-header-section__items {
+    .image-carousel__item-list {
+        flex-wrap: wrap;
+        height: 472px;
+        display: block;
+        column-width: 200px;
+        grid-column-gap: 0;
+        column-gap: 0;
+        column-fill: auto;
+        width: 100% !important;
+        transform: translate(0px, 0px);
+        transition: all 500ms ease 0s;
+
+        .image-carousel__item {
+            padding: 0px;
+            float: none;
+            height: 236px;
+            width: 200px !important;
+            overflow-x: hidden;
+            list-style: none;
+            touch-action: pan-y;
+        }
+    }
+}
+
+.ofs-carousel__item {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    padding: 10px;
+    border: 0;
+
+    .ofs-carousel__shop-cover-image {
+        text-decoration: none;
+        color: rgba(0, 0, 0, 0.87);
+        display: block;
+        background-position: 50%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+.ofs-carousel__cover-image {
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%;
+    padding-top: 120%;
+    background-position: 50%;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ofs-carousel__item__text {
+    position: absolute;
+    left: 14px;
+    bottom: 18px;
+    width: 172px;
+    height: 27px;
+    line-height: 27px;
+    text-align: center;
+    font-size: 18px;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    word-wrap: break-word;
+    overflow: hidden;
+    color: #d0011b;
+}
+
 // responsive
 @media (min-width: 1200px) and (max-width: 1439px) {
     // Category items list
@@ -662,5 +838,6 @@
 
     // Shopee items
     .shopee-stack-wrapper {
+        width: 760px !important;
     }
 }

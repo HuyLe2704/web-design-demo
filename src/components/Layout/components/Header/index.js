@@ -54,7 +54,7 @@ function Header() {
         <header className={cx('wrapper', 'wrapper-sticky')}>
             <div className={cx('navbar-wrapper', 'container-wrapper')}>
                 <nav className={cx('container', 'navbar', 'd-flex', 'container-all')}>
-                    <div className={cx('v-center', 'd-flex')}>
+                    <div className={cx('v-center', 'd-flex', 'navbar-mobile-wrapper')}>
                         <a
                             href="//banhang.shopee.vn"
                             target="_blank"

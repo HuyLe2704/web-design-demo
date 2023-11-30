@@ -88,3 +88,9 @@
     transition: opacity 0.3s ease;
     background-color: rgba(0, 0, 0, 0.18);
 }
+
+.noOutline {
+    color: var(--primary);
+    background-color: var(--white-color);
+    box-shadow: none !important;
+}

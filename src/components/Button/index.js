@@ -14,6 +14,7 @@ function Button({
     medium = false,
     vertical = false,
     large = false,
+    noOutline = false,
     children,
     leftIcon,
     icon,
@@ -54,6 +55,7 @@ function Button({
         medium,
         vertical,
         large,
+        noOutline,
     });
 
     return (
