@@ -13,6 +13,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import FlashSaleListItems from './FlashSaleListItems';
 import MallListItems from './MallListItems';
 import Context from '~/store/Context';
+import RecomendItems from './RecomendImtes/RecomendItems';
 
 const cx = classNames.bind(styles);
 let total_items = 27;
@@ -148,7 +149,9 @@ const Content = () => {
                     <div className={cx('container-all', 'homepage-mall-section')}>
                         <MallListItems />
                     </div>
-                    <div className={cx('container-all')}>abc</div>
+                    <div className={cx('container-all', 'section-recomend-products-wrapper')}>
+                        <RecomendItems />
+                    </div>
                 </div>
             </div>
         </>
