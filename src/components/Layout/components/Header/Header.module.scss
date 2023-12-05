@@ -359,6 +359,23 @@
     }
 }
 
+.shopee-cart-number-badge {
+    top: 0;
+    left: 21px;
+    position: absolute;
+    border-radius: 44px;
+    width: 25px;
+    line-height: 17px;
+    padding: 0px 5px;
+    text-align: center;
+    height: 20px;
+    border: 2px solid var(--brand-primary-color, var(--primary));
+    color: var(--brand-primary-color, var(--primary));
+    background-color: var(--white-color);
+    margin-right: -14px;
+    font-size: 14px;
+}
+
 .notify-popover-wrapper {
     top: 30px;
     right: 0;

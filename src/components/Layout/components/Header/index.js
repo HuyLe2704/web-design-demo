@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import SearchKeyWords from '~/components/SearchKeyWords';
 import { keywords, removeVietnameseTones, suggestHeaderData } from '~/data';
 import Navbar from '../Navbar';
+import Context from '~/store/Context';
 
 const cx = classNames.bind(styles);
 
@@ -21,6 +22,7 @@ function Header() {
     const [searchKeyWords, setSearchKeyWords] = useState('');
     const [isTippyVisible, setIsTippyVisible] = useState(false);
     const [showNav, setShowNav] = useState(false);
+    const { cartValue, setCartValue } = useContext(Context);
 
     useEffect(() => {
         if (searchResult.length > 0) {
@@ -257,6 +259,7 @@ function Header() {
                                 <div className={cx('cart-drawer-container')}>
                                     <Link to="/carts" className={cx('cart-drawer')} />
                                     <FontAwesomeIcon icon={faCartShopping} style={{ color: '#fff' }} />
+                                    {cartValue > 0 && <div className={cx('shopee-cart-number-badge')}>{cartValue}</div>}
                                 </div>
                             </div>
                         </div>
