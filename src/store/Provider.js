@@ -7,11 +7,14 @@ function Provider({ children }) {
     const [cartValue, setCartValue] = useState(0);
 
     const handleAddQuantity = () => {
-        setCartValue((prev) => prev + value);
         setValue((prev) => prev + 1);
     };
 
-    const props = { flashSaleRef, value, setValue, cartValue, setCartValue, handleAddQuantity };
+    const handleMinusQuantity = () => {
+        setValue((prev) => prev - 1);
+    };
+
+    const props = { flashSaleRef, value, setValue, cartValue, setCartValue, handleAddQuantity, handleMinusQuantity };
 
     return <Context.Provider value={props}>{children}</Context.Provider>;
 }

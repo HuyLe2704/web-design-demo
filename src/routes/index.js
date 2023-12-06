@@ -10,10 +10,10 @@ import Products from '~/pages/Products';
 // Public routes
 const publicRoutes = [
     { path: '/', component: Home },
-    { path: '/notifications', component: Notifications },
-    { path: '/products', component: Products },
-    { path: '/register', component: Register, layout: NewHeader },
-    { path: '/upload', component: Upload, layout: NewHeader },
+    { path: '/notifications/:id', component: Notifications },
+    { path: '/products/:id', component: Products },
+    { path: '/register/:id', component: Register, layout: NewHeader },
+    { path: '/upload/:id', component: Upload, layout: NewHeader },
 ];
 
 // Private routes
