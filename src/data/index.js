@@ -660,6 +660,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '21',
+        quantity: 1,
     },
     {
         id: 2,
@@ -673,6 +674,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: false,
         sold: '1,8k',
+        quantity: 1,
     },
     {
         id: 3,
@@ -686,6 +688,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: false,
         sold: '17,5k',
+        quantity: 1,
     },
     {
         id: 4,
@@ -699,6 +702,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '26',
+        quantity: 1,
     },
     {
         id: 5,
@@ -712,6 +716,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: false,
         sold: '2,2k',
+        quantity: 1,
     },
     {
         id: 6,
@@ -725,6 +730,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: false,
         sold: '1',
+        quantity: 1,
     },
     {
         id: 7,
@@ -738,6 +744,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '107,3k',
+        quantity: 1,
     },
     {
         id: 8,
@@ -751,6 +758,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: false,
         sold: '26,3k',
+        quantity: 1,
     },
     {
         id: 9,
@@ -764,6 +772,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: false,
         sold: 83,
+        quantity: 1,
     },
     {
         id: 10,
@@ -777,6 +786,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '9,7k',
+        quantity: 1,
     },
     {
         id: 11,
@@ -790,6 +800,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: false,
         sold: '139',
+        quantity: 1,
     },
     {
         id: 12,
@@ -803,6 +814,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: false,
         sold: '1,2k',
+        quantity: 1,
     },
     {
         id: 13,
@@ -816,6 +828,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '3,1k',
+        quantity: 1,
     },
     {
         id: 14,
@@ -829,6 +842,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '17,5k',
+        quantity: 1,
     },
     {
         id: 15,
@@ -842,6 +856,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '2,5k',
+        quantity: 1,
     },
     {
         id: 16,
@@ -855,6 +870,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '3,5k',
+        quantity: 1,
     },
     {
         id: 17,
@@ -868,6 +884,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '10,5k',
+        quantity: 1,
     },
     {
         id: 18,
@@ -881,6 +898,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '38,9k',
+        quantity: 1,
     },
     {
         id: 19,
@@ -894,6 +912,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '15,5k',
+        quantity: 1,
     },
     {
         id: 20,
@@ -907,6 +926,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '8k',
+        quantity: 1,
     },
     {
         id: 21,
@@ -920,6 +940,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '326',
+        quantity: 1,
     },
     {
         id: 22,
@@ -933,6 +954,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '17,3k',
+        quantity: 1,
     },
     {
         id: 23,
@@ -946,6 +968,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '9,9k',
+        quantity: 1,
     },
     {
         id: 24,
@@ -959,6 +982,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '201,7k',
+        quantity: 1,
     },
     {
         id: 25,
@@ -972,6 +996,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '167,2k',
+        quantity: 1,
     },
     {
         id: 26,
@@ -985,6 +1010,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '22,4k',
+        quantity: 1,
     },
     {
         id: 27,
@@ -998,6 +1024,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '7,4k',
+        quantity: 1,
     },
     {
         id: 28,
@@ -1011,6 +1038,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '7,8k',
+        quantity: 1,
     },
     {
         id: 29,
@@ -1024,6 +1052,7 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '426',
+        quantity: 1,
     },
     {
         id: 30,
@@ -1037,5 +1066,6 @@ export const suggestItems = [
         rating: Math.round(Math.random() * 10000),
         discountPrime: true,
         sold: '2,3k',
+        quantity: 1,
     },
 ];

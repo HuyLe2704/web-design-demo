@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import Tippy from '@tippyjs/react/headless';
-import { supportNav } from '~/data';
+import { suggestItems, supportNav } from '~/data';
 import { faAngleDown, faBars, faCartShopping, faMagnifyingGlass, faShop } from '@fortawesome/free-solid-svg-icons';
 import Button from '~/components/Button';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
@@ -260,6 +260,40 @@ function Header() {
                                     <Link to="/carts" className={cx('cart-drawer')} />
                                     <FontAwesomeIcon icon={faCartShopping} style={{ color: '#fff' }} />
                                     {cartValue > 0 && <div className={cx('shopee-cart-number-badge')}>{cartValue}</div>}
+                                </div>
+                            </div>
+                            <div className={cx('stardust-popover__wrapper')}>
+                                <div className={cx('stardust-popover_arrow')}>
+                                    <div className={cx('stardust-popover_arrow-inner')}></div>
+                                </div>
+                                <div tabIndex={0} className={cx('stardust-popover__popover')}>
+                                    <div>
+                                        <h3 className={cx('new-product-label')}>Sản phẩm mới thêm</h3>
+                                        {suggestItems.map((item) => {
+                                            return (
+                                                <div className={cx('new-product')}>
+                                                    <img className={cx('product-img')} alt="" src="" />
+                                                    <div className={cx('product-items-name-wrapper')}>
+                                                        <div className={cx('d-flex', 'align-items-center')}>
+                                                            <div className={cx('product-items-name')}>abc</div>
+                                                            <div style={{ flex: '1' }}></div>
+                                                            <div className={cx('product-items-price-wrapper')}>
+                                                                <div className={cx('product-items-price')}>
+                                                                    ₫130.500
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                        <div className={cx('go-to-cart')}>
+                                            <div style={{ flex: '1' }}></div>
+                                            <Button primary className={cx('go-to-cart-btn')}>
+                                                <Link to="/">Xem Giỏ Hàng</Link>
+                                            </Button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

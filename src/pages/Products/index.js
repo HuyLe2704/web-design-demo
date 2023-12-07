@@ -22,18 +22,18 @@ const cx = classNames.bind(styles);
 function Products() {
     function normalizeName(name) {
         return name
-            .replace(/đ/g, 'd') // Thay thế "đ" bằng "d"
-            .replace(/Đ/g, 'D') // Thay thế "Đ" bằng "D"
+            .replace(/đ/g, 'd')
+            .replace(/Đ/g, 'D')
             .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '') // Loại bỏ dấu
+            .replace(/[\u0300-\u036f]/g, '')
             .toLowerCase()
-            .replace(/\s+/g, '-') // Thay thế khoảng trắng bằng dấu gạch nối
-            .replace(/[^\w\-]/g, '') // Loại bỏ ký tự đặc biệt
-            .replace(/-+/g, '-'); // khiến nhiều dấu - thành một dấu -
+            .replace(/\s+/g, '-')
+            .replace(/[^\w\-]/g, '')
+            .replace(/-+/g, '-');
     }
     let { id } = useParams();
     const normalizedParam = decodeURIComponent(id);
-    const { value, setValue, handleAddQuantity, handleMinusQuantity } = useContext(Context);
+    const { value, setValue, handleAddQuantity, handleMinusQuantity, handleAddCarts } = useContext(Context);
 
     return (
         <div style={{ backgroundColor: '#f5f5f5', paddingTop: '30px', marginTop: '-30px' }}>
@@ -313,6 +313,7 @@ function Products() {
                                                             />
                                                         }
                                                         className={cx('add-cart-btn')}
+                                                        onClick={() => handleAddCarts()}
                                                     >
                                                         <span>Thêm vào giỏ hàng</span>
                                                     </Button>

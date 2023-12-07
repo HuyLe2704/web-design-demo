@@ -8,8 +8,8 @@ const cx = classNames.bind(styles);
 function RecomendItems() {
     function normalizeName(name) {
         return name
-            .replace(/đ/g, 'd') // Thay thế "đ" bằng "d"
-            .replace(/Đ/g, 'D') // Thay thế "Đ" bằng "D"
+            .replace(/đ/g, 'd')
+            .replace(/Đ/g, 'D')
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '') // Loại bỏ dấu
             .toLowerCase()
