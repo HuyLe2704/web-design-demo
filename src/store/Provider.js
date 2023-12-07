@@ -1,5 +1,5 @@
 import Context from './Context';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function Provider({ children }) {
     const flashSaleRef = useRef();
@@ -33,6 +33,10 @@ function Provider({ children }) {
         }
         setValue(1);
     };
+
+    useEffect(() => {
+        console.log(carts);
+    });
 
     const props = {
         flashSaleRef,

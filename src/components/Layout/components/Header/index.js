@@ -22,7 +22,7 @@ function Header() {
     const [searchKeyWords, setSearchKeyWords] = useState('');
     const [isTippyVisible, setIsTippyVisible] = useState(false);
     const [showNav, setShowNav] = useState(false);
-    const { cartValue, setCartValue } = useContext(Context);
+    const { cartValue, setCartValue, carts, setCarts } = useContext(Context);
 
     useEffect(() => {
         if (searchResult.length > 0) {
@@ -269,17 +269,17 @@ function Header() {
                                 <div tabIndex={0} className={cx('stardust-popover__popover')}>
                                     <div>
                                         <h3 className={cx('new-product-label')}>Sản phẩm mới thêm</h3>
-                                        {suggestItems.map((item) => {
+                                        {carts.map((item) => {
                                             return (
-                                                <div className={cx('new-product')}>
-                                                    <img className={cx('product-img')} alt="" src="" />
+                                                <div key={item.id} className={cx('new-product')}>
+                                                    <img className={cx('product-img')} alt="" src={item.img} />
                                                     <div className={cx('product-items-name-wrapper')}>
                                                         <div className={cx('d-flex', 'align-items-center')}>
-                                                            <div className={cx('product-items-name')}>abc</div>
+                                                            <div className={cx('product-items-name')}>{item.name}</div>
                                                             <div style={{ flex: '1' }}></div>
                                                             <div className={cx('product-items-price-wrapper')}>
                                                                 <div className={cx('product-items-price')}>
-                                                                    ₫130.500
+                                                                    ₫{item.price.toLocaleString('vi-VN')}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -287,6 +287,7 @@ function Header() {
                                                 </div>
                                             );
                                         })}
+
                                         <div className={cx('go-to-cart')}>
                                             <div style={{ flex: '1' }}></div>
                                             <Button primary className={cx('go-to-cart-btn')}>

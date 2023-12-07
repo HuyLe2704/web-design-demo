@@ -313,7 +313,7 @@ function Products() {
                                                             />
                                                         }
                                                         className={cx('add-cart-btn')}
-                                                        onClick={() => handleAddCarts()}
+                                                        onClick={() => handleAddCarts(item)}
                                                     >
                                                         <span>Thêm vào giỏ hàng</span>
                                                     </Button>
