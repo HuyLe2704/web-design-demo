@@ -173,7 +173,9 @@ function FlashSaleListItems(props) {
                                                                 <div className={cx('price-container')}>
                                                                     <div className={cx('price')}>
                                                                         <span className={cx('currency')}>₫</span>
-                                                                        <span>{item.price}</span>
+                                                                        <span>
+                                                                            {item.price.toLocaleString('vi-VN')}
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                             </div>

@@ -1,0 +1,327 @@
+.carts-page-wrapper {
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 14px;
+    padding-top: 20px;
+
+    .carts-page-img-wrapper {
+        background-color: #fffefb;
+        border: 1px solid rgba(224, 168, 0, 0.4);
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        border-radius: 2px;
+    }
+}
+
+.carts-page-label {
+    color: #222;
+    margin-left: 8px;
+}
+
+.carts-page-check-wrapper {
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border-radius: 3px;
+    height: 55px;
+    font-size: 14px;
+    background: #fff;
+    margin-bottom: 12px;
+    color: #888;
+    padding: 0 20px;
+
+    .carts-page-check {
+        padding: 0 12px 0 20px;
+        display: flex;
+        flex-direction: row-reverse;
+        min-width: 58px;
+        box-sizing: border-box;
+    }
+}
+
+.stardust-checkbox {
+    font-weight: 300;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    cursor: default;
+    position: relative;
+    color: rgba(0, 0, 0, 0.54);
+    max-width: 400px;
+}
+
+.stardust-checkbox__input {
+    opacity: 0;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.stardust-checkbox__box {
+    user-select: none;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    text-align: center;
+    box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.02);
+    margin-right: 8px;
+
+    &::before {
+        position: absolute;
+        content: '';
+        height: 5px;
+        width: 9px;
+        border-left: 2px solid #fff;
+        border-bottom: 2px solid #fff;
+        transform: rotate(-45deg);
+        left: 3px;
+        top: 3px;
+    }
+}
+
+.product {
+    color: rgba(0, 0, 0, 0.8);
+    width: 46.27949%;
+}
+
+.price-quotation {
+    width: 15.88022%;
+    text-align: center;
+}
+
+.quantity {
+    width: 15.4265%;
+    text-align: center;
+}
+
+.price {
+    width: 10.43557%;
+    text-align: center;
+}
+
+.operation {
+    width: 12.70417%;
+    text-align: center;
+}
+
+.cart-product-wrapper-all {
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 0.125rem;
+    background: #fff;
+    overflow: visible;
+    margin-bottom: 15px;
+}
+
+.cart-product {
+    position: relative;
+    padding-bottom: 1px;
+
+    .cart-product-wrapper {
+        border: 1px solid rgba(0, 0, 0, 0.09);
+        border-radius: 2px;
+        margin: 22px 20px;
+    }
+}
+
+.product-deal-wrapper {
+    padding: 9px 12px;
+    background: #fff3ed;
+    line-height: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87);
+
+    .product-deal-label {
+        padding: 1px 4px;
+        margin-right: 8px;
+        line-height: 12px;
+        vertical-align: middle;
+        color: var(--primary);
+        font-size: 10px;
+        border: 1px solid;
+        border-radius: 2px;
+        font-weight: 400;
+    }
+}
+
+.product-wrapper {
+    margin-top: 0;
+    padding: 16px 0;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.product-checkbox {
+    padding: 0 12px 0 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    min-width: 58px;
+}
+
+.product-info {
+    width: 29.03811%;
+    box-sizing: border-box;
+    position: relative;
+    flex-direction: column;
+    display: flex;
+}
+
+.product-desc {
+    line-height: 16px;
+    overflow: hidden;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 5px 20px 0 10px;
+    font-size: 14px;
+
+    .product-desc-link {
+        text-decoration: none;
+        color: rgba(0, 0, 0, 0.87);
+        margin-bottom: 5px;
+        max-height: 32px;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-height: 16px;
+        overflow: hidden;
+    }
+}
+
+.free-refund-container {
+    font-size: 12px;
+    color: #252525;
+    margin-left: 5px;
+}
+
+#price-waiting {
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    margin-top: 12px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    color: var(--primary);
+}
+
+.price-info-wrapper {
+    flex-direction: column;
+    width: 15.88022%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.originalPrice {
+    color: rgba(0, 0, 0, 0.54);
+    text-decoration: line-through;
+    margin-right: 10px;
+}
+
+.sellingPrice {
+    margin: 0;
+}
+
+.input-quantity-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 15.4265%;
+
+    .shopee-input-quantity {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.shopee-input-quantity-btn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    outline: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.1s cubic-bezier(0.4, 0, 0.6, 1);
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    border-radius: 2px;
+    background: transparent;
+    color: rgba(0, 0, 0, 0.8);
+    min-width: 32px !important;
+    min-height: 32px !important;
+}
+
+.input-quantity {
+    width: 50px;
+    border-left: 0;
+    border-right: 0;
+    font-size: 16px;
+    font-weight: 400;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: text;
+    border-radius: 0;
+}
+
+.total-price-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10.43557%;
+    color: var(--primary);
+}
+
+.user-operations-wrapper {
+    width: 12.70417%;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.user-operations-delete {
+    background: none;
+    border: 0;
+    font-size: 14px;
+    box-shadow: none;
+    font-weight: 300;
+
+    &:hover {
+        color: var(--primary);
+    }
+}
+
+.btn-no-outline {
+    color: var(--primary);
+    font-weight: 400;
+    border: 1px solid transparent;
+    height: 30px;
+    max-width: 100%;
+    position: relative;
+    overflow: visible;
+    outline: 0;
+    padding: 5px 7px;
+    background-color: initial;
+    font-weight: 300;
+    box-shadow: none;
+    font-size: 14px;
+}

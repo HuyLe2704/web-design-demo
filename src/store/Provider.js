@@ -1,5 +1,5 @@
 import Context from './Context';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 function Provider({ children }) {
     const flashSaleRef = useRef();
@@ -15,6 +15,29 @@ function Provider({ children }) {
         setValue((prev) => prev - 1);
     };
 
+    const handleAddValueItem = (selectedItem) => {
+        const updatedCarts = carts.map((item) => {
+            if (item.id === selectedItem.id) {
+                return { ...item, quantity: item.quantity + 1 };
+            }
+            return item;
+        });
+
+        setCarts(updatedCarts);
+    };
+
+    const handleMinusValueItem = (selectedItem) => {
+        const updatedCarts = carts.map((item) => {
+            if (item.id === selectedItem.id) {
+                return { ...item, quantity: item.quantity - 1 };
+            }
+            return item;
+        });
+
+        setCarts(updatedCarts);
+    };
+
+    // Xử lí phần thêm sản phẩm vào giỏ hàng
     const handleAddCarts = (item) => {
         setCartValue((prev) => prev + value);
         const existingItem = carts.find((cart) => cart.id === item.id);
@@ -34,10 +57,6 @@ function Provider({ children }) {
         setValue(1);
     };
 
-    useEffect(() => {
-        console.log(carts);
-    });
-
     const props = {
         flashSaleRef,
         value,
@@ -49,6 +68,8 @@ function Provider({ children }) {
         handleAddCarts,
         carts,
         setCarts,
+        handleAddValueItem,
+        handleMinusValueItem,
     };
 
     return <Context.Provider value={props}>{children}</Context.Provider>;

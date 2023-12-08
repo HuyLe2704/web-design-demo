@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import Tippy from '@tippyjs/react/headless';
-import { suggestItems, supportNav } from '~/data';
+import { supportNav } from '~/data';
 import { faAngleDown, faBars, faCartShopping, faMagnifyingGlass, faShop } from '@fortawesome/free-solid-svg-icons';
 import Button from '~/components/Button';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
@@ -22,7 +22,7 @@ function Header() {
     const [searchKeyWords, setSearchKeyWords] = useState('');
     const [isTippyVisible, setIsTippyVisible] = useState(false);
     const [showNav, setShowNav] = useState(false);
-    const { cartValue, setCartValue, carts, setCarts } = useContext(Context);
+    const { cartValue, carts } = useContext(Context);
 
     useEffect(() => {
         if (searchResult.length > 0) {
@@ -279,7 +279,10 @@ function Header() {
                                                             <div style={{ flex: '1' }}></div>
                                                             <div className={cx('product-items-price-wrapper')}>
                                                                 <div className={cx('product-items-price')}>
-                                                                    ₫{item.price.toLocaleString('vi-VN')}
+                                                                    ₫
+                                                                    {(item.price * item.quantity).toLocaleString(
+                                                                        'vi-VN',
+                                                                    )}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -291,7 +294,12 @@ function Header() {
                                         <div className={cx('go-to-cart')}>
                                             <div style={{ flex: '1' }}></div>
                                             <Button primary className={cx('go-to-cart-btn')}>
-                                                <Link to="/">Xem Giỏ Hàng</Link>
+                                                <Link
+                                                    to="/carts"
+                                                    style={{ color: 'var(--white-color)', fontSize: '14px' }}
+                                                >
+                                                    Xem Giỏ Hàng
+                                                </Link>
                                             </Button>
                                         </div>
                                     </div>

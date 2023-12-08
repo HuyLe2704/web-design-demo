@@ -6,14 +6,16 @@ import Register from '~/pages/Register';
 import Upload from '~/pages/Upload';
 import Notifications from '~/pages/Notifications';
 import Products from '~/pages/Products';
+import Carts from '~/pages/Carts';
 
 // Public routes
 const publicRoutes = [
     { path: '/', component: Home },
-    { path: '/notifications/:id', component: Notifications },
+    { path: '/notifications/', component: Notifications },
     { path: '/products/:id', component: Products },
-    { path: '/register/:id', component: Register, layout: NewHeader },
-    { path: '/upload/:id', component: Upload, layout: NewHeader },
+    { path: '/carts', component: Carts },
+    { path: '/register/', component: Register, layout: NewHeader },
+    { path: '/upload/', component: Upload, layout: NewHeader },
 ];
 
 // Private routes
