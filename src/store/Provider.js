@@ -1,5 +1,6 @@
 import Context from './Context';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 function Provider({ children }) {
     const flashSaleRef = useRef();
@@ -57,6 +58,17 @@ function Provider({ children }) {
         setValue(1);
     };
 
+    // Xử lý phần scroll top khi chuyển trang
+    const ScrollToTop = () => {
+        const location = useLocation();
+
+        useEffect(() => {
+            window.scrollTo(0, 0);
+        }, [location]);
+
+        return null;
+    };
+
     const props = {
         flashSaleRef,
         value,
@@ -70,6 +82,7 @@ function Provider({ children }) {
         setCarts,
         handleAddValueItem,
         handleMinusValueItem,
+        ScrollToTop,
     };
 
     return <Context.Provider value={props}>{children}</Context.Provider>;

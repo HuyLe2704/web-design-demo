@@ -115,13 +115,13 @@ function MallListItems() {
                                 className={cx('category_btn-prev')}
                             />
                             <div style={transform} className={cx('image-carousel__item-list-wrapper')}>
-                                <ul className={cx('image-carousel__item-list')}>
+                                <ul className={cx('image-carousel__item-list', 'image-carousel__item-list2')}>
                                     {mallItems.map((item) => {
                                         return (
                                             <li
                                                 ref={categoryItemsRef}
                                                 key={item.id}
-                                                className={cx('image-carousel__item')}
+                                                className={cx('image-carousel__item', 'image-carousel__item2')}
                                             >
                                                 <div style={{ height: '100%' }}>
                                                     <div className={cx('ofs-carousel__item')}>
@@ -151,7 +151,7 @@ function MallListItems() {
                                 onClick={handleNext}
                                 disabled={currentPage === totalPages - 1}
                                 icon={<FontAwesomeIcon icon={faChevronRight} style={{ fontSize: '12px' }} />}
-                                className={cx('category_btn-next')}
+                                className={cx('category_btn-next', 'category_btn-next2')}
                             ></Button>
                         </div>
                     </div>
