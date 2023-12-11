@@ -58,6 +58,14 @@ function Provider({ children }) {
         setValue(1);
     };
 
+    // Xử lí phần xoá sản phẩm trong giỏ hàng
+    const handleRemoveCarts = (itemDel) => {
+        setCartValue((prev) => prev - itemDel.quantity);
+
+        let newCart = carts.filter((item) => item.id !== itemDel.id);
+        setCarts(newCart);
+    };
+
     // Xử lý phần scroll top khi chuyển trang
     const ScrollToTop = () => {
         const location = useLocation();
@@ -83,6 +91,7 @@ function Provider({ children }) {
         handleAddValueItem,
         handleMinusValueItem,
         ScrollToTop,
+        handleRemoveCarts,
     };
 
     return <Context.Provider value={props}>{children}</Context.Provider>;

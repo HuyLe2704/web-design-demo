@@ -1195,7 +1195,7 @@
 
     // Suggest items
     .section-recomend-products-wrapper {
-        width: 1000px;
+        width: 1000px !important;
     }
 }
 
@@ -1330,15 +1330,12 @@
     }
 
     .shopee-header-section__items {
-        width: 620px;
+        width: 625px;
+        height: 630px;
     }
 
     .homepage-mall-section {
         width: 760px !important;
-    }
-
-    .shopee-header-section__items {
-        height: 630px;
     }
 
     .image-carousel__item-list-wrapper {

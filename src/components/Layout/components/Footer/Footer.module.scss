@@ -1,5 +1,5 @@
 .content-info {
-    min-width: 1858px;
+    max-width: 1858px;
     border-top: 4px solid var(--primary);
     color: rgba(0, 0, 0, 0.54);
     background-color: #fbfbfb;
@@ -9,8 +9,7 @@
     padding-bottom: 30px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.09);
     width: 1200px;
-    margin: 0 auto;
-    margin-top: 60px;
+    margin: 60px auto 0;
 }
 
 .section-above-footer {
@@ -111,4 +110,122 @@
     width: 100%;
     text-align: center;
     margin-top: 8px;
+}
+
+// Responsive
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .content-info {
+        max-width: 1600px !important;
+    }
+
+    .content-info-wrapper {
+        width: 1000px !important;
+    }
+
+    .section-above-footer {
+        max-width: 1034px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .section-above-footer-desc {
+        flex-shrink: 0;
+        margin-right: auto !important;
+        line-height: 18px;
+        margin-left: auto;
+    }
+
+    .section-above-footer-nation-wrapper {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-wrapper {
+        .wrapper {
+            width: 1000px !important;
+        }
+    }
+
+    .section-above-footer-wrapper {
+        width: 1000px !important;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .content-info {
+        max-width: 1200px !important;
+    }
+
+    .content-info-wrapper {
+        width: 950px !important;
+    }
+
+    .section-above-footer {
+        max-width: 1009px;
+        margin-right: auto;
+    }
+
+    .section-above-footer-desc {
+        flex-shrink: 0;
+        margin-right: auto !important;
+        line-height: 18px;
+        margin-left: auto;
+    }
+
+    .section-above-footer-nation-wrapper {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-wrapper {
+        .wrapper {
+            max-width: 960px !important;
+        }
+    }
+
+    .section-above-footer-wrapper {
+        width: 960px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .content-info-wrapper {
+        width: 730px !important;
+    }
+
+    .section-above-footer {
+        max-width: 755px;
+        margin-right: auto;
+        border-top: none;
+    }
+
+    .section-above-footer-desc {
+        flex-shrink: 0;
+        margin-right: auto !important;
+        line-height: 18px;
+        margin-left: auto;
+    }
+
+    .section-above-footer-nation-wrapper {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .section-above-footer-nation {
+        max-width: 100%;
+    }
+
+    .footer-desc {
+        padding: 0 10px;
+    }
+
+    .footer-wrapper {
+        .wrapper {
+            max-width: 700px !important;
+        }
+    }
+
+    .section-above-footer-wrapper {
+        width: 600px !important;
+    }
 }

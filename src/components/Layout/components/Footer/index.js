@@ -124,7 +124,7 @@ function Footer() {
                     </div>
                 </div>
                 <div style={{ backgroundColor: '#fbfbfb' }}>
-                    <div className={cx('container-all')}>
+                    <div className={cx('container-all', 'section-above-footer-wrapper')}>
                         <div className={cx('section-above-footer')}>
                             <div className={cx('section-above-footer-desc')}>
                                 © 2023 Shopee. Tất cả các quyền được bảo lưu.
