@@ -36,7 +36,10 @@ function Products() {
     const { value, setValue, handleAddQuantity, handleMinusQuantity, handleAddCarts } = useContext(Context);
 
     return (
-        <div style={{ backgroundColor: '#f5f5f5', paddingTop: '30px', marginTop: '-30px' }}>
+        <div
+            className={cx('products-items-wrapper')}
+            style={{ backgroundColor: '#f5f5f5', paddingTop: '30px', marginTop: '-30px' }}
+        >
             {suggestItems.map(
                 (item) =>
                     normalizeName(item.name) === normalizedParam && (

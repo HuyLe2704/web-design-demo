@@ -12,7 +12,7 @@ function CategoryListItems(props, ref) {
             {categoryItems.map((item) => {
                 return (
                     <li key={item.id} ref={ref} className={cx('image-carousel__item')}>
-                        <Link to="/products" className={cx('home-category-list__category-grid')}>
+                        <Link to="/category" className={cx('home-category-list__category-grid')}>
                             <div className={cx('home-category-list__wrapper')}>
                                 <div className={cx('home-category-list__image-wrapper')}>
                                     <div className={cx('home-category-list__image')}>
