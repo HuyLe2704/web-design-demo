@@ -1,0 +1,79 @@
+.wrapper {
+    background-image: url(https://down-vn.img.susercontent.com/file/sg-11134004-7rbm1-lphq0ly9tv1f25);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 600px;
+    margin: 0 auto;
+    min-height: 600px;
+    width: 1040px;
+    justify-content: flex-end;
+    align-items: center;
+    display: flex;
+}
+.register-submit-wrapper {
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+
+    .register-submit-left {
+        margin-left: 40px;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+    }
+
+    .register-submit-right {
+        width: 400px;
+        min-height: 427px;
+        background-color: #fff;
+        box-sizing: border-box;
+        box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.14);
+        border-radius: 4px;
+        overflow: hidden;
+    }
+}
+
+.register-submit-content {
+    padding: 0 30px 30px;
+    overflow: hidden;
+}
+
+.register-desc-wrapper {
+    width: 100%;
+    padding: 22px 30px;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+
+    .register-desc {
+        max-width: 136px;
+        font-size: 20px;
+        color: #222;
+        flex-shrink: 0;
+    }
+}
+
+.register-username-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 2px;
+    box-shadow: inset 0 2px 0 rgba(0, 0, 0, 0.02);
+    align-items: center;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.register-input {
+    padding: 12px;
+    outline: none;
+    border: 0;
+    flex: 1;
+    flex-shrink: 0;
+    filter: none;
+    line-height: normal;
+    font-size: 14px;
+}

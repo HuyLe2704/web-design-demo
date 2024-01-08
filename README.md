@@ -1,22 +1,32 @@
-<h1 align="center"> DỰ ÁN TRANG WEB THƯƠNG MẠI ĐIỆN TỬ </h1>
+<h1 align="center"> DỰ ÁN TRANG WEB THƯƠNG MẠI ĐIỆN TỬ 🔥</h1>
 
-<div align="center">
-  <p align="center">
-    Dự án này là bản mô phỏng của một nền tảng mua sắm trực tuyến hàng đầu, được viết bằng Reactjs.Dự án không chỉ nhằm mục đích cung cấp một ví dụ cụ thể về cách thức xây dựng và quản lý một ứng dụng thương mại điện tử phức tạp, mà còn để phát triển kỹ năng và thực hành các nguyên lý lập trình front-end.
+## Mô tả dự án
+
+<div>
+  <p>
+    Dự án này là bản mô phỏng của một nền tảng mua sắm trực tuyến hàng đầu, được viết bằng Reactjs. Dự án không chỉ nhằm mục đích cung cấp một ví dụ cụ thể về cách thức xây dựng và quản lý một ứng dụng thương mại điện tử phức tạp, mà còn để phát triển kỹ năng và thực hành các nguyên lý lập trình front-end.
     <br />
-    <a href="https://huyle2704.github.io/web-design-demo/">View Project</a>
+    <p align="center"><a href="https://huyle2704.github.io/web-design-demo/">View Project</a></p>
   </p>
 </div>
 
-## Về Project
+## Về dự án
 
-### Trang Web này được sử dụng với các ngôn ngữ và thư viện sau:
+### Trang Web này được xây dựng với các ngôn ngữ và thư viện sau:
 
--   [![Next][Next.js]][Next-url]
--   [![React][React.js]][React-url]
--   [![Vue][Vue.js]][Vue-url]
--   [![Angular][Angular.io]][Angular-url]
--   [![Svelte][Svelte.dev]][Svelte-url]
--   [![Laravel][Laravel.com]][Laravel-url]
--   [![Bootstrap][Bootstrap.com]][Bootstrap-url]
--   [![JQuery][JQuery.com]][JQuery-url]
+-   HTML, CSS
+-   JavaScript
+-   Reactjs
+-   Bootstrap
+-   ClassNames
+-   Tippy
+
+### Cách sử dụng:
+
+1. Cài đặt phiên bản React 18, npm hoặc yarn
+2. Trong terminal, sử dụng câu lệnh sau để mở dự án trên web:
+
+-   npm
+    ```sh
+    npm start
+    ```

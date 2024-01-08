@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
@@ -14,6 +14,8 @@ import SearchKeyWords from '~/components/SearchKeyWords';
 import { keywords, removeVietnameseTones, suggestHeaderData } from '~/data';
 import Navbar from '../Navbar';
 import Context from '~/store/Context';
+// import * as searchServices from '~/apiServices/searchServices';
+// import { useDebounce } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
@@ -23,6 +25,24 @@ function Header() {
     const [isTippyVisible, setIsTippyVisible] = useState(false);
     const [showNav, setShowNav] = useState(false);
     const { cartValue, carts } = useContext(Context);
+    // const [searchResult2, setSearchResult2] = useState([]);
+    // const [searchValue, setSearchValue] = useState('');
+
+    // const debounced = useDebounce(searchValue, 600);
+
+    // useEffect(() => {
+    //     if (!debounced.trim()) {
+    //         setSearchResult2([]);
+    //         return;
+    //     }
+
+    //     const fetchApi = async () => {
+    //         const result = await searchServices.search(debounced);
+    //         setSearchResult2(result);
+    //     };
+
+    //     fetchApi();
+    // }, [debounced]);
 
     useEffect(() => {
         if (searchResult.length > 0) {
@@ -190,7 +210,7 @@ function Header() {
                             Đăng ký
                         </Link>
                         <div className={cx('navbar__link-separator')}></div>
-                        <Link to="/register" className={cx('navbar__link--login', 'mt-2')} style={{ color: '#fff' }}>
+                        <Link to="/login" className={cx('navbar__link--login', 'mt-2')} style={{ color: '#fff' }}>
                             Đăng nhập
                         </Link>
                     </ul>
@@ -222,6 +242,9 @@ function Header() {
                                                 </span>
                                                 <h4 className={cx('search-title')}>Tìm shop "{searchKeyWords}"</h4>
                                             </div>
+                                            {/* {searchResult2.map((result) => (
+                                                <SearchKeyWords key={result.id} data={result} />
+                                            ))} */}
                                             <SearchKeyWords searchResult={searchResult.slice(0, 10)} />
                                         </PopperWrapper>
                                     </div>
@@ -235,6 +258,8 @@ function Header() {
                                             className={cx('shopee-searchbar-input__input')}
                                             maxLength={128}
                                             onChange={changeInput}
+                                            // value={searchValue}
+                                            // onChange={(e) => setSearchValue(e.target.value)}
                                         ></input>
                                     </div>
                                 </div>

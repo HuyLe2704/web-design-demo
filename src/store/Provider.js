@@ -1,5 +1,5 @@
 import Context from './Context';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 function Provider({ children }) {
@@ -8,6 +8,7 @@ function Provider({ children }) {
     const [cartValue, setCartValue] = useState(0);
     const [value, setValue] = useState(1);
 
+    // Logic
     const handleAddQuantity = () => {
         setValue((prev) => prev + 1);
     };
@@ -68,11 +69,11 @@ function Provider({ children }) {
 
     // Xử lý phần scroll top khi chuyển trang
     const ScrollToTop = () => {
-        const location = useLocation();
+        const pathname = useLocation();
 
-        useEffect(() => {
-            window.scrollTo(0, 0);
-        }, [location]);
+        useLayoutEffect(() => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }, [pathname]);
 
         return null;
     };

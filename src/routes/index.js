@@ -7,6 +7,7 @@ import Upload from '~/pages/Upload';
 import Category from '~/pages/Category';
 import Products from '~/pages/Products';
 import Carts from '~/pages/Carts';
+import Login from '~/pages/Login';
 
 // Public routes
 const publicRoutes = [
@@ -15,6 +16,7 @@ const publicRoutes = [
     { path: '/products/:id', component: Products },
     { path: '/carts', component: Carts },
     { path: '/register/', component: Register, layout: NewHeader },
+    { path: '/login/', component: Login, layout: NewHeader },
     { path: '/upload/', component: Upload, layout: NewHeader },
 ];
 
