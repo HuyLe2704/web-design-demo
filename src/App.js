@@ -1,46 +1,55 @@
-import { Fragment, useContext } from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { Fragment, useEffect } from 'react';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { publicRoutes } from '~/routes';
 import { DefaultLayout } from './components/Layout';
 import Footer from './components/Layout/components/Footer';
-import Context from './store/Context';
 
 function App() {
-    const { ScrollToTop } = useContext(Context);
+    const ScrollToTop = () => {
+        const pathname = useLocation();
+
+        useEffect(() => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }, [pathname]);
+
+        return null;
+    };
     return (
-        <Router>
-            <ScrollToTop />
-            <div className="App">
-                <Routes>
-                    {publicRoutes.map((route, index) => {
-                        const Page = route.component;
+        <>
+            <Router>
+                <ScrollToTop />
+                <div className="App">
+                    <Routes>
+                        {publicRoutes.map((route, index) => {
+                            const Page = route.component;
 
-                        let Layout = DefaultLayout;
+                            let Layout = DefaultLayout;
 
-                        if (route.layout) {
-                            Layout = route.layout;
-                        } else if (route.layout === null) {
-                            Layout = Fragment;
-                        }
+                            if (route.layout) {
+                                Layout = route.layout;
+                            } else if (route.layout === null) {
+                                Layout = Fragment;
+                            }
 
-                        return (
-                            <Route
-                                key={index}
-                                path={route.path}
-                                element={
-                                    <>
-                                        <Layout>
-                                            <Page />
-                                        </Layout>
-                                        <Footer />
-                                    </>
-                                }
-                            />
-                        );
-                    })}
-                </Routes>
-            </div>
-        </Router>
+                            return (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    element={
+                                        <>
+                                            <Layout>
+                                                <Page />
+                                            </Layout>
+                                            <Footer />
+                                        </>
+                                    }
+                                />
+                            );
+                        })}
+                    </Routes>
+                </div>
+            </Router>
+        </>
     );
 }
 

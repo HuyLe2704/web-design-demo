@@ -688,6 +688,65 @@
     }
 }
 
+.navbar-link__account {
+    position: relative;
+    justify-content: center;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-link__account-container {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    text-transform: none;
+}
+
+.shopee-avatar {
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    position: relative;
+    border-radius: 50%;
+    border: 10px solid rgba(0, 0, 0, 0.09);
+    box-sizing: border-box;
+    top: 2px;
+}
+
+.shopee-avatar__placeholder {
+    width: 100%;
+    position: relative;
+    padding-top: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+
+    .icon-headshot {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+    }
+}
+
+.shopee-avatar__img {
+    border-radius: 50%;
+    position: absolute;
+    top: -9px;
+    left: -9px;
+    display: block;
+}
+
+.navbar__username {
+    max-width: 150px;
+    padding-left: 5px;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    top: 3px;
+}
+
 // Responsive
 
 @media (min-width: 1200px) and (max-width: 1439px) {

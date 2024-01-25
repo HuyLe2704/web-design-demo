@@ -4,6 +4,56 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 function Footer() {
+    const nations = [
+        'Singapore',
+        'Indonesia',
+        'Thái Lan',
+        'Malaysia',
+        'Việt Nam',
+        'Philippines',
+        'Brazil',
+        'México',
+        'Colombia',
+        'Chile',
+        'Đài Loan',
+    ];
+
+    const footerDesc = [
+        'Chính sách bảo mật',
+        'Quy chế hoạt động',
+        'Chính sách vận chuyển',
+        'CHÍNH SÁCH TRẢ HÀNG VÀ HOÀN TIỀN',
+    ];
+
+    const footerLogoLinkWrapper = (
+        <div className={cx('d-flex', 'align-items-center', 'justify-content-center')} style={{ marginTop: '0' }}>
+            <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="http://online.gov.vn/Home/WebDetails/18367"
+                className={cx('footer-logo-link-wrapper')}
+            >
+                <div className={cx('footer-vn-background')}></div>
+            </a>
+            <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="http://online.gov.vn/Home/AppDetails/29"
+                className={cx('footer-logo-link-wrapper')}
+            >
+                <div className={cx('footer-vn-background')}></div>
+            </a>
+            <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://help.shopee.vn/portal"
+                className={cx('footer-logo-link-wrapper')}
+            >
+                <div className={cx('footer-vn-background-no-fake-item')}></div>
+            </a>
+        </div>
+    );
+
     return (
         <>
             <div style={{ paddingTop: '60px', backgroundColor: '#f5f5f5' }}></div>
@@ -131,39 +181,13 @@ function Footer() {
                             </div>
                             <div className={cx('section-above-footer-nation-wrapper')}>
                                 <div className={cx('nation-location')}>Quốc gia & Khu vực:</div>
-                                <div className={cx('section-above-footer-nation')}>
-                                    <div className={cx('section-above-footer-nation-link')}>Singapore</div>
-                                </div>
-                                <div className={cx('section-above-footer-nation')}>
-                                    <div className={cx('section-above-footer-nation-link')}>Indonesia</div>
-                                </div>
-                                <div className={cx('section-above-footer-nation')}>
-                                    <div className={cx('section-above-footer-nation-link')}>Thái Lan</div>
-                                </div>
-                                <div className={cx('section-above-footer-nation')}>
-                                    <div className={cx('section-above-footer-nation-link')}>Malaysia</div>
-                                </div>
-                                <div className={cx('section-above-footer-nation')}>
-                                    <div className={cx('section-above-footer-nation-link')}>Việt Nam</div>
-                                </div>
-                                <div className={cx('section-above-footer-nation')}>
-                                    <div className={cx('section-above-footer-nation-link')}>Philippines</div>
-                                </div>
-                                <div className={cx('section-above-footer-nation')}>
-                                    <div className={cx('section-above-footer-nation-link')}>Brazil</div>
-                                </div>
-                                <div className={cx('section-above-footer-nation')}>
-                                    <div className={cx('section-above-footer-nation-link')}>México</div>
-                                </div>
-                                <div className={cx('section-above-footer-nation')}>
-                                    <div className={cx('section-above-footer-nation-link')}>Colombia</div>
-                                </div>
-                                <div className={cx('section-above-footer-nation')}>
-                                    <div className={cx('section-above-footer-nation-link')}>Chile</div>
-                                </div>
-                                <div className={cx('section-above-footer-nation')}>
-                                    <div className={cx('section-above-footer-nation-link')}>Đài Loan</div>
-                                </div>
+                                {nations.map((nation) => {
+                                    return (
+                                        <div className={cx('section-above-footer-nation')}>
+                                            <div className={cx('section-above-footer-nation-link')}>{nation}</div>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>
@@ -171,56 +195,17 @@ function Footer() {
                 <div className={cx('footer-wrapper')}>
                     <div className={cx('wrapper', 'container-all')}>
                         <div className={cx('footer-desc-wrapper')}>
-                            <div className={cx('footer-desc')}>
-                                <a href="https://help.shopee.vn/portal/article/77244">
-                                    <span>Chính sách bảo mật</span>
-                                </a>
-                            </div>
-                            <div className={cx('footer-desc')}>
-                                <a href="https://help.shopee.vn/portal/article/77244">
-                                    <span>Quy chế hoạt động</span>
-                                </a>
-                            </div>
-                            <div className={cx('footer-desc')}>
-                                <a href="https://help.shopee.vn/portal/article/77244">
-                                    <span>Chính sách vận chuyển</span>
-                                </a>
-                            </div>
-                            <div className={cx('footer-desc')}>
-                                <a href="https://help.shopee.vn/portal/article/77244">
-                                    <span>CHÍNH SÁCH TRẢ HÀNG VÀ HOÀN TIỀN</span>
-                                </a>
-                            </div>
+                            {footerDesc.map((desc) => {
+                                return (
+                                    <div className={cx('footer-desc')}>
+                                        <a href="https://help.shopee.vn/portal/article/77244">
+                                            <span>{desc}</span>
+                                        </a>
+                                    </div>
+                                );
+                            })}
                         </div>
-                        <div
-                            className={cx('d-flex', 'align-items-center', 'justify-content-center')}
-                            style={{ marginTop: '0' }}
-                        >
-                            <a
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                href="http://online.gov.vn/Home/WebDetails/18367"
-                                className={cx('footer-logo-link-wrapper')}
-                            >
-                                <div className={cx('footer-vn-background')}></div>
-                            </a>
-                            <a
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                href="http://online.gov.vn/Home/AppDetails/29"
-                                className={cx('footer-logo-link-wrapper')}
-                            >
-                                <div className={cx('footer-vn-background')}></div>
-                            </a>
-                            <a
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                href="https://help.shopee.vn/portal"
-                                className={cx('footer-logo-link-wrapper')}
-                            >
-                                <div className={cx('footer-vn-background-no-fake-item')}></div>
-                            </a>
-                        </div>
+                        {footerLogoLinkWrapper}
                         <div className={cx('footer-under-logo-link-wrapper')} style={{ marginBottom: '28px' }}>
                             Công ty TNHH Shopee
                         </div>

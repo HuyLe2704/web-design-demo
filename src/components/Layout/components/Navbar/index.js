@@ -10,6 +10,47 @@ import { Wrapper } from '~/components/Popper';
 const cx = classNames.bind(styles);
 
 function Navbar() {
+    const registerAndLogin = (
+        <>
+            <Link to="/register" className={cx('topnav_link', 'nav_name')}>
+                <span className={cx('navbar__support-name', 'ms-4', 'me-2')}>Đăng Ký</span>
+            </Link>
+            <Link to="/register" className={cx('topnav_link', 'nav_name')}>
+                <span className={cx('navbar__support-name', 'ms-4', 'me-2')}>Đăng Nhập</span>
+            </Link>
+        </>
+    );
+
+    const notifyPopoverWrapper = (
+        <div className={cx('notify-popover-wrapper')}>
+            <div className={cx('popover_arrow')}>
+                <div className={cx('popover_arrow-inner')}></div>
+            </div>
+            <div className={cx('notify-description')}>
+                <div className={cx('notify-wrapper')}>
+                    <div className={cx('notify')}>
+                        <div className={cx('notify__image-wrapper')}>
+                            <img
+                                src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/99e561e3944805a023e87a81d4869600.png"
+                                alt=""
+                                className={cx('notify__image')}
+                            />
+                        </div>
+                        <p className={cx('notify-warn')}>Đăng nhập để xem thông báo</p>
+                    </div>
+                    <div className={cx('d-flex')}>
+                        <Button className={cx('notify__register')} tabIndex="-1">
+                            <div tabIndex="0">Đăng ký</div>
+                        </Button>
+                        <Button className={cx('notify__login')} tabIndex="-1">
+                            <div tabIndex="0">Đăng nhập</div>
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
     return (
         <Wrapper className={cx('wrapper')}>
             <ul className={cx('topnav')}>
@@ -20,35 +61,7 @@ function Navbar() {
 
                     if (index === 0) {
                         classNames = cx('topnav_link', 'notify-navbar');
-                        notifyPopover = (
-                            <div className={cx('notify-popover-wrapper')}>
-                                <div className={cx('popover_arrow')}>
-                                    <div className={cx('popover_arrow-inner')}></div>
-                                </div>
-                                <div className={cx('notify-description')}>
-                                    <div className={cx('notify-wrapper')}>
-                                        <div className={cx('notify')}>
-                                            <div className={cx('notify__image-wrapper')}>
-                                                <img
-                                                    src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/99e561e3944805a023e87a81d4869600.png"
-                                                    alt=""
-                                                    className={cx('notify__image')}
-                                                />
-                                            </div>
-                                            <p className={cx('notify-warn')}>Đăng nhập để xem thông báo</p>
-                                        </div>
-                                        <div className={cx('d-flex')}>
-                                            <Button className={cx('notify__register')} tabIndex="-1">
-                                                <div tabIndex="0">Đăng ký</div>
-                                            </Button>
-                                            <Button className={cx('notify__login')} tabIndex="-1">
-                                                <div tabIndex="0">Đăng nhập</div>
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        );
+                        notifyPopover = { notifyPopoverWrapper };
                     } else if (index === 2) {
                         classNames = cx('d-flex', 'langues', 'topnav_link');
                         languesWrapper = (
@@ -85,12 +98,7 @@ function Navbar() {
                         </li>
                     );
                 })}
-                <Link to="/register" className={cx('topnav_link', 'nav_name')}>
-                    <span className={cx('navbar__support-name', 'ms-4', 'me-2')}>Đăng Ký</span>
-                </Link>
-                <Link to="/register" className={cx('topnav_link', 'nav_name')}>
-                    <span className={cx('navbar__support-name', 'ms-4', 'me-2')}>Đăng Nhập</span>
-                </Link>
+                {registerAndLogin}
             </ul>
         </Wrapper>
     );

@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable jsx-a11y/anchor-has-content */
 import classNames from 'classnames/bind';
 import styles from './Content.module.scss';
@@ -14,6 +15,7 @@ import FlashSaleListItems from './FlashSaleListItems';
 import MallListItems from './MallListItems';
 import Context from '~/store/Context';
 import RecomendItems from './RecomendImtes/RecomendItems';
+import SuggestItemsService from '~/ItemService/SuggestItemsService';
 
 const cx = classNames.bind(styles);
 let total_items = 27;
@@ -24,14 +26,17 @@ const Content = () => {
     const { flashSaleRef } = useContext(Context);
 
     const [currentPage, setCurrentPage] = useState(0);
-
+    const { suggestItems } = useContext(Context);
     const mainCategoryRef = useRef();
     const categoryItemsRef = useRef();
+    const [moreItems, setMoreItems] = useState();
 
     useEffect(() => {
         visibleItems = (mainCategoryRef.current.clientWidth / categoryItemsRef.current.clientWidth) * 2;
         totalPages = Math.ceil(total_items / visibleItems);
     }, [mainCategoryRef]);
+
+    useEffect(() => {}, []);
 
     const handleNext = () => {
         if (currentPage < totalPages - 1) {
@@ -45,83 +50,107 @@ const Content = () => {
         }
     };
 
+    const handleAddMoreItems = () => {
+        const updatedSuggestItems = suggestItems.map((suggestItem) => {
+            if (suggestItem.hidden === true) {
+                return { ...suggestItem, hidden: false };
+            }
+            return suggestItem;
+        });
+
+        setMoreItems(updatedSuggestItems);
+    };
+
     const transform = {
         transform: `translateX(-${currentPage * ((100 / visibleItems) * (visibleItems - 12))}%)`,
     };
+
+    const promotionalIconsWrapper = (
+        <div className={cx('wrapper__promotional-icon')}>
+            {promotionalIcons.map((item, index) => {
+                return (
+                    <Link to="/products" key={index} style={{ color: 'inherit' }}>
+                        <div className={cx('icon-wrapper')}>
+                            <div className={cx('icon-container')}>
+                                <div className={cx('icon')}>
+                                    <div
+                                        className={cx('icon-img-container')}
+                                        style={{ backgroundImage: `url(${item.img})` }}
+                                    ></div>
+                                </div>
+                                <div className={cx('icon-desc')}>{item.name}</div>
+                            </div>
+                        </div>
+                    </Link>
+                );
+            })}
+        </div>
+    );
+
+    const mainCategory = (
+        <div ref={mainCategoryRef} className={cx('main', 'container-all')}>
+            <CarouselWrapper>
+                <div className={cx('section-below-the-flow')}>
+                    <div className={cx('home-category-list')}>
+                        <div className={cx('shopee-header-section')}>
+                            <div className={cx('shopee-header-section__header')}>
+                                <div className={cx('shopee-header-section__title')}>DANH MỤC</div>
+                            </div>
+                            <div className={cx('shopee-header-section__content')}>
+                                <div className={cx('image-carousel', 'p-relative')}>
+                                    <Button
+                                        small
+                                        onClick={handlePrev}
+                                        disabled={currentPage === 0}
+                                        icon={<FontAwesomeIcon icon={faChevronLeft} style={{ fontSize: '12px' }} />}
+                                        className={cx('category_btn-prev')}
+                                    />
+                                    <div className={cx('image-carousel__item-list-wrapper')} style={transform}>
+                                        <ul className={cx('image-carousel__item-list')}>
+                                            <CategoryListItems ref={categoryItemsRef} />
+                                        </ul>
+                                    </div>
+                                    <Button
+                                        small
+                                        onClick={handleNext}
+                                        disabled={currentPage === totalPages - 1}
+                                        icon={<FontAwesomeIcon icon={faChevronRight} style={{ fontSize: '12px' }} />}
+                                        className={cx('category_btn-next')}
+                                    ></Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </CarouselWrapper>
+        </div>
+    );
+
+    const stackBanner = (
+        <div className={cx('shopee-stack-banner')}>
+            <ul className={cx('stack-banner__banner-list')}>
+                <li>
+                    <div className={cx('simple-banner')}>
+                        <img
+                            src="https://cf.shopee.vn/file/sg-50009109-38818b241ac87cf753f191c49dd77e81"
+                            alt=""
+                            className={cx('banner-image')}
+                        />
+                        <div className={cx('click-sections-wrapper')}></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    );
+
     return (
         <>
             <Carousels />
             <div className={cx('wrapper')}>
-                <div className={cx('wrapper__promotional-icon')}>
-                    {promotionalIcons.map((item, index) => {
-                        return (
-                            <Link to="/products" key={index} style={{ color: 'inherit' }}>
-                                <div className={cx('icon-wrapper')}>
-                                    <div className={cx('icon-container')}>
-                                        <div className={cx('icon')}>
-                                            <div
-                                                className={cx('icon-img-container')}
-                                                style={{ backgroundImage: `url(${item.img})` }}
-                                            ></div>
-                                        </div>
-                                        <div className={cx('icon-desc')}>{item.name}</div>
-                                    </div>
-                                </div>
-                            </Link>
-                        );
-                    })}
-                </div>
+                {promotionalIconsWrapper}
                 <div className={cx('category__main-wrapper')} style={{ backgroundColor: '#f5f5f5' }}>
                     <div style={{ height: '20px' }}></div>
-                    <div ref={mainCategoryRef} className={cx('main', 'container-all')}>
-                        <CarouselWrapper>
-                            <div className={cx('section-below-the-flow')}>
-                                <div className={cx('home-category-list')}>
-                                    <div className={cx('shopee-header-section')}>
-                                        <div className={cx('shopee-header-section__header')}>
-                                            <div className={cx('shopee-header-section__title')}>DANH MỤC</div>
-                                        </div>
-                                        <div className={cx('shopee-header-section__content')}>
-                                            <div className={cx('image-carousel', 'p-relative')}>
-                                                <Button
-                                                    small
-                                                    onClick={handlePrev}
-                                                    disabled={currentPage === 0}
-                                                    icon={
-                                                        <FontAwesomeIcon
-                                                            icon={faChevronLeft}
-                                                            style={{ fontSize: '12px' }}
-                                                        />
-                                                    }
-                                                    className={cx('category_btn-prev')}
-                                                />
-                                                <div
-                                                    className={cx('image-carousel__item-list-wrapper')}
-                                                    style={transform}
-                                                >
-                                                    <ul className={cx('image-carousel__item-list')}>
-                                                        <CategoryListItems ref={categoryItemsRef} />
-                                                    </ul>
-                                                </div>
-                                                <Button
-                                                    small
-                                                    onClick={handleNext}
-                                                    disabled={currentPage === totalPages - 1}
-                                                    icon={
-                                                        <FontAwesomeIcon
-                                                            icon={faChevronRight}
-                                                            style={{ fontSize: '12px' }}
-                                                        />
-                                                    }
-                                                    className={cx('category_btn-next')}
-                                                ></Button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </CarouselWrapper>
-                    </div>
+                    {mainCategory}
                     <div ref={flashSaleRef} className={cx('flashSale-wrapper', 'container-all')}>
                         <FlashSaleListItems />
                     </div>
@@ -129,28 +158,18 @@ const Content = () => {
                         className={cx('container-all', 'shopee-stack-wrapper')}
                         style={{ height: '110px', marginTop: '20px' }}
                     >
-                        <div>
-                            <div className={cx('shopee-stack-banner')}>
-                                <ul className={cx('stack-banner__banner-list')}>
-                                    <li>
-                                        <div className={cx('simple-banner')}>
-                                            <img
-                                                src="https://cf.shopee.vn/file/sg-50009109-38818b241ac87cf753f191c49dd77e81"
-                                                alt=""
-                                                className={cx('banner-image')}
-                                            />
-                                            <div className={cx('click-sections-wrapper')}></div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        <div>{stackBanner}</div>
                     </div>
                     <div className={cx('container-all', 'homepage-mall-section')}>
                         <MallListItems />
                     </div>
                     <div className={cx('container-all', 'section-recomend-products-wrapper')}>
-                        <RecomendItems />
+                        <RecomendItems moreItems={moreItems} />
+                    </div>
+                    <div className={cx('btn-see-more')}>
+                        <Button large className={cx('btn-more')} onClick={() => handleAddMoreItems()}>
+                            <p style={{ fontWeight: '300', marginTop: '6px' }}>Xem thêm</p>
+                        </Button>
                     </div>
                 </div>
             </div>

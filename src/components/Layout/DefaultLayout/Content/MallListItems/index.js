@@ -40,42 +40,74 @@ function MallListItems() {
         transform: `translateX(-${currentPage * ((100 / visibleItems) * visibleItems)}%)`,
     };
 
+    const headerTitle = (
+        <div className={cx('shopee-header-section__header__title')}>
+            <div className={cx('d-flex')}>
+                <a className={cx('shopee-header__title-link')} href="/">
+                    SHOPEE MALL
+                </a>
+                <div className={cx('shopee-header__title-desc-wrapper')}>
+                    <div className={cx('shopee-header__title-desc')} tabIndex={0}>
+                        <img
+                            src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/homepagefe/6c502a2641457578b0d5f5153b53dd5d.png"
+                            alt=""
+                            className={cx('shopee-header__title-icon')}
+                        />
+                        <span>7 ngày miễn phí trả hàng</span>
+                    </div>
+                    <div className={cx('shopee-header__title-desc')} tabIndex={0}>
+                        <img
+                            src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/homepagefe/511aca04cc3ba9234ab0e4fcf20768a2.png"
+                            alt=""
+                            className={cx('shopee-header__title-icon')}
+                        />
+                        Hàng chính hãng 100%
+                    </div>
+                    <div className={cx('shopee-header__title-desc')} tabIndex={0}>
+                        <img
+                            src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/homepagefe/16ead7e0a68c3cff9f32910e4be08122.png"
+                            alt=""
+                            className={cx('shopee-header__title-icon')}
+                        />
+                        Miễn Phí Vận Chuyển
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
+    const imgCarouselItemList = (
+        <ul className={cx('image-carousel__item-list', 'image-carousel__item-list2')}>
+            {mallItems.map((item) => {
+                return (
+                    <li
+                        ref={categoryItemsRef}
+                        key={item.id}
+                        className={cx('image-carousel__item', 'image-carousel__item2')}
+                    >
+                        <div style={{ height: '100%' }}>
+                            <div className={cx('ofs-carousel__item')}>
+                                <Link to="/unilever-hb" className={cx('ofs-carousel__shop-cover-image')}>
+                                    <div className={cx('position-relative')}>
+                                        <div
+                                            className={cx('ofs-carousel__cover-image')}
+                                            style={{ backgroundImage: `url(${item.img})` }}
+                                        ></div>
+                                    </div>
+                                </Link>
+                                <div className={cx('ofs-carousel__item__text')}>{item.desc}</div>
+                            </div>
+                        </div>
+                    </li>
+                );
+            })}
+        </ul>
+    );
+
     return (
         <div className={cx('shopee-header-section--simple')}>
             <div className={cx('shopee-header-section__header')}>
-                <div className={cx('shopee-header-section__header__title')}>
-                    <div className={cx('d-flex')}>
-                        <a className={cx('shopee-header__title-link')} href="/">
-                            SHOPEE MALL
-                        </a>
-                        <div className={cx('shopee-header__title-desc-wrapper')}>
-                            <div className={cx('shopee-header__title-desc')} tabIndex={0}>
-                                <img
-                                    src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/homepagefe/6c502a2641457578b0d5f5153b53dd5d.png"
-                                    alt=""
-                                    className={cx('shopee-header__title-icon')}
-                                />
-                                <span>7 ngày miễn phí trả hàng</span>
-                            </div>
-                            <div className={cx('shopee-header__title-desc')} tabIndex={0}>
-                                <img
-                                    src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/homepagefe/511aca04cc3ba9234ab0e4fcf20768a2.png"
-                                    alt=""
-                                    className={cx('shopee-header__title-icon')}
-                                />
-                                Hàng chính hãng 100%
-                            </div>
-                            <div className={cx('shopee-header__title-desc')} tabIndex={0}>
-                                <img
-                                    src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/homepagefe/16ead7e0a68c3cff9f32910e4be08122.png"
-                                    alt=""
-                                    className={cx('shopee-header__title-icon')}
-                                />
-                                Miễn Phí Vận Chuyển
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {headerTitle}
                 <div className={cx('shopee-header-section__header-link')}>
                     <Button
                         primary
@@ -115,36 +147,7 @@ function MallListItems() {
                                 className={cx('category_btn-prev')}
                             />
                             <div style={transform} className={cx('image-carousel__item-list-wrapper')}>
-                                <ul className={cx('image-carousel__item-list', 'image-carousel__item-list2')}>
-                                    {mallItems.map((item) => {
-                                        return (
-                                            <li
-                                                ref={categoryItemsRef}
-                                                key={item.id}
-                                                className={cx('image-carousel__item', 'image-carousel__item2')}
-                                            >
-                                                <div style={{ height: '100%' }}>
-                                                    <div className={cx('ofs-carousel__item')}>
-                                                        <Link
-                                                            to="/unilever-hb"
-                                                            className={cx('ofs-carousel__shop-cover-image')}
-                                                        >
-                                                            <div className={cx('position-relative')}>
-                                                                <div
-                                                                    className={cx('ofs-carousel__cover-image')}
-                                                                    style={{ backgroundImage: `url(${item.img})` }}
-                                                                ></div>
-                                                            </div>
-                                                        </Link>
-                                                        <div className={cx('ofs-carousel__item__text')}>
-                                                            {item.desc}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
+                                {imgCarouselItemList}
                             </div>
                             <Button
                                 small

@@ -56,13 +56,6 @@
 }
 
 .stardust-checkbox__input {
-    opacity: 0;
-    top: 0;
-    left: 0;
-    position: absolute;
-}
-
-.stardust-checkbox__box {
     user-select: none;
     position: relative;
     width: 16px;
@@ -324,4 +317,129 @@
     font-weight: 300;
     box-shadow: none;
     font-size: 14px;
+}
+
+.carts-accessibility-footer {
+    z-index: 2;
+    position: sticky;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: 1fr 20.3125rem 11.875rem;
+    align-items: center;
+    box-sizing: border-box;
+    background: #fff;
+    width: 100%;
+    flex: 1;
+    font-size: 16px;
+    margin-top: 12px;
+
+    .carts-accessibility-footer_voucher {
+        grid-column-start: 2;
+        grid-column-end: 4;
+        -ms-grid-column-span: 2;
+        display: flex;
+        align-items: center;
+        padding: 12px 0;
+    }
+}
+
+.shopee-svg-icon {
+    color: #ee4d2d;
+    fill: currentColor;
+    width: 21px;
+    height: 20px;
+    position: relative;
+    display: inline-block;
+}
+
+.carts-access-shopee-voucher {
+    margin: 0 5px;
+}
+
+.carts-access-selected {
+    margin-right: 30px;
+    color: #05a;
+    font-size: 14px;
+    white-space: nowrap;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+    border: 0;
+}
+
+.GdUwdD {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    -ms-grid-column-span: 3;
+    border-top: 1px dashed rgba(0, 0, 0, 0.09);
+}
+
+.ceZa-G {
+    display: flex;
+    flex-direction: row-reverse;
+    min-width: 58px;
+    box-sizing: border-box;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    -ms-grid-column-span: 1;
+    padding: 16px 12px 16px 20px;
+}
+
+.carts-checkbox-all-wrapper {
+    padding: 12px 0;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    -ms-grid-column-span: 3;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    width: 100%;
+}
+
+.carts-checkbox-all {
+    padding: 0 12px 0 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    min-width: 58px;
+    box-sizing: border-box;
+}
+
+.clear-all-btn {
+    color: #333;
+    font-weight: 300;
+    background-color: #fff;
+    box-shadow: none;
+
+    &:hover {
+        color: blue;
+    }
+}
+
+.total-pay-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .total-pay-container {
+        display: flex;
+        justify-content: flex-end;
+
+        .total-pay-desc-wrapper {
+            align-items: center;
+            display: flex;
+            margin-left: 20px;
+
+            .total-pay-desc {
+                color: #222;
+                font-size: 16px;
+                line-height: 19px;
+            }
+
+            .total-pay {
+                color: #ee4d2d;
+                font-size: 24px;
+                line-height: 28px;
+                margin-left: 5px;
+            }
+        }
+    }
 }

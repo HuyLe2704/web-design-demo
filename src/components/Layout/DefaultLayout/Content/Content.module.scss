@@ -1367,3 +1367,16 @@
         width: 190px;
     }
 }
+
+.btn-see-more {
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-more {
+    background-color: #fff;
+    &:hover {
+        background-color: #f0f0f0 !important;
+    }
+}

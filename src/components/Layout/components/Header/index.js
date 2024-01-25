@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext, useLayoutEffect, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
@@ -11,7 +11,7 @@ import { faAngleDown, faBars, faCartShopping, faMagnifyingGlass, faShop } from '
 import Button from '~/components/Button';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import SearchKeyWords from '~/components/SearchKeyWords';
-import { keywords, removeVietnameseTones, suggestHeaderData } from '~/data';
+import { removeVietnameseTones, suggestHeaderData } from '~/data';
 import Navbar from '../Navbar';
 import Context from '~/store/Context';
 // import * as searchServices from '~/apiServices/searchServices';
@@ -44,7 +44,9 @@ function Header() {
     //     fetchApi();
     // }, [debounced]);
 
-    useEffect(() => {
+    const { suggestItems, isLogin } = useContext(Context);
+
+    useLayoutEffect(() => {
         if (searchResult.length > 0) {
             setIsTippyVisible(true);
         } else {
@@ -55,14 +57,15 @@ function Header() {
     function changeInput(e) {
         let inputValue = e.target.value;
         setSearchKeyWords(e.target.value);
-
+        const suggestItem = suggestItems.map((item) => item.name.toLowerCase());
         if (!inputValue.trim()) {
             setSearchResult([]);
         } else {
             const normalizedInputValue = removeVietnameseTones(inputValue.toLowerCase());
-            const filterResults = keywords.filter((keyword) =>
-                removeVietnameseTones(keyword.toLowerCase()).startsWith(normalizedInputValue),
+            const filterResults = suggestItem.filter((keyword) =>
+                removeVietnameseTones(keyword).includes(normalizedInputValue),
             );
+            console.log(filterResults);
 
             setSearchResult(filterResults);
         }
@@ -72,55 +75,254 @@ function Header() {
         setShowNav((prev) => !prev);
     };
 
+    const navbarMobileWrapper = (
+        <div className={cx('v-center', 'd-flex', 'navbar-mobile-wrapper')}>
+            <a href="//banhang.shopee.vn" target="_blank" rel="noopener noreferrer" className={cx('seller_channel')}>
+                Kênh người bán
+            </a>
+            <a href="//banhang.shopee.vn" target="_blank" rel="noopener noreferrer" className={cx('seller_become')}>
+                Trở thành Người bán Shopee
+            </a>
+
+            <div className={cx('shopee-drawer')}>
+                <Link to="/upload" target="_blank" rel="noopener noreferrer" className={cx('upload')}>
+                    Tải ứng dụng
+                </Link>
+            </div>
+            <div className={cx('d-flex', 'connect')}>Kết nối</div>
+            <div className={cx('d-flex', 'social-web')}>
+                <a
+                    href="https://www.facebook.com/ShopeeVN"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Kết nối facebook"
+                >
+                    <FontAwesomeIcon icon={faFacebook} className={cx('ms-2')} style={{ color: 'white' }} />
+                </a>
+                <a
+                    href="https://www.facebook.com/ShopeeVN"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Kết nối instagram"
+                    className={cx('ms-3')}
+                >
+                    <FontAwesomeIcon icon={faInstagram} style={{ color: 'white' }} />
+                </a>
+            </div>
+        </div>
+    );
+
+    const notifyNavbar = (
+        <ul className={cx('navbar__links', 'd-flex', 'justify-content-between')}>
+            {supportNav.map((item, index) => {
+                let classNames = cx('navbar__link', 'd-flex', 'mt-1');
+                let notifyPopover = null;
+                let languesWrapper = null;
+
+                if (index === 0) {
+                    classNames = cx('navbar__link', 'd-flex', 'notify-navbar', 'mt-1');
+                    notifyPopover = (
+                        <div className={cx('notify-popover-wrapper')}>
+                            <div className={cx('popover_arrow')}>
+                                <div className={cx('popover_arrow-inner')}></div>
+                            </div>
+                            <div className={cx('notify-description')}>
+                                <div className={cx('notify-wrapper')}>
+                                    <div className={cx('notify')}>
+                                        <div className={cx('notify__image-wrapper')}>
+                                            <img
+                                                src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/99e561e3944805a023e87a81d4869600.png"
+                                                alt=""
+                                                className={cx('notify__image')}
+                                            />
+                                        </div>
+                                        <p className={cx('notify-warn')}>Đăng nhập để xem thông báo</p>
+                                    </div>
+                                    <div className={cx('d-flex')}>
+                                        <Button className={cx('notify__register')} tabIndex="-1">
+                                            <div tabIndex="0">Đăng ký</div>
+                                        </Button>
+                                        <Button className={cx('notify__login')} tabIndex="-1">
+                                            <div tabIndex="0">Đăng nhập</div>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                } else if (index === 2) {
+                    classNames = cx('navbar__link', 'd-flex', 'langues', 'mt-1');
+                    languesWrapper = (
+                        <div className={cx('langues-popover-wrapper')}>
+                            <div className={cx('popover_arrow2')}>
+                                <div className={cx('popover_arrow-inner2')}></div>
+                            </div>
+                            <div className={cx('langues-wrapper')}>
+                                <Button medium className={cx('langues-selected', 'selected')}>
+                                    <span>Tiếng Việt</span>
+                                </Button>
+                                <Button medium className={cx('langues-selected')}>
+                                    <span>Tiếng Anh</span>
+                                </Button>
+                            </div>
+                        </div>
+                    );
+                }
+                return (
+                    <li key={index} className={classNames}>
+                        <div role="button">
+                            <Link to="/notifications" style={{ color: '#fff' }}>
+                                <FontAwesomeIcon icon={item.icon} style={{ marginLeft: '12px' }} />
+                                <span className={cx('navbar__support-name', 'ms-2', 'me-2')}>{item.name}</span>
+                                {item.arrow ? (
+                                    <span className={cx('angle-down')}>
+                                        <FontAwesomeIcon icon={faAngleDown} />
+                                    </span>
+                                ) : null}
+                            </Link>
+                        </div>
+                        {notifyPopover}
+                        {index === 0 && <div className={cx('header_pseudo')}></div>}
+                        {languesWrapper}
+                        {index === 2 && <div className={cx('header_pseudo')}></div>}
+                    </li>
+                );
+            })}
+            {isLogin ? (
+                <div className={cx('navbar-link__account')}>
+                    <div className={cx('stardust-popover')}>
+                        <div className={cx('stardust-popover__target')}>
+                            <div className={cx('navbar-link__account-container')}>
+                                <div className={cx('shopee-avatar')}>
+                                    <div className={cx('shopee-avatar__placeholder')}>
+                                        <svg
+                                            enableBackground="new 0 0 15 15"
+                                            viewBox="0 0 15 15"
+                                            x="0"
+                                            y="0"
+                                            className={cx('icon-headshot')}
+                                        >
+                                            <g>
+                                                <circle
+                                                    cx="7.5"
+                                                    cy="4.5"
+                                                    fill="none"
+                                                    r="3.8"
+                                                    strokeMiterlimit={10}
+                                                ></circle>
+                                                <path
+                                                    d="m1.5 14.2c0-3.3 2.7-6 6-6s6 2.7 6 6"
+                                                    fill="none"
+                                                    strokeLinecap="round"
+                                                    strokeMiterlimit={10}
+                                                ></path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <img
+                                        src="https://down-vn.img.susercontent.com/file/15f4b05177adc8e584022070059c4997_tn"
+                                        className={cx('shopee-avatar__img')}
+                                        alt="avatar"
+                                        width={21}
+                                        height={21}
+                                    />
+                                </div>
+                                <div className={cx('navbar__username')}>User9999</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <>
+                    <Link to="/register" className={cx('navbar__link--signup', 'mt-2')} style={{ color: '#fff' }}>
+                        Đăng ký
+                    </Link>
+                    <div className={cx('navbar__link-separator')}></div>
+                    <Link to="/login" className={cx('navbar__link--login', 'mt-2')} style={{ color: '#fff' }}>
+                        Đăng nhập
+                    </Link>
+                </>
+            )}
+        </ul>
+    );
+
+    const stardustPopover = (
+        <div tabIndex={0} className={cx('stardust-popover__popover')}>
+            <div>
+                <h3 className={cx('new-product-label')}>Sản phẩm mới thêm</h3>
+                {carts.map((item) => {
+                    return (
+                        <div key={item.id} className={cx('new-product')}>
+                            <img className={cx('product-img')} alt="" src={item.img} />
+                            <div className={cx('product-items-name-wrapper')}>
+                                <div className={cx('d-flex', 'align-items-center')}>
+                                    <div className={cx('product-items-name')}>{item.name}</div>
+                                    <div style={{ flex: '1' }}></div>
+                                    <div className={cx('product-items-price-wrapper')}>
+                                        <div className={cx('product-items-price')}>
+                                            ₫{(item.price * item.quantity).toLocaleString('vi-VN')}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+                <div className={cx('go-to-cart')}>
+                    <div style={{ flex: '1' }}></div>
+                    <Button primary className={cx('go-to-cart-btn')}>
+                        <Link to="/carts" style={{ color: 'var(--white-color)', fontSize: '14px' }}>
+                            Xem Giỏ Hàng
+                        </Link>
+                    </Button>
+                </div>
+            </div>
+        </div>
+    );
+
+    const tippyWrapper = (
+        <Tippy
+            interactive
+            visible={isTippyVisible}
+            onClickOutside={() => setIsTippyVisible(false)}
+            render={(attrs) => (
+                <div className={cx('search-result')} tabIndex="-1" {...attrs}>
+                    <PopperWrapper>
+                        <div className={cx('d-flex', 'search-shop')}>
+                            <span className={cx('me-2')}>
+                                <FontAwesomeIcon icon={faShop} style={{ color: '#ee4d2d' }} />
+                            </span>
+                            <h4 className={cx('search-title')}>Tìm shop "{searchKeyWords}"</h4>
+                        </div>
+                        {/* {searchResult2.map((result) => (
+                                                <SearchKeyWords key={result.id} data={result} />
+                                            ))} */}
+                        <SearchKeyWords searchResult={searchResult} />
+                    </PopperWrapper>
+                </div>
+            )}
+            appendTo={() => document.body}
+        >
+            <div className={cx('shopee-searchbar__main')}>
+                <div className={cx('shopee-searchbar__input')}>
+                    <input
+                        placeholder="Shopee bao ship 0Đ - Đăng ký ngay!"
+                        className={cx('shopee-searchbar-input__input')}
+                        maxLength={128}
+                        onChange={changeInput}
+                        // value={searchValue}
+                        // onChange={(e) => setSearchValue(e.target.value)}
+                    ></input>
+                </div>
+            </div>
+        </Tippy>
+    );
+
     return (
         <header className={cx('wrapper', 'wrapper-sticky')}>
             <div className={cx('navbar-wrapper', 'container-wrapper')}>
                 <nav className={cx('container', 'navbar', 'd-flex', 'container-all')}>
-                    <div className={cx('v-center', 'd-flex', 'navbar-mobile-wrapper')}>
-                        <a
-                            href="//banhang.shopee.vn"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={cx('seller_channel')}
-                        >
-                            Kênh người bán
-                        </a>
-                        <a
-                            href="//banhang.shopee.vn"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={cx('seller_become')}
-                        >
-                            Trở thành Người bán Shopee
-                        </a>
-
-                        <div className={cx('shopee-drawer')}>
-                            <Link to="/upload" target="_blank" rel="noopener noreferrer" className={cx('upload')}>
-                                Tải ứng dụng
-                            </Link>
-                        </div>
-                        <div className={cx('d-flex', 'connect')}>Kết nối</div>
-                        <div className={cx('d-flex', 'social-web')}>
-                            <a
-                                href="https://www.facebook.com/ShopeeVN"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                title="Kết nối facebook"
-                            >
-                                <FontAwesomeIcon icon={faFacebook} className={cx('ms-2')} style={{ color: 'white' }} />
-                            </a>
-                            <a
-                                href="https://www.facebook.com/ShopeeVN"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                title="Kết nối instagram"
-                                className={cx('ms-3')}
-                            >
-                                <FontAwesomeIcon icon={faInstagram} style={{ color: 'white' }} />
-                            </a>
-                        </div>
-                    </div>
-
+                    {navbarMobileWrapper}
                     <div className={cx('navbar__spacer')}></div>
                     <Button
                         primary
@@ -129,96 +331,12 @@ function Header() {
                         onClick={() => handleToggle()}
                     ></Button>
                     {showNav && <Navbar />}
-                    <ul className={cx('navbar__links', 'd-flex', 'justify-content-between')}>
-                        {supportNav.map((item, index) => {
-                            let classNames = cx('navbar__link', 'd-flex', 'mt-1');
-                            let notifyPopover = null;
-                            let languesWrapper = null;
-
-                            if (index === 0) {
-                                classNames = cx('navbar__link', 'd-flex', 'notify-navbar', 'mt-1');
-                                notifyPopover = (
-                                    <div className={cx('notify-popover-wrapper')}>
-                                        <div className={cx('popover_arrow')}>
-                                            <div className={cx('popover_arrow-inner')}></div>
-                                        </div>
-                                        <div className={cx('notify-description')}>
-                                            <div className={cx('notify-wrapper')}>
-                                                <div className={cx('notify')}>
-                                                    <div className={cx('notify__image-wrapper')}>
-                                                        <img
-                                                            src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/99e561e3944805a023e87a81d4869600.png"
-                                                            alt=""
-                                                            className={cx('notify__image')}
-                                                        />
-                                                    </div>
-                                                    <p className={cx('notify-warn')}>Đăng nhập để xem thông báo</p>
-                                                </div>
-                                                <div className={cx('d-flex')}>
-                                                    <Button className={cx('notify__register')} tabIndex="-1">
-                                                        <div tabIndex="0">Đăng ký</div>
-                                                    </Button>
-                                                    <Button className={cx('notify__login')} tabIndex="-1">
-                                                        <div tabIndex="0">Đăng nhập</div>
-                                                    </Button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                );
-                            } else if (index === 2) {
-                                classNames = cx('navbar__link', 'd-flex', 'langues', 'mt-1');
-                                languesWrapper = (
-                                    <div className={cx('langues-popover-wrapper')}>
-                                        <div className={cx('popover_arrow2')}>
-                                            <div className={cx('popover_arrow-inner2')}></div>
-                                        </div>
-                                        <div className={cx('langues-wrapper')}>
-                                            <Button medium className={cx('langues-selected', 'selected')}>
-                                                <span>Tiếng Việt</span>
-                                            </Button>
-                                            <Button medium className={cx('langues-selected')}>
-                                                <span>Tiếng Anh</span>
-                                            </Button>
-                                        </div>
-                                    </div>
-                                );
-                            }
-                            return (
-                                <li key={index} className={classNames}>
-                                    <div role="button">
-                                        <Link to="/notifications" style={{ color: '#fff' }}>
-                                            <FontAwesomeIcon icon={item.icon} style={{ marginLeft: '12px' }} />
-                                            <span className={cx('navbar__support-name', 'ms-2', 'me-2')}>
-                                                {item.name}
-                                            </span>
-                                            {item.arrow ? (
-                                                <span className={cx('angle-down')}>
-                                                    <FontAwesomeIcon icon={faAngleDown} />
-                                                </span>
-                                            ) : null}
-                                        </Link>
-                                    </div>
-                                    {notifyPopover}
-                                    {index === 0 && <div className={cx('header_pseudo')}></div>}
-                                    {languesWrapper}
-                                    {index === 2 && <div className={cx('header_pseudo')}></div>}
-                                </li>
-                            );
-                        })}
-                        <Link to="/register" className={cx('navbar__link--signup', 'mt-2')} style={{ color: '#fff' }}>
-                            Đăng ký
-                        </Link>
-                        <div className={cx('navbar__link-separator')}></div>
-                        <Link to="/login" className={cx('navbar__link--login', 'mt-2')} style={{ color: '#fff' }}>
-                            Đăng nhập
-                        </Link>
-                    </ul>
+                    {notifyNavbar}
                 </nav>
             </div>
             <div className={cx('header-with-search-wrapper')}>
                 <div className={cx('header-with-search', 'container-all')}>
-                    <a href="/" className={cx('header-with-search__logo-section')}>
+                    <Link to="/" className={cx('header-with-search__logo-section')}>
                         <div className={cx('header-with-search__logo-wrapper')}>
                             <svg viewBox="0 0 192 65" className={cx('header-with-search__logo')}>
                                 <g fillRule="evenodd">
@@ -226,44 +344,10 @@ function Header() {
                                 </g>
                             </svg>
                         </div>
-                    </a>
+                    </Link>
                     <div className={cx('header-with-search__search-section')}>
                         <form role="search" autoComplete="off" className={cx('shopee-searchbar')}>
-                            <Tippy
-                                interactive
-                                visible={isTippyVisible}
-                                onClickOutside={() => setIsTippyVisible(false)}
-                                render={(attrs) => (
-                                    <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                                        <PopperWrapper>
-                                            <div className={cx('d-flex', 'search-shop')}>
-                                                <span className={cx('me-2')}>
-                                                    <FontAwesomeIcon icon={faShop} style={{ color: '#ee4d2d' }} />
-                                                </span>
-                                                <h4 className={cx('search-title')}>Tìm shop "{searchKeyWords}"</h4>
-                                            </div>
-                                            {/* {searchResult2.map((result) => (
-                                                <SearchKeyWords key={result.id} data={result} />
-                                            ))} */}
-                                            <SearchKeyWords searchResult={searchResult.slice(0, 10)} />
-                                        </PopperWrapper>
-                                    </div>
-                                )}
-                                appendTo={() => document.body}
-                            >
-                                <div className={cx('shopee-searchbar__main')}>
-                                    <div className={cx('shopee-searchbar__input')}>
-                                        <input
-                                            placeholder="Shopee bao ship 0Đ - Đăng ký ngay!"
-                                            className={cx('shopee-searchbar-input__input')}
-                                            maxLength={128}
-                                            onChange={changeInput}
-                                            // value={searchValue}
-                                            // onChange={(e) => setSearchValue(e.target.value)}
-                                        ></input>
-                                    </div>
-                                </div>
-                            </Tippy>
+                            {tippyWrapper}
                             <Button primary icon={<FontAwesomeIcon icon={faMagnifyingGlass} />}></Button>
                         </form>
                         <div className={cx('suggest-wrapper')}>
@@ -291,44 +375,7 @@ function Header() {
                                 <div className={cx('stardust-popover_arrow')}>
                                     <div className={cx('stardust-popover_arrow-inner')}></div>
                                 </div>
-                                <div tabIndex={0} className={cx('stardust-popover__popover')}>
-                                    <div>
-                                        <h3 className={cx('new-product-label')}>Sản phẩm mới thêm</h3>
-                                        {carts.map((item) => {
-                                            return (
-                                                <div key={item.id} className={cx('new-product')}>
-                                                    <img className={cx('product-img')} alt="" src={item.img} />
-                                                    <div className={cx('product-items-name-wrapper')}>
-                                                        <div className={cx('d-flex', 'align-items-center')}>
-                                                            <div className={cx('product-items-name')}>{item.name}</div>
-                                                            <div style={{ flex: '1' }}></div>
-                                                            <div className={cx('product-items-price-wrapper')}>
-                                                                <div className={cx('product-items-price')}>
-                                                                    ₫
-                                                                    {(item.price * item.quantity).toLocaleString(
-                                                                        'vi-VN',
-                                                                    )}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
-
-                                        <div className={cx('go-to-cart')}>
-                                            <div style={{ flex: '1' }}></div>
-                                            <Button primary className={cx('go-to-cart-btn')}>
-                                                <Link
-                                                    to="/carts"
-                                                    style={{ color: 'var(--white-color)', fontSize: '14px' }}
-                                                >
-                                                    Xem Giỏ Hàng
-                                                </Link>
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {stardustPopover}
                             </div>
                         </div>
                     </div>

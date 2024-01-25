@@ -1,12 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import SuggestItemsService from '~/ItemService/SuggestItemsService';
 import Context from './Context';
-import { useRef, useState, useLayoutEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useRef, useState, useEffect } from 'react';
 
 function Provider({ children }) {
     const flashSaleRef = useRef();
     const [carts, setCarts] = useState([]);
     const [cartValue, setCartValue] = useState(0);
     const [value, setValue] = useState(1);
+    const [suggestItems, setSuggestItems] = useState([]);
+    const [isLogin, setIsLogin] = useState(false);
 
     // Logic
     const handleAddQuantity = () => {
@@ -31,7 +34,8 @@ function Provider({ children }) {
     const handleMinusValueItem = (selectedItem) => {
         const updatedCarts = carts.map((item) => {
             if (item.id === selectedItem.id) {
-                return { ...item, quantity: item.quantity - 1 };
+                const newQuantity = item.quantity > 0 ? item.quantity - 1 : 0;
+                return { ...item, quantity: newQuantity };
             }
             return item;
         });
@@ -67,16 +71,24 @@ function Provider({ children }) {
         setCarts(newCart);
     };
 
-    // Xử lý phần scroll top khi chuyển trang
-    const ScrollToTop = () => {
-        const pathname = useLocation();
-
-        useLayoutEffect(() => {
-            window.scrollTo({ top: 0, behavior: 'instant' });
-        }, [pathname]);
-
-        return null;
-    };
+    // Lấy dữ liệu API
+    useEffect(() => {
+        SuggestItemsService.getListSuggestItems()
+            .then((res) => {
+                const updateData = res.data.map((item) => {
+                    return {
+                        ...item,
+                        liked: item.liked === 1,
+                        hidden: item.hidden === 1,
+                        discountPrime: item.discountPrime === 1,
+                    };
+                });
+                setSuggestItems(updateData);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, []);
 
     const props = {
         flashSaleRef,
@@ -91,8 +103,10 @@ function Provider({ children }) {
         setCarts,
         handleAddValueItem,
         handleMinusValueItem,
-        ScrollToTop,
         handleRemoveCarts,
+        suggestItems,
+        isLogin,
+        setIsLogin,
     };
 
     return <Context.Provider value={props}>{children}</Context.Provider>;

@@ -3,7 +3,19 @@ import styles from './Input.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Input({ onClick, id, type, className, placeholder, checked, style, value, setValue, quantity, tabIndex }) {
+function Input({
+    onClick,
+    id,
+    type,
+    className,
+    placeholder,
+    checked = false,
+    style,
+    value,
+    setValue,
+    quantity,
+    tabIndex,
+}) {
     const handleOnChange = (e) => {
         if (type === 'checkbox') {
             setValue(e.target.checked);

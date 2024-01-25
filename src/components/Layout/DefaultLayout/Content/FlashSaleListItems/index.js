@@ -81,25 +81,110 @@ function FlashSaleListItems(props) {
         };
     }, []);
 
+    const flashSaleCountdown = (
+        <div className={cx('flashSale-logo-and-countdown')}>
+            <div className={cx('flashSale-logo')}></div>
+            <div className={cx('shopee-countdown-timer')}>
+                <div className={cx('shopee-countdown-timer__number')}>
+                    <span className={cx('shopee-countdown-timer__number-item')}>{hours}</span>
+                </div>
+
+                <div className={cx('shopee-countdown-timer__number')}>
+                    <span className={cx('shopee-countdown-timer__number-item')}>{minutes}</span>
+                </div>
+
+                <div className={cx('shopee-countdown-timer__number')}>
+                    <span className={cx('shopee-countdown-timer__number-item')}>{seconds}</span>
+                </div>
+            </div>
+        </div>
+    );
+
+    const carouselItemListWrapper = (
+        <div className={cx('image-carousel__item-list-wrapper')} style={transform}>
+            <ul
+                className={cx('image-carousel__item-list')}
+                style={{ width: '266.667%', transform: 'translate(0px, 0px)' }}
+            >
+                {flashSaleCategoryItems.map((item) => {
+                    return (
+                        <li key={item.id} className={cx('image-carousel__item-flashSale')} style={{ padding: '0px' }}>
+                            <div style={{ height: '100%' }}>
+                                <div ref={itemWidthRef} className={cx('carousel__item')}>
+                                    <Link to="/products">
+                                        <div className={cx('image-container', 'p-relative')}>
+                                            <div className={cx('sale-price-wrapper')}>
+                                                <div className={cx('sale-price')}>
+                                                    <FontAwesomeIcon
+                                                        icon={faBoltLightning}
+                                                        className={cx('icon-sale')}
+                                                    />
+                                                    <span>{`-${item.discount}`}</span>
+                                                </div>
+                                            </div>
+                                            <div className={cx('sale-status-position-wrapper')}>
+                                                <div className={cx('sale-status-position')}>
+                                                    <div className={cx('sale-status-wrapper')}>
+                                                        <div className={cx('sale-status')}>
+                                                            <span>Yêu thích</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className={cx('sale-image-position')}>
+                                                    <div
+                                                        className={cx('sale-image-bottom')}
+                                                        style={{
+                                                            backgroundImage: `url(${item.imgBot})`,
+                                                        }}
+                                                    ></div>
+                                                    <div
+                                                        className={cx('sale-image')}
+                                                        style={{
+                                                            backgroundImage: `url(${item.img})`,
+                                                        }}
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                            <div className={cx('price-sold__wrapper')}>
+                                                <div className={cx('price-sold-padding__wrapper')}>
+                                                    <div className={cx('price-wrapper')}>
+                                                        <div className={cx('price-container')}>
+                                                            <div className={cx('price')}>
+                                                                <span className={cx('currency')}>₫</span>
+                                                                <span>{item.price.toLocaleString('vi-VN')}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className={cx('sold-wrapper')}>
+                                                        <div
+                                                            className={cx('position-relative', 'w-100')}
+                                                            style={{ height: '16px' }}
+                                                        >
+                                                            <div className={cx('sold')}>{item.sold}</div>
+                                                            <div
+                                                                className={cx('sold-progress')}
+                                                                style={{ width: `${item.progress}%` }}
+                                                            ></div>
+                                                            <div className={cx('sold-container')}></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                        </li>
+                    );
+                })}
+            </ul>
+        </div>
+    );
+
     return (
         <CarouselWrapper>
             <div className={cx('flashSale-logo-wrapper')}>
-                <div className={cx('flashSale-logo-and-countdown')}>
-                    <div className={cx('flashSale-logo')}></div>
-                    <div className={cx('shopee-countdown-timer')}>
-                        <div className={cx('shopee-countdown-timer__number')}>
-                            <span className={cx('shopee-countdown-timer__number-item')}>{hours}</span>
-                        </div>
-
-                        <div className={cx('shopee-countdown-timer__number')}>
-                            <span className={cx('shopee-countdown-timer__number-item')}>{minutes}</span>
-                        </div>
-
-                        <div className={cx('shopee-countdown-timer__number')}>
-                            <span className={cx('shopee-countdown-timer__number-item')}>{seconds}</span>
-                        </div>
-                    </div>
-                </div>
+                {flashSaleCountdown}
                 <a
                     className={cx('see-all')}
                     href="https://shopee.vn/flash_sale?promotionId=187710545526789"
@@ -119,90 +204,7 @@ function FlashSaleListItems(props) {
                     icon={<FontAwesomeIcon icon={faChevronLeft} style={{ fontSize: '12px' }} />}
                     className={cx('category_btn-prev')}
                 />
-                <div className={cx('image-carousel__item-list-wrapper')} style={transform}>
-                    <ul
-                        className={cx('image-carousel__item-list')}
-                        style={{ width: '266.667%', transform: 'translate(0px, 0px)' }}
-                    >
-                        {flashSaleCategoryItems.map((item) => {
-                            return (
-                                <li
-                                    key={item.id}
-                                    className={cx('image-carousel__item-flashSale')}
-                                    style={{ padding: '0px' }}
-                                >
-                                    <div style={{ height: '100%' }}>
-                                        <div ref={itemWidthRef} className={cx('carousel__item')}>
-                                            <Link to="/products">
-                                                <div className={cx('image-container', 'p-relative')}>
-                                                    <div className={cx('sale-price-wrapper')}>
-                                                        <div className={cx('sale-price')}>
-                                                            <FontAwesomeIcon
-                                                                icon={faBoltLightning}
-                                                                className={cx('icon-sale')}
-                                                            />
-                                                            <span>{`-${item.discount}`}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div className={cx('sale-status-position-wrapper')}>
-                                                        <div className={cx('sale-status-position')}>
-                                                            <div className={cx('sale-status-wrapper')}>
-                                                                <div className={cx('sale-status')}>
-                                                                    <span>Yêu thích</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className={cx('sale-image-position')}>
-                                                            <div
-                                                                className={cx('sale-image-bottom')}
-                                                                style={{
-                                                                    backgroundImage: `url(${item.imgBot})`,
-                                                                }}
-                                                            ></div>
-                                                            <div
-                                                                className={cx('sale-image')}
-                                                                style={{
-                                                                    backgroundImage: `url(${item.img})`,
-                                                                }}
-                                                            ></div>
-                                                        </div>
-                                                    </div>
-                                                    <div className={cx('price-sold__wrapper')}>
-                                                        <div className={cx('price-sold-padding__wrapper')}>
-                                                            <div className={cx('price-wrapper')}>
-                                                                <div className={cx('price-container')}>
-                                                                    <div className={cx('price')}>
-                                                                        <span className={cx('currency')}>₫</span>
-                                                                        <span>
-                                                                            {item.price.toLocaleString('vi-VN')}
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className={cx('sold-wrapper')}>
-                                                                <div
-                                                                    className={cx('position-relative', 'w-100')}
-                                                                    style={{ height: '16px' }}
-                                                                >
-                                                                    <div className={cx('sold')}>{item.sold}</div>
-                                                                    <div
-                                                                        className={cx('sold-progress')}
-                                                                        style={{ width: `${item.progress}%` }}
-                                                                    ></div>
-                                                                    <div className={cx('sold-container')}></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
+                {carouselItemListWrapper}
                 <Button
                     small
                     onClick={handleNext}

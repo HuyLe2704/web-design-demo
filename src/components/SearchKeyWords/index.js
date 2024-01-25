@@ -13,6 +13,7 @@ const SearchKeyWords = ({ searchResult }) => {
                         {keyword}
                     </p>
                 ))}
+                {/* <p className={cx('keyword')}>{searchResult}</p> */}
             </div>
         </div>
     );
