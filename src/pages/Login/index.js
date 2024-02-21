@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './Login.module.scss';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Context from '~/store/Context';
+import UsersRegisterService from '~/ItemService/UsersRegisterService';
 
 const cx = classNames.bind(styles);
 
@@ -12,7 +13,6 @@ const Login = () => {
     const {
         register,
         handleSubmit,
-        trigger,
         formState: { errors },
     } = useForm();
 
@@ -21,22 +21,24 @@ const Login = () => {
     const navigate = useNavigate();
     const [loginError, setLoginError] = useState(false);
 
-    // Register
-    const [dataUser, setDataUser] = useState([]);
+    const onLogin = async (data) => {
+        try {
+            const loginData = {
+                userName: data.userName,
+                userPassword: data.password,
+            };
 
-    useEffect(() => {
-        const storageData = JSON.parse(localStorage.getItem('userData')) || [];
-        setDataUser(storageData);
-    }, []);
+            const response = await UsersRegisterService.loginUser(loginData);
 
-    // Register
-
-    const onLogin = (data) => {
-        const userExists = dataUser.find((user) => user.userName === data.userName && user.password === data.password);
-        if (userExists) {
-            setIsLogin(true);
-            navigate('/');
-        } else {
+            if (response.status === 200) {
+                localStorage.setItem('userName', response.data.userName);
+                setIsLogin(true);
+                navigate('/');
+            } else {
+                setLoginError(true);
+            }
+        } catch (error) {
+            console.error('Lỗi đăng nhập:', error);
             setLoginError(true);
         }
     };

@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleChevronRight, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { mallItems } from '~/data';
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 let total_items = 16;
@@ -18,6 +19,7 @@ function MallListItems() {
 
     const mallItemsWrapperRef = useRef();
     const categoryItemsRef = useRef();
+    const { t } = useTranslation();
 
     useEffect(() => {
         visibleItems = (mallItemsWrapperRef.current.clientWidth / categoryItemsRef.current.clientWidth) * 2;
@@ -117,7 +119,7 @@ function MallListItems() {
                     >
                         <Link to="/mall">
                             <div className={cx('shop-mall__open')}>
-                                <span style={{ fontSize: '14px' }}>Xem tất cả</span>
+                                <span style={{ fontSize: '14px' }}>{t('SEE_ALL')}</span>
                             </div>
                         </Link>
                     </Button>

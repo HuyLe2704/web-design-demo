@@ -139,6 +139,8 @@
 .navbar__links {
     align-items: center;
     margin-bottom: 0;
+    margin-top: -8px;
+    margin-right: 20px;
 
     .navbar__link {
         position: relative;
@@ -436,6 +438,12 @@
     width: 50%;
     background-color: #f5f5f5;
     border: 0;
+    text-align: center;
+    margin-right: 3px;
+
+    &:hover {
+        opacity: 0.8;
+    }
 }
 
 .notify__register div,
@@ -679,7 +687,7 @@
     overflow: visible;
     outline: 0;
     height: 34px !important;
-    width: 122px !important;
+    width: 122px;
     font-size: 14px;
     font-weight: 300;
 
@@ -735,6 +743,7 @@
     top: -9px;
     left: -9px;
     display: block;
+    cursor: pointer;
 }
 
 .navbar__username {

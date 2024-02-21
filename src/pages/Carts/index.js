@@ -6,15 +6,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect, useState } from 'react';
 import Context from '~/store/Context';
+import ToastModal from '~/components/Layout/components/ToastModal';
+import Voucher from './Voucher';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
-function Carts() {
-    const { carts, handleAddValueItem, cartValue, setCartValue, setCarts, handleMinusValueItem, handleRemoveCarts } =
+const Carts = () => {
+    const { carts, handleAddValueItem, setCartValue, setCarts, handleMinusValueItem, handleRemoveCarts } =
         useContext(Context);
+    const { t } = useTranslation();
+
     const [isItemChecked, setIsItemChecked] = useState([]);
     const [isCheckedAll, setIsCheckedAll] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [showToast, setShowToast] = useState(false);
+    const [messageToast, setMessageToast] = useState('');
+    const [showToastSuccessfull, setShowToastSuccessfull] = useState(false);
+    const [messageToastSuccessfull, setMessageToastSuccessfull] = useState('');
+    const [voucher, setVoucher] = useState(false);
+    const [closeVoucher, setCloseVoucher] = useState(false);
+    const [priceAfterDiscount, setPriceAfterDiscount] = useState(0);
 
     const handleCheckboxAllChange = (isCheckedAll) => {
         setIsCheckedAll(isCheckedAll);
@@ -36,6 +48,83 @@ function Carts() {
         setIsCheckedAll(newCheckedState.length === carts.length);
     };
 
+    const handleShowToastBuying = () => {
+        setShowToast((prev) => !prev);
+
+        if (isCheckedAll || isItemChecked.length > 1) {
+            setMessageToast('Bạn đã chắc chắn mua những sản phẩm này chưa?');
+            // eslint-disable-next-line eqeqeq
+        } else if (isItemChecked.length == 1) {
+            setMessageToast('Bạn đã chắc chắn mua sản phẩm này chưa?');
+        } else {
+            setMessageToast('Rất tiếc, bạn chưa chọn mua sản phẩm nào từ giỏ hàng.');
+        }
+    };
+
+    const handleConfirmToast = () => {
+        setShowToast((prev) => !prev);
+
+        setMessageToastSuccessfull('Mua hàng thành công!');
+
+        setShowToastSuccessfull(true);
+    };
+
+    // Đóng wrapper voucher khi nhấn ra ngoài
+    useEffect(() => {
+        if (closeVoucher) {
+            setVoucher(false);
+            setCloseVoucher(false);
+        }
+    }, [closeVoucher]);
+
+    const ToastModalShow = ({ show, message }) => {
+        if (!show) {
+            return null;
+        }
+        return (
+            <ToastModal
+                message={message}
+                setShowToast={setShowToast}
+                handleConfirmToast={handleConfirmToast}
+                confirm="OK"
+            />
+        );
+    };
+
+    const ToastSuccessfull = ({ show, message }) => {
+        if (!show) {
+            return null;
+        }
+        return (
+            <div className={cx('shopee-popup-modal')}>
+                <div className={cx('shopee-popup__overlay')}></div>
+                <div className={cx('shopee-popup__container')}>
+                    <div className={cx('shopee-popup__card')}>
+                        <div className={cx('shopee-popup__message')}>
+                            {message}
+                            <div className={cx('shopee-alert-popup__message-list')}></div>
+                        </div>
+                        <div className={cx('shopee-alert-popup__btn-layout')}>
+                            <Button
+                                large
+                                primary
+                                className={cx('shopee-btn-solid')}
+                                style={{ marginLeft: '70px' }}
+                                onClick={() => setShowToastSuccessfull((prev) => !prev)}
+                            >
+                                <span>Xác nhận</span>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const handleShowVoucher = () => {
+        setVoucher((prev) => !prev);
+    };
+
     useEffect(() => {
         const totalPriceItemsChecked = carts
             .filter((item) => isItemChecked.includes(item.id))
@@ -45,17 +134,13 @@ function Carts() {
     }, [isItemChecked, carts]);
 
     const handleRemoveCheckedItems = () => {
-        const itemsToRemove = carts.filter((cartItem) => isItemChecked[cartItem.id]);
-
-        const totalQuantityToRemove = itemsToRemove.reduce((total, item) => total + item.quantity, 0);
-
-        setCartValue((prev) => prev - totalQuantityToRemove);
-
-        const newCarts = carts.filter((cartItem) => !isItemChecked[cartItem.id]);
+        const newCarts = carts.filter((cart) => !isItemChecked.includes(cart.id));
+        const remainingQuantity = newCarts.reduce((total, item) => total + item.quantity, 0);
         setCarts(newCarts);
-
+        setTotalPrice(0);
+        setCartValue(remainingQuantity);
+        setIsItemChecked([]);
         setIsCheckedAll(false);
-        setIsItemChecked({});
     };
 
     const cartPageImgWrapper = (
@@ -66,9 +151,7 @@ function Carts() {
                 width={24}
                 height={20}
             />
-            <span className={cx('carts-page-label')}>
-                Nhấn vào mục Mã giảm giá ở cuối trang để hưởng miễn phí vận chuyển bạn nhé!
-            </span>
+            <span className={cx('carts-page-label')}>{t('SELECT-FREE-VOUCHER')}</span>
         </div>
     );
 
@@ -198,7 +281,7 @@ function Carts() {
                                     </div>
                                     <div className={cx('user-operations-wrapper')}>
                                         <Button
-                                            onClick={() => handleRemoveCarts(item)}
+                                            onClick={() => handleRemoveCarts(item, setIsCheckedAll)}
                                             className={cx('user-operations-delete')}
                                         >
                                             Xoá
@@ -248,62 +331,86 @@ function Carts() {
     );
 
     return (
-        <div style={{ backgroundColor: '#f5f5f5', marginTop: '-30px' }}>
-            <div className={cx('wrapper', 'container-all')}>
-                <div className={cx('carts-page-wrapper')}>
-                    {cartPageImgWrapper}
-                    <div className={cx('carts-page-check-wrapper')}>
-                        {cartPageCheck}
-                        <div className={cx('product')}>Sản Phẩm</div>
-                        <div className={cx('price-quotation')}>Đơn Giá</div>
-                        <div className={cx('quantity')}>Số Lượng</div>
-                        <div className={cx('price')}>Số Tiền</div>
-                        <div className={cx('operation')}>Thao Tác</div>
-                    </div>
-                    <div className={cx('cart-product-wrapper-all')}>{cartProduct}</div>
-                    <section className={cx('carts-accessibility-footer')}>
-                        <div className={cx('carts-accessibility-footer_voucher')}>
-                            {shopeeSvgIcon}
-                            <div className={cx('carts-access-shopee-voucher', 'me-4')}>Shopee Voucher</div>
-                            <div className={cx('carts-access-selected')}>Chọn hoặc nhập mã</div>
+        <>
+            <ToastModalShow show={showToast} message={messageToast} />
+            <Voucher
+                show={voucher}
+                onClose={() => setCloseVoucher(true)}
+                totalPrice={totalPrice}
+                setPriceAfterDiscount={setPriceAfterDiscount}
+            />
+            <ToastSuccessfull show={showToastSuccessfull} message={messageToastSuccessfull} />
+            <div style={{ backgroundColor: '#f5f5f5', marginTop: '-30px' }}>
+                <div className={cx('wrapper', 'container-all')}>
+                    <div className={cx('carts-page-wrapper')}>
+                        {cartPageImgWrapper}
+                        <div className={cx('carts-page-check-wrapper')}>
+                            {cartPageCheck}
+                            <div className={cx('product')}>Sản Phẩm</div>
+                            <div className={cx('price-quotation')}>Đơn Giá</div>
+                            <div className={cx('quantity')}>Số Lượng</div>
+                            <div className={cx('price')}>Số Tiền</div>
+                            <div className={cx('operation')}>Thao Tác</div>
                         </div>
-                        <div className={cx('GdUwdD')}></div>
-                        <div className={cx('ceZa-G')}></div>
-                        <div className={cx('carts-checkbox-all-wrapper')} style={{ cursor: 'pointer' }}>
-                            <div className={cx('carts-checkbox-all')}>
-                                <label className={cx('stardust-checkbox')}>
-                                    <Input
-                                        type="checkbox"
-                                        setValue={handleCheckboxAllChange}
-                                        checked={isCheckedAll}
-                                        className={cx('stardust-checkbox__input')}
-                                        style={{ cursor: 'pointer' }}
-                                    />
-                                </label>
+                        <div className={cx('cart-product-wrapper-all')}>{cartProduct}</div>
+                        <section className={cx('carts-accessibility-footer')}>
+                            <div className={cx('carts-accessibility-footer_voucher')}>
+                                {shopeeSvgIcon}
+                                <div className={cx('carts-access-shopee-voucher', 'me-4')}>Shopee Voucher</div>
+                                <div className={cx('carts-access-selected')} onClick={() => handleShowVoucher()}>
+                                    {priceAfterDiscount > 0 ? 'Đã chọn mã giảm giá' : 'Chọn hoặc nhập mã'}
+                                </div>
                             </div>
-                            <div>{`Chọn tất cả (${isItemChecked.length})`}</div>
-                            <Button className={cx('clear-all-btn')} onClick={() => handleRemoveCheckedItems()}>
-                                Xóa
-                            </Button>
-                            <div style={{ flex: '1' }}></div>
-                            <div className={cx('total-pay-wrapper')}>
-                                <div className={cx('total-pay-container')}>
-                                    <div className={cx('total-pay-desc-wrapper')}>
-                                        <div
-                                            className={cx('total-pay-desc')}
-                                        >{`Tổng thanh toán (${isItemChecked.length} sản phẩm)`}</div>
-                                        <div className={cx('total-pay')}>
-                                            {`₫${totalPrice.toLocaleString('vi-VN')}`}
+                            <div className={cx('GdUwdD')}></div>
+                            <div className={cx('ceZa-G')}></div>
+                            <div className={cx('carts-checkbox-all-wrapper')} style={{ cursor: 'pointer' }}>
+                                <div className={cx('carts-checkbox-all')}>
+                                    <label className={cx('stardust-checkbox')}>
+                                        <Input
+                                            type="checkbox"
+                                            setValue={handleCheckboxAllChange}
+                                            checked={isCheckedAll}
+                                            className={cx('stardust-checkbox__input')}
+                                            style={{ cursor: 'pointer' }}
+                                        />
+                                    </label>
+                                </div>
+                                <div>{`Chọn tất cả (${isItemChecked.length})`}</div>
+                                <Button className={cx('clear-all-btn')} onClick={() => handleRemoveCheckedItems()}>
+                                    Xóa
+                                </Button>
+                                <div style={{ flex: '1' }}></div>
+                                <div className={cx('total-pay-wrapper')}>
+                                    <div className={cx('total-pay-container')}>
+                                        <div className={cx('total-pay-desc-wrapper')}>
+                                            <div
+                                                className={cx('total-pay-desc')}
+                                            >{`Tổng thanh toán (${isItemChecked.length} sản phẩm)`}</div>
+                                            <div className={cx('total-pay')}>
+                                                {`₫${
+                                                    priceAfterDiscount === 0
+                                                        ? totalPrice.toLocaleString('vi-VN')
+                                                        : priceAfterDiscount.toLocaleString('vi-VN')
+                                                }`}
+                                            </div>
+                                            <Button
+                                                primary
+                                                medium
+                                                className={cx('ms-4', 'me-5')}
+                                                onClick={() => handleShowToastBuying()}
+                                            >
+                                                <span style={{ fontSize: '14px', fontWeight: '500' }}>Mua hàng</span>
+                                            </Button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
-}
+};
 
 export default Carts;

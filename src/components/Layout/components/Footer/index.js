@@ -181,9 +181,9 @@ function Footer() {
                             </div>
                             <div className={cx('section-above-footer-nation-wrapper')}>
                                 <div className={cx('nation-location')}>Quốc gia & Khu vực:</div>
-                                {nations.map((nation) => {
+                                {nations.map((nation, index) => {
                                     return (
-                                        <div className={cx('section-above-footer-nation')}>
+                                        <div key={index} className={cx('section-above-footer-nation')}>
                                             <div className={cx('section-above-footer-nation-link')}>{nation}</div>
                                         </div>
                                     );
@@ -195,9 +195,9 @@ function Footer() {
                 <div className={cx('footer-wrapper')}>
                     <div className={cx('wrapper', 'container-all')}>
                         <div className={cx('footer-desc-wrapper')}>
-                            {footerDesc.map((desc) => {
+                            {footerDesc.map((desc, index) => {
                                 return (
-                                    <div className={cx('footer-desc')}>
+                                    <div key={index} className={cx('footer-desc')}>
                                         <a href="https://help.shopee.vn/portal/article/77244">
                                             <span>{desc}</span>
                                         </a>

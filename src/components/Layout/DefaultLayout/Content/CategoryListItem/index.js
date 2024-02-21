@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from '../Content.module.scss';
 import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
 function CategoryListItems(props, ref) {
+    const { t } = useTranslation();
     return (
         <>
             {categoryItems.map((item) => {
@@ -25,7 +27,7 @@ function CategoryListItems(props, ref) {
                                     </div>
                                 </div>
                                 <div className={cx('category-name-wrapper')}>
-                                    <div className={cx('category-name')}>{item.name}</div>
+                                    <div className={cx('category-name')}>{t(item.name)}</div>
                                 </div>
                             </div>
                         </Link>

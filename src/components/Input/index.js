@@ -15,17 +15,20 @@ function Input({
     setValue,
     quantity,
     tabIndex,
+    disabled = false,
 }) {
     const handleOnChange = (e) => {
-        if (type === 'checkbox') {
-            setValue(e.target.checked);
-        } else {
-            const newValue = e.target.value;
-            const intValue = parseInt(newValue, 10);
-            if (!isNaN(intValue) && intValue >= 1) {
-                setValue(intValue);
+        if (setValue && typeof setValue === 'function') {
+            if (type === 'checkbox') {
+                setValue(e.target.checked);
             } else {
-                setValue(1);
+                const newValue = e.target.value;
+                const intValue = parseInt(newValue, 10);
+                if (!isNaN(intValue) && intValue >= 1) {
+                    setValue(intValue);
+                } else {
+                    setValue(1);
+                }
             }
         }
     };
@@ -44,11 +47,12 @@ function Input({
             type={type}
             placeholder={placeholder}
             onClick={onClick}
-            onChange={(e) => handleOnChange(e)}
+            onChange={handleOnChange}
             value={value}
             checked={checked}
             style={style}
             tabIndex={tabIndex}
+            disabled={disabled}
         ></Comp>
     );
 }

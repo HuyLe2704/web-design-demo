@@ -28,7 +28,12 @@ function Provider({ children }) {
             return item;
         });
 
+        const totalQuantity = updatedCarts.reduce((total, item) => {
+            return total + item.quantity;
+        }, 0);
+
         setCarts(updatedCarts);
+        setCartValue(totalQuantity);
     };
 
     const handleMinusValueItem = (selectedItem) => {
@@ -40,7 +45,12 @@ function Provider({ children }) {
             return item;
         });
 
+        const totalQuantity = updatedCarts.reduce((total, item) => {
+            return total + item.quantity;
+        }, 0);
+
         setCarts(updatedCarts);
+        setCartValue(totalQuantity);
     };
 
     // Xử lí phần thêm sản phẩm vào giỏ hàng
@@ -64,10 +74,11 @@ function Provider({ children }) {
     };
 
     // Xử lí phần xoá sản phẩm trong giỏ hàng
-    const handleRemoveCarts = (itemDel) => {
+    const handleRemoveCarts = (itemDel, setIsCheckedAll) => {
         setCartValue((prev) => prev - itemDel.quantity);
 
         let newCart = carts.filter((item) => item.id !== itemDel.id);
+        setIsCheckedAll(false);
         setCarts(newCart);
     };
 

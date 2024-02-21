@@ -2,14 +2,40 @@ import classNames from 'classnames/bind';
 import styles from './Navbar.module.scss';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
-import { supportNav } from '~/data';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { Wrapper } from '~/components/Popper';
+import { useTranslation } from 'react-i18next';
+import { locales } from '~/i18n/i18n';
 
 const cx = classNames.bind(styles);
 
 function Navbar() {
+    const { faBell, faCircleQuestion } = require('@fortawesome/free-regular-svg-icons');
+    const { faGlobe } = require('@fortawesome/free-solid-svg-icons');
+    const { i18n, t } = useTranslation();
+    const currentLanguage = locales[i18n.language];
+    // Navbar support data
+    const supportNav = [
+        {
+            id: 1,
+            name: t('NOTIFY'),
+            icon: faBell,
+            arrow: false,
+        },
+        {
+            id: 2,
+            name: t('HELP'),
+            icon: faCircleQuestion,
+            arrow: false,
+        },
+        {
+            id: 3,
+            name: currentLanguage,
+            icon: faGlobe,
+            arrow: true,
+        },
+    ];
     const registerAndLogin = (
         <>
             <Link to="/register" className={cx('topnav_link', 'nav_name')}>

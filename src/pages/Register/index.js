@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './Register.module.scss';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import UsersRegisterService from '~/ItemService/UsersRegisterService';
 
 const cx = classNames.bind(styles);
 
@@ -13,7 +14,6 @@ const Register = () => {
         handleSubmit,
         watch,
         reset,
-        trigger,
         formState: { errors },
     } = useForm();
 
@@ -22,34 +22,29 @@ const Register = () => {
     const watchPassword = watch('password');
     const [hasUserMessage, setHasUserMessage] = useState('');
     const navigate = useNavigate();
-    // Register
-    const [dataUser, setDataUser] = useState([]);
-
-    useEffect(() => {
-        const storageData = JSON.parse(localStorage.getItem('userData')) || [];
-        setDataUser(storageData);
-        console.log(storageData);
-    }, []);
 
     // Register
     const onSubmit = async (data) => {
-        setHasUserMessage('');
+        try {
+            setHasUserMessage('');
 
-        const isFormValid = await trigger();
-        if (!isFormValid) return;
+            const dataUserRequest = {
+                userName: data.userName,
+                userPassword: data.password,
+                userEmail: data.email,
+            };
 
-        let currentData = JSON.parse(localStorage.getItem('userData')) || [];
-        const userExists = currentData.some((user) => user.userName === data.userName);
+            const response = await UsersRegisterService.addUser(dataUserRequest);
 
-        if (userExists) {
-            setHasUserMessage('Tài khoản đã tồn tại !');
-        } else {
-            const updatedData = [...currentData, data];
-            localStorage.setItem('userData', JSON.stringify(updatedData));
-            setDataUser(updatedData);
-            reset();
-            console.log(dataUser);
-            navigate('/login');
+            if (response.status === 200) {
+                reset();
+                navigate('/login');
+            } else {
+                setHasUserMessage('Đã xảy ra lỗi khi đăng ký.');
+            }
+        } catch (error) {
+            console.error('Lỗi đăng ký:', error);
+            setHasUserMessage(' Đăng ký không thành công do tài khoản đã tồn tại.');
         }
     };
 

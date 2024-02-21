@@ -1,12 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useContext, useLayoutEffect, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import Tippy from '@tippyjs/react/headless';
-import { supportNav } from '~/data';
 import { faAngleDown, faBars, faCartShopping, faMagnifyingGlass, faShop } from '@fortawesome/free-solid-svg-icons';
 import Button from '~/components/Button';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
@@ -14,8 +14,8 @@ import SearchKeyWords from '~/components/SearchKeyWords';
 import { removeVietnameseTones, suggestHeaderData } from '~/data';
 import Navbar from '../Navbar';
 import Context from '~/store/Context';
-// import * as searchServices from '~/apiServices/searchServices';
-// import { useDebounce } from '~/hooks';
+import { useTranslation } from 'react-i18next';
+import { locales } from '~/i18n/i18n';
 
 const cx = classNames.bind(styles);
 
@@ -24,27 +24,50 @@ function Header() {
     const [searchKeyWords, setSearchKeyWords] = useState('');
     const [isTippyVisible, setIsTippyVisible] = useState(false);
     const [showNav, setShowNav] = useState(false);
+    const [selectedLanguage, setSelectedLanguage] = useState('vi');
     const { cartValue, carts } = useContext(Context);
-    // const [searchResult2, setSearchResult2] = useState([]);
-    // const [searchValue, setSearchValue] = useState('');
-
-    // const debounced = useDebounce(searchValue, 600);
-
-    // useEffect(() => {
-    //     if (!debounced.trim()) {
-    //         setSearchResult2([]);
-    //         return;
-    //     }
-
-    //     const fetchApi = async () => {
-    //         const result = await searchServices.search(debounced);
-    //         setSearchResult2(result);
-    //     };
-
-    //     fetchApi();
-    // }, [debounced]);
-
     const { suggestItems, isLogin } = useContext(Context);
+    const userName = localStorage.getItem('userName');
+    const { i18n, t } = useTranslation();
+    const currentLanguage = locales[i18n.language];
+    const { faBell, faCircleQuestion } = require('@fortawesome/free-regular-svg-icons');
+    const { faGlobe } = require('@fortawesome/free-solid-svg-icons');
+
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+        localStorage.setItem('language', lng);
+        setSelectedLanguage(lng);
+    };
+
+    useEffect(() => {
+        const savedLanguage = localStorage.getItem('language');
+        if (savedLanguage) {
+            i18n.changeLanguage(savedLanguage);
+            setSelectedLanguage(savedLanguage);
+        }
+    }, [i18n]);
+
+    // Navbar support data
+    const supportNav = [
+        {
+            id: 1,
+            name: t('NOTIFY'),
+            icon: faBell,
+            arrow: false,
+        },
+        {
+            id: 2,
+            name: t('HELP'),
+            icon: faCircleQuestion,
+            arrow: false,
+        },
+        {
+            id: 3,
+            name: currentLanguage,
+            icon: faGlobe,
+            arrow: true,
+        },
+    ];
 
     useLayoutEffect(() => {
         if (searchResult.length > 0) {
@@ -54,7 +77,7 @@ function Header() {
         }
     }, [searchResult]);
 
-    function changeInput(e) {
+    const changeInput = (e) => {
         let inputValue = e.target.value;
         setSearchKeyWords(e.target.value);
         const suggestItem = suggestItems.map((item) => item.name.toLowerCase());
@@ -65,31 +88,34 @@ function Header() {
             const filterResults = suggestItem.filter((keyword) =>
                 removeVietnameseTones(keyword).includes(normalizedInputValue),
             );
-            console.log(filterResults);
-
             setSearchResult(filterResults);
         }
-    }
+    };
 
     const handleToggle = () => {
         setShowNav((prev) => !prev);
     };
 
+    const navlinkHidden = () => {
+        setSearchKeyWords('');
+        setIsTippyVisible(false);
+    };
+
     const navbarMobileWrapper = (
         <div className={cx('v-center', 'd-flex', 'navbar-mobile-wrapper')}>
             <a href="//banhang.shopee.vn" target="_blank" rel="noopener noreferrer" className={cx('seller_channel')}>
-                Kênh người bán
+                {t('SELLER_CENTER')}
             </a>
             <a href="//banhang.shopee.vn" target="_blank" rel="noopener noreferrer" className={cx('seller_become')}>
-                Trở thành Người bán Shopee
+                {t('BECOME_SELLER')}
             </a>
 
             <div className={cx('shopee-drawer')}>
                 <Link to="/upload" target="_blank" rel="noopener noreferrer" className={cx('upload')}>
-                    Tải ứng dụng
+                    {t('DOWNLOAD')}
                 </Link>
             </div>
-            <div className={cx('d-flex', 'connect')}>Kết nối</div>
+            <div className={cx('d-flex', 'connect')}>{t('FOLLOW_US')}</div>
             <div className={cx('d-flex', 'social-web')}>
                 <a
                     href="https://www.facebook.com/ShopeeVN"
@@ -136,15 +162,19 @@ function Header() {
                                                 className={cx('notify__image')}
                                             />
                                         </div>
-                                        <p className={cx('notify-warn')}>Đăng nhập để xem thông báo</p>
+                                        <p className={cx('notify-warn')}>{t('LOGIN_NOTIFY')}</p>
                                     </div>
                                     <div className={cx('d-flex')}>
-                                        <Button className={cx('notify__register')} tabIndex="-1">
-                                            <div tabIndex="0">Đăng ký</div>
-                                        </Button>
-                                        <Button className={cx('notify__login')} tabIndex="-1">
-                                            <div tabIndex="0">Đăng nhập</div>
-                                        </Button>
+                                        <NavLink to="/register" className={cx('notify__register')}>
+                                            <Button className={cx('notify__register')} tabIndex="-1">
+                                                <div tabIndex="0">{t('REGISTER')}</div>
+                                            </Button>
+                                        </NavLink>
+                                        <NavLink to="/login" className={cx('notify__login')}>
+                                            <Button className={cx('notify__login')} tabIndex="-1">
+                                                <div tabIndex="0">{t('LOGIN')}</div>
+                                            </Button>
+                                        </NavLink>
                                     </div>
                                 </div>
                             </div>
@@ -158,11 +188,19 @@ function Header() {
                                 <div className={cx('popover_arrow-inner2')}></div>
                             </div>
                             <div className={cx('langues-wrapper')}>
-                                <Button medium className={cx('langues-selected', 'selected')}>
+                                <Button
+                                    medium
+                                    className={cx('langues-selected', { selected: selectedLanguage === 'vi' })}
+                                    onClick={() => changeLanguage('vi')}
+                                >
                                     <span>Tiếng Việt</span>
                                 </Button>
-                                <Button medium className={cx('langues-selected')}>
-                                    <span>Tiếng Anh</span>
+                                <Button
+                                    medium
+                                    className={cx('langues-selected', { selected: selectedLanguage === 'en' })}
+                                    onClick={() => changeLanguage('en')}
+                                >
+                                    <span>English</span>
                                 </Button>
                             </div>
                         </div>
@@ -227,7 +265,7 @@ function Header() {
                                         height={21}
                                     />
                                 </div>
-                                <div className={cx('navbar__username')}>User9999</div>
+                                <div className={cx('navbar__username', 'mb-1')}>{userName}</div>
                             </div>
                         </div>
                     </div>
@@ -235,11 +273,11 @@ function Header() {
             ) : (
                 <>
                     <Link to="/register" className={cx('navbar__link--signup', 'mt-2')} style={{ color: '#fff' }}>
-                        Đăng ký
+                        {t('REGISTER')}
                     </Link>
                     <div className={cx('navbar__link-separator')}></div>
                     <Link to="/login" className={cx('navbar__link--login', 'mt-2')} style={{ color: '#fff' }}>
-                        Đăng nhập
+                        {t('LOGIN')}
                     </Link>
                 </>
             )}
@@ -249,7 +287,7 @@ function Header() {
     const stardustPopover = (
         <div tabIndex={0} className={cx('stardust-popover__popover')}>
             <div>
-                <h3 className={cx('new-product-label')}>Sản phẩm mới thêm</h3>
+                <h3 className={cx('new-product-label')}>{t('RECENTLY_ADDED_PRODUCTS')}</h3>
                 {carts.map((item) => {
                     return (
                         <div key={item.id} className={cx('new-product')}>
@@ -270,9 +308,13 @@ function Header() {
                 })}
                 <div className={cx('go-to-cart')}>
                     <div style={{ flex: '1' }}></div>
-                    <Button primary className={cx('go-to-cart-btn')}>
+                    <Button
+                        primary
+                        className={cx('go-to-cart-btn')}
+                        style={selectedLanguage === 'en' ? { width: '190px' } : null}
+                    >
                         <Link to="/carts" style={{ color: 'var(--white-color)', fontSize: '14px' }}>
-                            Xem Giỏ Hàng
+                            {t('VIEW_SHOPPING_CART')}
                         </Link>
                     </Button>
                 </div>
@@ -297,7 +339,7 @@ function Header() {
                         {/* {searchResult2.map((result) => (
                                                 <SearchKeyWords key={result.id} data={result} />
                                             ))} */}
-                        <SearchKeyWords searchResult={searchResult} />
+                        <SearchKeyWords searchResult={searchResult} navlinkHidden={navlinkHidden} />
                     </PopperWrapper>
                 </div>
             )}
@@ -306,10 +348,11 @@ function Header() {
             <div className={cx('shopee-searchbar__main')}>
                 <div className={cx('shopee-searchbar__input')}>
                     <input
-                        placeholder="Shopee bao ship 0Đ - Đăng ký ngay!"
+                        placeholder={t('SHOPEE_FREE_SHIP_SEARCH')}
                         className={cx('shopee-searchbar-input__input')}
                         maxLength={128}
                         onChange={changeInput}
+                        value={searchKeyWords}
                         // value={searchValue}
                         // onChange={(e) => setSearchValue(e.target.value)}
                     ></input>

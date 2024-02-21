@@ -12,7 +12,6 @@
         display: block;
         object-fit: contain;
         object-position: center;
-        position: absolute;
         top: 0;
         left: 0;
         height: 450px;
@@ -542,6 +541,111 @@
     width: 180px;
     min-height: 48px !important;
     font-weight: 300;
+}
+
+.sharing-like-wrapper {
+    margin-top: 15px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+    .sharing-like-left-content {
+        padding: 0 30px;
+        align-items: center;
+        display: flex;
+
+        .sharing-like {
+            color: #222;
+            font-size: 16px;
+        }
+    }
+}
+
+.sprite-product-sharing {
+    border: 0;
+    height: 25px;
+    margin-left: 5px;
+    outline: 0;
+    overflow: visible;
+    padding: 0;
+    position: relative;
+    width: 25px;
+    background-size: 100%;
+    background-color: initial;
+    background-image: url(https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/1876c121524255f7eb6a64b4d8d0b7e3.png);
+}
+
+.sharing-ms {
+    background-position: 0 -100%;
+}
+
+.sharing-fb {
+    background-position: 0 0%;
+}
+
+.sharing-pt {
+    background-position: 0 -300%;
+}
+
+.sharing-x {
+    background-position: 0 -400%;
+}
+
+.shopee-popup-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 600;
+
+    .shopee-popup__overlay {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .shopee-popup__container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        overflow: visible;
+        max-height: 100%;
+        max-width: 100%;
+
+        .shopee-popup__card {
+            background-color: #fff;
+            background: #fff;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+            width: 560px;
+            padding: 20px;
+            overflow: visible;
+
+            .shopee-popup__message {
+                margin-top: 40px;
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+.shopee-alert-popup__message-list {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.shopee-alert-popup__btn-layout {
+    display: flex;
+    margin-top: 100px;
+}
+
+.shopee-btn-solid {
+    span {
+        font-weight: normal;
+    }
 }
 
 // Responsive

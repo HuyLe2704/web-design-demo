@@ -8,11 +8,12 @@ import {
     faChevronLeft,
     faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { default as CarouselWrapper } from '~/components/CarouselListItem';
 import { flashSaleCategoryItems } from '~/data';
 import Button from '~/components/Button';
 import Context from '~/store/Context';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 const total_items = 16;
@@ -22,6 +23,7 @@ let totalPages;
 function FlashSaleListItems(props) {
     const { flashSaleRef } = useContext(Context);
     const itemWidthRef = useRef();
+    const { t } = useTranslation();
 
     const [hours, setHours] = useState('12');
     const [minutes, setMinutes] = useState('00');
@@ -111,7 +113,7 @@ function FlashSaleListItems(props) {
                         <li key={item.id} className={cx('image-carousel__item-flashSale')} style={{ padding: '0px' }}>
                             <div style={{ height: '100%' }}>
                                 <div ref={itemWidthRef} className={cx('carousel__item')}>
-                                    <Link to="/products">
+                                    <Link to={`/products/${item.id}`}>
                                         <div className={cx('image-container', 'p-relative')}>
                                             <div className={cx('sale-price-wrapper')}>
                                                 <div className={cx('sale-price')}>
@@ -191,7 +193,7 @@ function FlashSaleListItems(props) {
                     target="_blank"
                     rel="noreferrer"
                 >
-                    <span className={cx('me-2')}>Xem tất cả</span>
+                    <span className={cx('me-2')}>{t('SEE_ALL')}</span>
                     <FontAwesomeIcon icon={faChevronCircleRight} className={cx('mt-1')} />
                 </a>
             </div>

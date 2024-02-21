@@ -13,8 +13,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Input from '~/components/Input';
 import Context from '~/store/Context';
-import { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import ToastModal from '~/components/Layout/components/ToastModal';
 
 const cx = classNames.bind(styles);
 
@@ -33,8 +34,11 @@ function Products() {
             .replace(/-+/g, '-');
     }
     let { id } = useParams();
+    const navigate = useNavigate();
     const normalizedParam = decodeURIComponent(id);
-    const { value, setValue, handleAddQuantity, handleMinusQuantity, handleAddCarts } = useContext(Context);
+    const { value, setValue, handleAddQuantity, handleMinusQuantity, handleAddCarts, isLogin } = useContext(Context);
+    const [showToast, setShowToast] = useState(false);
+    const [messageToast, setMessageToast] = useState('Bạn chưa đăng nhập, vui lòng đăng nhập để chọn sản phẩm này.');
 
     const svgBackground = (
         <svg
@@ -187,11 +191,42 @@ function Products() {
         </div>
     );
 
+    const sharingWrapper = (
+        <div className={cx('sharing-like-wrapper')}>
+            <div className={cx('sharing-like-left-content')}>
+                <div className={cx('sharing-like')}>Chia sẻ:</div>
+                <button className={cx('sprite-product-sharing', 'sharing-ms')}></button>
+                <button className={cx('sprite-product-sharing', 'sharing-fb')}></button>
+                <button className={cx('sprite-product-sharing', 'sharing-pt')}></button>
+                <button className={cx('sprite-product-sharing', 'sharing-x')}></button>
+            </div>
+        </div>
+    );
+
+    const handleConfirmToast = () => {
+        navigate('/login');
+    };
+
+    const ToastModalShow = ({ show, message }) => {
+        if (!show) {
+            return null;
+        }
+        return (
+            <ToastModal
+                message={message}
+                setShowToast={setShowToast}
+                confirm="Đăng nhập"
+                handleConfirmToast={handleConfirmToast}
+            />
+        );
+    };
+
     return (
         <div
             className={cx('products-items-wrapper')}
             style={{ backgroundColor: '#f5f5f5', paddingTop: '30px', marginTop: '-30px' }}
         >
+            <ToastModalShow show={showToast} message={messageToast} />
             {suggestItems.map(
                 (item) =>
                     normalizeName(item.name) === normalizedParam && (
@@ -204,6 +239,7 @@ function Products() {
                                         </div>
                                     </div>
                                 </div>
+                                {sharingWrapper}
                             </div>
                             <div className={cx('items-info-wrapper')}>
                                 <div className={cx('items-info-container')}>
@@ -286,7 +322,11 @@ function Products() {
                                                             />
                                                         }
                                                         className={cx('add-cart-btn')}
-                                                        onClick={() => handleAddCarts(item)}
+                                                        onClick={
+                                                            isLogin
+                                                                ? () => handleAddCarts(item)
+                                                                : () => setShowToast((prev) => !prev)
+                                                        }
                                                     >
                                                         <span>Thêm vào giỏ hàng</span>
                                                     </Button>

@@ -15,7 +15,7 @@ import FlashSaleListItems from './FlashSaleListItems';
 import MallListItems from './MallListItems';
 import Context from '~/store/Context';
 import RecomendItems from './RecomendImtes/RecomendItems';
-import SuggestItemsService from '~/ItemService/SuggestItemsService';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 let total_items = 27;
@@ -24,19 +24,29 @@ let totalPages;
 
 const Content = () => {
     const { flashSaleRef } = useContext(Context);
-
+    const { t } = useTranslation();
     const [currentPage, setCurrentPage] = useState(0);
     const { suggestItems } = useContext(Context);
     const mainCategoryRef = useRef();
     const categoryItemsRef = useRef();
     const [moreItems, setMoreItems] = useState();
 
+    function normalizeName(name) {
+        return name
+            .replace(/đ/g, 'd')
+            .replace(/Đ/g, 'D')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w\-]/g, '')
+            .replace(/-+/g, '-');
+    }
+
     useEffect(() => {
         visibleItems = (mainCategoryRef.current.clientWidth / categoryItemsRef.current.clientWidth) * 2;
         totalPages = Math.ceil(total_items / visibleItems);
     }, [mainCategoryRef]);
-
-    useEffect(() => {}, []);
 
     const handleNext = () => {
         if (currentPage < totalPages - 1) {
@@ -69,7 +79,7 @@ const Content = () => {
         <div className={cx('wrapper__promotional-icon')}>
             {promotionalIcons.map((item, index) => {
                 return (
-                    <Link to="/products" key={index} style={{ color: 'inherit' }}>
+                    <Link to={`/productSale/${normalizeName(item.name)}`} key={index} style={{ color: 'inherit' }}>
                         <div className={cx('icon-wrapper')}>
                             <div className={cx('icon-container')}>
                                 <div className={cx('icon')}>
@@ -78,7 +88,7 @@ const Content = () => {
                                         style={{ backgroundImage: `url(${item.img})` }}
                                     ></div>
                                 </div>
-                                <div className={cx('icon-desc')}>{item.name}</div>
+                                <div className={cx('icon-desc')}>{t(item.name)}</div>
                             </div>
                         </div>
                     </Link>
@@ -94,7 +104,7 @@ const Content = () => {
                     <div className={cx('home-category-list')}>
                         <div className={cx('shopee-header-section')}>
                             <div className={cx('shopee-header-section__header')}>
-                                <div className={cx('shopee-header-section__title')}>DANH MỤC</div>
+                                <div className={cx('shopee-header-section__title')}>{t('CATEGORIES')}</div>
                             </div>
                             <div className={cx('shopee-header-section__content')}>
                                 <div className={cx('image-carousel', 'p-relative')}>
