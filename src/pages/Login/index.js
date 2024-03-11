@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Context from '~/store/Context';
 import UsersRegisterService from '~/ItemService/UsersRegisterService';
+import { t } from 'i18next';
 
 const cx = classNames.bind(styles);
 
@@ -31,6 +32,7 @@ const Login = () => {
             const response = await UsersRegisterService.loginUser(loginData);
 
             if (response.status === 200) {
+                localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('userName', response.data.userName);
                 setIsLogin(true);
                 navigate('/');
@@ -46,7 +48,7 @@ const Login = () => {
     const contentLogin = (
         <div className={cx('register-submit-right')}>
             <div className={cx('register-desc-wrapper')}>
-                <div className={cx('register-desc')}>Đăng Nhập</div>
+                <div className={cx('register-desc')}>{t('LOGIN')}</div>
             </div>
             <div className={cx('register-submit-content')}>
                 <form onSubmit={handleSubmit(onLogin)}>
@@ -56,15 +58,19 @@ const Login = () => {
                                 required: true,
                                 minLength: {
                                     value: 8,
-                                    message: 'Tài khoản cần ít nhất 8 kí tự và tối đa 16 kí tự',
+                                    message: `${t('ACCOUNT_AT_LEAST')} 8 ${t('CHARACTERS')} ${t('AND')} ${t(
+                                        'MAXIMUM',
+                                    )} 16 ${t('CHARACTERS')}`,
                                 },
                                 maxLength: {
                                     value: 16,
-                                    message: 'Tài khoản cần ít nhất 8 kí tự và tối đa 16 kí tự',
+                                    message: `${t('ACCOUNT_AT_LEAST')} 8 ${t('CHARACTERS')} ${t('AND')} ${t(
+                                        'MAXIMUM',
+                                    )} 16 ${t('CHARACTERS')}`,
                                 },
                             })}
                             className={cx('register-input')}
-                            placeholder="Tên đăng nhập"
+                            placeholder={t('USERNAME')}
                         />
                     </div>
                     {errors.userName && <p className={cx('error')}>{errors.userName.message}</p>}
@@ -76,26 +82,26 @@ const Login = () => {
                                 required: true,
                                 minLength: {
                                     value: 8,
-                                    message: 'Mật khẩu cần ít nhất 8 kí tự và tối đa 16 kí tự',
+                                    message: `${t('PASSWORD_AT_LEAST')} 8 ${t('CHARACTERS')} ${t('AND')} ${t(
+                                        'MAXIMUM',
+                                    )} 16 ${t('CHARACTERS')}`,
                                 },
                                 maxLength: {
                                     value: 16,
-                                    message: 'Mật khẩu cần ít nhất 8 kí tự và tối đa 16 kí tự',
+                                    message: `${t('PASSWORD_AT_LEAST')} 8 ${t('CHARACTERS')} ${t('AND')} ${t(
+                                        'MAXIMUM',
+                                    )} 16 ${t('CHARACTERS')}`,
                                 },
                             })}
                             className={cx('register-input')}
-                            placeholder="Mật khẩu"
+                            placeholder={t('PASSWORD')}
                         />
                     </div>
                     {errors.password && <p className={cx('error')}>{errors.password.message}</p>}
 
-                    {loginError && (
-                        <p className={cx('error')}>
-                            Tài khoản hoặc mật khẩu không chính xác, vui lòng thử đăng nhập lại
-                        </p>
-                    )}
+                    {loginError && <p className={cx('error')}>{t('ERROR_ACCOUNT_PASSWORD')}</p>}
                     <Button type="submit" primary style={{ width: '340px', height: '40px' }}>
-                        <span style={{ fontWeight: '300', fontSize: '14px' }}>TIẾP THEO</span>
+                        <span style={{ fontWeight: '300', fontSize: '14px' }}>{t('NEXT')}</span>
                     </Button>
                 </form>
             </div>

@@ -39,10 +39,10 @@ function Navbar() {
     const registerAndLogin = (
         <>
             <Link to="/register" className={cx('topnav_link', 'nav_name')}>
-                <span className={cx('navbar__support-name', 'ms-4', 'me-2')}>Đăng Ký</span>
+                <span className={cx('navbar__support-name', 'ms-4', 'me-2')}>{t('SIGN_UP')}</span>
             </Link>
             <Link to="/register" className={cx('topnav_link', 'nav_name')}>
-                <span className={cx('navbar__support-name', 'ms-4', 'me-2')}>Đăng Nhập</span>
+                <span className={cx('navbar__support-name', 'ms-4', 'me-2')}>{t('LOG_IN')}</span>
             </Link>
         </>
     );
@@ -62,14 +62,14 @@ function Navbar() {
                                 className={cx('notify__image')}
                             />
                         </div>
-                        <p className={cx('notify-warn')}>Đăng nhập để xem thông báo</p>
+                        <p className={cx('notify-warn')}>{t('LOGIN_NOTIFY')}</p>
                     </div>
                     <div className={cx('d-flex')}>
                         <Button className={cx('notify__register')} tabIndex="-1">
-                            <div tabIndex="0">Đăng ký</div>
+                            <div tabIndex="0">{t('SIGN_UP')}</div>
                         </Button>
                         <Button className={cx('notify__login')} tabIndex="-1">
-                            <div tabIndex="0">Đăng nhập</div>
+                            <div tabIndex="0">{t('LOGIN')}</div>
                         </Button>
                     </div>
                 </div>

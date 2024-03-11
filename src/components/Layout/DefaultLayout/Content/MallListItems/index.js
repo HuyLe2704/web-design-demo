@@ -55,7 +55,7 @@ function MallListItems() {
                             alt=""
                             className={cx('shopee-header__title-icon')}
                         />
-                        <span>7 ngày miễn phí trả hàng</span>
+                        <span>7 {t('DAYS_RETURN')}</span>
                     </div>
                     <div className={cx('shopee-header__title-desc')} tabIndex={0}>
                         <img
@@ -63,7 +63,7 @@ function MallListItems() {
                             alt=""
                             className={cx('shopee-header__title-icon')}
                         />
-                        Hàng chính hãng 100%
+                        {t('AUTHENTIC')} 100%
                     </div>
                     <div className={cx('shopee-header__title-desc')} tabIndex={0}>
                         <img
@@ -71,7 +71,7 @@ function MallListItems() {
                             alt=""
                             className={cx('shopee-header__title-icon')}
                         />
-                        Miễn Phí Vận Chuyển
+                        {t('FREE_SHIPPING')}
                     </div>
                 </div>
             </div>

@@ -6,9 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect, useState } from 'react';
 import Context from '~/store/Context';
-import ToastModal from '~/components/Layout/components/ToastModal';
 import Voucher from './Voucher';
 import { useTranslation } from 'react-i18next';
+import ToastModalShow from '~/components/ToastModalShow';
+import ToastSuccessfull from '~/components/ToastModalShowSuccessfull';
 
 const cx = classNames.bind(styles);
 
@@ -52,19 +53,27 @@ const Carts = () => {
         setShowToast((prev) => !prev);
 
         if (isCheckedAll || isItemChecked.length > 1) {
-            setMessageToast('Bạn đã chắc chắn mua những sản phẩm này chưa?');
+            setMessageToast(t('SURE_BUY_ITEMS'));
             // eslint-disable-next-line eqeqeq
         } else if (isItemChecked.length == 1) {
-            setMessageToast('Bạn đã chắc chắn mua sản phẩm này chưa?');
+            setMessageToast(t('SURE_BUY_ITEM'));
         } else {
-            setMessageToast('Rất tiếc, bạn chưa chọn mua sản phẩm nào từ giỏ hàng.');
+            setMessageToast(t('NO_ITEM_NOT_SURE_BUY'));
         }
     };
 
     const handleConfirmToast = () => {
         setShowToast((prev) => !prev);
 
-        setMessageToastSuccessfull('Mua hàng thành công!');
+        setMessageToastSuccessfull(
+            <>
+                <p>Mua hàng thành công!</p>
+                <br />
+                <p>Sản phẩm sẽ nhanh chóng được chuyển đến cho bạn!</p>
+                <br />
+                <p>Bạn có thể xem lại sản phẩm đã mua trong phần Đơn mua</p>
+            </>,
+        );
 
         setShowToastSuccessfull(true);
     };
@@ -76,50 +85,6 @@ const Carts = () => {
             setCloseVoucher(false);
         }
     }, [closeVoucher]);
-
-    const ToastModalShow = ({ show, message }) => {
-        if (!show) {
-            return null;
-        }
-        return (
-            <ToastModal
-                message={message}
-                setShowToast={setShowToast}
-                handleConfirmToast={handleConfirmToast}
-                confirm="OK"
-            />
-        );
-    };
-
-    const ToastSuccessfull = ({ show, message }) => {
-        if (!show) {
-            return null;
-        }
-        return (
-            <div className={cx('shopee-popup-modal')}>
-                <div className={cx('shopee-popup__overlay')}></div>
-                <div className={cx('shopee-popup__container')}>
-                    <div className={cx('shopee-popup__card')}>
-                        <div className={cx('shopee-popup__message')}>
-                            {message}
-                            <div className={cx('shopee-alert-popup__message-list')}></div>
-                        </div>
-                        <div className={cx('shopee-alert-popup__btn-layout')}>
-                            <Button
-                                large
-                                primary
-                                className={cx('shopee-btn-solid')}
-                                style={{ marginLeft: '70px' }}
-                                onClick={() => setShowToastSuccessfull((prev) => !prev)}
-                            >
-                                <span>Xác nhận</span>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    };
 
     const handleShowVoucher = () => {
         setVoucher((prev) => !prev);
@@ -151,7 +116,7 @@ const Carts = () => {
                 width={24}
                 height={20}
             />
-            <span className={cx('carts-page-label')}>{t('SELECT-FREE-VOUCHER')}</span>
+            <span className={cx('carts-page-label')}>{t('SELECT_FREE_VOUCHER')}</span>
         </div>
     );
 
@@ -173,11 +138,11 @@ const Carts = () => {
             {carts.length === 0 ? (
                 <div className={cx('cart-product-wrapper')}>
                     <div className={cx('product-deal-wrapper')}>
-                        <span className={cx('product-deal-label')}>Deal sốc</span>
-                        <span>Mua kèm deal độc quyền</span>
+                        <span className={cx('product-deal-label')}>{t('BUNDLE')}</span>
+                        <span>{t('BUY_WITH_EXCLUSIVE_DEAL')}</span>
                     </div>
                     <h1 className={cx('mt-5', 'ms-3')}>
-                        KHÔNG CÓ SẢN PHẨM NÀO TRONG GIỎ HÀNG CỦA BẠN <span className={cx('ms-2')}>T.T</span>
+                        {t('NO_PRODUCT_CART')} <span className={cx('ms-2')}>T.T</span>
                     </h1>
                 </div>
             ) : (
@@ -185,7 +150,7 @@ const Carts = () => {
                     return (
                         <div key={item.id} className={cx('cart-product-wrapper')}>
                             <div className={cx('product-deal-wrapper')}>
-                                <span className={cx('product-deal-label')}>Deal sốc</span>
+                                <span className={cx('product-deal-label')}>{t('BUNDLE')}</span>
                                 <span>Mua kèm deal độc quyền</span>
                             </div>
                             <div key={item.id} className={cx('product-wrapper')}>
@@ -240,12 +205,12 @@ const Carts = () => {
                                                         height={14}
                                                     />
                                                     <div className={cx('free-refund-container')}>
-                                                        7 Ngày Miễn Phí Trả Hàng
+                                                        7 {t('DAYS_RETURN')}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id={cx('price-waiting')}>Chờ giá</div>
+                                        <div id={cx('price-waiting')}>{t('WAIT_PRICE')}</div>
                                     </div>
                                     <div style={{ width: '180px' }}></div>
                                     <div className={cx('price-info-wrapper')}>
@@ -284,11 +249,11 @@ const Carts = () => {
                                             onClick={() => handleRemoveCarts(item, setIsCheckedAll)}
                                             className={cx('user-operations-delete')}
                                         >
-                                            Xoá
+                                            {t('DELETE')}
                                         </Button>
                                         <div style={{ maxWidth: '100%', zIndex: '2' }}>
                                             <Button className={cx('btn-no-outline')}>
-                                                <span>Tìm sản phẩm tương tự</span>
+                                                <span>{t('FIND_SIMILAR')}</span>
                                                 <FontAwesomeIcon
                                                     icon={faChevronDown}
                                                     style={{ marginLeft: '4px', width: '10px' }}
@@ -332,25 +297,35 @@ const Carts = () => {
 
     return (
         <>
-            <ToastModalShow show={showToast} message={messageToast} />
+            <ToastModalShow
+                show={showToast}
+                message={messageToast}
+                handleConfirmToast={handleConfirmToast}
+                setShowToast={setShowToast}
+                confirm={t('CONFIRM')}
+            />
             <Voucher
                 show={voucher}
                 onClose={() => setCloseVoucher(true)}
                 totalPrice={totalPrice}
                 setPriceAfterDiscount={setPriceAfterDiscount}
             />
-            <ToastSuccessfull show={showToastSuccessfull} message={messageToastSuccessfull} />
+            <ToastSuccessfull
+                show={showToastSuccessfull}
+                message={messageToastSuccessfull}
+                setShowToastSuccessfull={setShowToastSuccessfull}
+            />
             <div style={{ backgroundColor: '#f5f5f5', marginTop: '-30px' }}>
                 <div className={cx('wrapper', 'container-all')}>
                     <div className={cx('carts-page-wrapper')}>
                         {cartPageImgWrapper}
                         <div className={cx('carts-page-check-wrapper')}>
                             {cartPageCheck}
-                            <div className={cx('product')}>Sản Phẩm</div>
-                            <div className={cx('price-quotation')}>Đơn Giá</div>
-                            <div className={cx('quantity')}>Số Lượng</div>
-                            <div className={cx('price')}>Số Tiền</div>
-                            <div className={cx('operation')}>Thao Tác</div>
+                            <div className={cx('product')}>{t('PRODUCT')}</div>
+                            <div className={cx('price-quotation')}>{t('UNIT_PRICE')}</div>
+                            <div className={cx('quantity')}>{t('QUANTITY')}</div>
+                            <div className={cx('price')}>{t('TOTAL_PRICE')}</div>
+                            <div className={cx('operation')}>{t('ACTIONS')}</div>
                         </div>
                         <div className={cx('cart-product-wrapper-all')}>{cartProduct}</div>
                         <section className={cx('carts-accessibility-footer')}>
@@ -358,7 +333,7 @@ const Carts = () => {
                                 {shopeeSvgIcon}
                                 <div className={cx('carts-access-shopee-voucher', 'me-4')}>Shopee Voucher</div>
                                 <div className={cx('carts-access-selected')} onClick={() => handleShowVoucher()}>
-                                    {priceAfterDiscount > 0 ? 'Đã chọn mã giảm giá' : 'Chọn hoặc nhập mã'}
+                                    {priceAfterDiscount > 0 ? t('DISCOUNT_CODE_SELECTED') : t('SELECT_OR_ENTER')}
                                 </div>
                             </div>
                             <div className={cx('GdUwdD')}></div>
@@ -375,17 +350,17 @@ const Carts = () => {
                                         />
                                     </label>
                                 </div>
-                                <div>{`Chọn tất cả (${isItemChecked.length})`}</div>
+                                <div>{`${t('SELECT_ALL')} (${isItemChecked.length})`}</div>
                                 <Button className={cx('clear-all-btn')} onClick={() => handleRemoveCheckedItems()}>
-                                    Xóa
+                                    {t('DELETE')}
                                 </Button>
                                 <div style={{ flex: '1' }}></div>
                                 <div className={cx('total-pay-wrapper')}>
                                     <div className={cx('total-pay-container')}>
                                         <div className={cx('total-pay-desc-wrapper')}>
-                                            <div
-                                                className={cx('total-pay-desc')}
-                                            >{`Tổng thanh toán (${isItemChecked.length} sản phẩm)`}</div>
+                                            <div className={cx('total-pay-desc')}>{`${t('TOTAL')} (${
+                                                isItemChecked.length
+                                            } ${t(isItemChecked.length > 1 ? 'ITEMS' : 'ITEM')})`}</div>
                                             <div className={cx('total-pay')}>
                                                 {`₫${
                                                     priceAfterDiscount === 0
@@ -399,7 +374,9 @@ const Carts = () => {
                                                 className={cx('ms-4', 'me-5')}
                                                 onClick={() => handleShowToastBuying()}
                                             >
-                                                <span style={{ fontSize: '14px', fontWeight: '500' }}>Mua hàng</span>
+                                                <span style={{ fontSize: '14px', fontWeight: '500' }}>
+                                                    {t('CHECK_OUT')}
+                                                </span>
                                             </Button>
                                         </div>
                                     </div>

@@ -4,6 +4,7 @@ import styles from '../Content.module.scss';
 import { NavLink } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import Context from '~/store/Context';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
@@ -11,6 +12,7 @@ const RecomendItems = (props) => {
     const { suggestItems } = useContext(Context);
     const { moreItems } = props;
     const [itemsToShow, setItemsToShow] = useState([]);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (moreItems) {
@@ -36,6 +38,10 @@ const RecomendItems = (props) => {
             .replace(/-+/g, '-');
     }
 
+    function priceFormat(price) {
+        return price > 1000 ? (price / 1000).toFixed(0) + 'k' : price.toString();
+    }
+
     const stardustTabs = (
         <>
             <div className={cx('stardust-tabs-header-anchor')}></div>
@@ -44,7 +50,7 @@ const RecomendItems = (props) => {
                     <li className={cx('stardust-tabs-header__tab', 'stardust-tabs-header__tab--active')}>
                         <div className={cx('stardust-tabs-header__tab-line')}></div>
                         <div className={cx('suggest-wrapper')} tabIndex={0}>
-                            <span>GỢI Ý HÔM NAY</span>
+                            <span>{t('DAILY_DISCOVER')}</span>
                         </div>
                     </li>
                 </ul>
@@ -166,7 +172,7 @@ const RecomendItems = (props) => {
                                                                 </div>
                                                                 <div className={cx('shopee_itemcard__sold-wrapper')}>
                                                                     <span className={cx('shopee_itemcard__sold')}>
-                                                                        {`Đã bán ${item.sold}`}
+                                                                        {`Đã bán ${priceFormat(item.sold)}`}
                                                                     </span>
                                                                 </div>
                                                             </div>

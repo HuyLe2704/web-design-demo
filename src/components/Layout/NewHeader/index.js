@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './NewHeader.module.scss';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { t } from 'i18next';
 
 const cx = classNames.bind(styles);
 
@@ -41,7 +42,7 @@ function NewHeader({ children }) {
                     </div>
                 </div>
                 <Link to="/" className={cx('support-contact-wrapper')}>
-                    Bạn cần giúp đỡ?
+                    {t('NEED_HELP')}
                 </Link>
             </nav>
             <div>{children}</div>

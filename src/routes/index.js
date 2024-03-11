@@ -4,7 +4,7 @@ import { NewHeader } from '~/components/Layout';
 import Home from '~/pages/Home';
 import Register from '~/pages/Register';
 import Upload from '~/pages/Upload';
-import Category from '~/pages/Category';
+import CategoryPage from '~/pages/Category';
 import Products from '~/pages/Products';
 import Carts from '~/pages/Carts';
 import Login from '~/pages/Login';
@@ -13,7 +13,7 @@ import ProductSale from '~/pages/ProductSale';
 // Public routes
 const publicRoutes = [
     { path: '/', component: Home },
-    { path: '/category/', component: Category },
+    { path: '/category/:id/:categoryName', component: CategoryPage },
     { path: '/products/:id', component: Products },
     { path: '/carts', component: Carts },
     { path: '/productSale/:productName', component: ProductSale },

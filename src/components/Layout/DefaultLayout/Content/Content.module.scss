@@ -816,7 +816,7 @@
 
 .panel-items {
     width: 16.66667%;
-    padding: 0.3125rem;
+    padding: 5px;
 }
 
 .shopee_ic {
@@ -1121,6 +1121,54 @@
     }
 }
 
+.salePicture {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 4px;
+    max-height: 235px;
+    min-width: 400px;
+
+    & a {
+        color: rgba(0, 0, 0, 0.87);
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+
+        & div {
+            height: 100%;
+            background-color: #fafafa;
+
+            & img {
+                object-fit: cover;
+                object-position: bottom;
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+
+    & a + a {
+        margin-top: 4px;
+    }
+}
+
+.btn-see-more {
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-more {
+    background-color: #fff;
+    &:hover {
+        background-color: #f0f0f0 !important;
+    }
+}
+
 // responsive
 @media (min-width: 1200px) and (max-width: 1439px) {
     // Category items list
@@ -1271,6 +1319,10 @@
     .section-recomend-products-wrapper {
         width: 960px !important;
     }
+
+    .salePicture {
+        flex-grow: 1;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
@@ -1366,17 +1418,8 @@
     .panel-items {
         width: 190px;
     }
-}
 
-.btn-see-more {
-    width: 100%;
-    margin-top: 20px;
-    text-align: center;
-}
-
-.btn-more {
-    background-color: #fff;
-    &:hover {
-        background-color: #f0f0f0 !important;
+    .salePicture {
+        min-width: 0;
     }
 }

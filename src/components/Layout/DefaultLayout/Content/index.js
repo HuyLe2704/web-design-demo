@@ -15,7 +15,8 @@ import FlashSaleListItems from './FlashSaleListItems';
 import MallListItems from './MallListItems';
 import Context from '~/store/Context';
 import RecomendItems from './RecomendImtes/RecomendItems';
-import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
+import CarouselItemsService from '~/ItemService/CarouselItemsService';
 
 const cx = classNames.bind(styles);
 let total_items = 27;
@@ -24,12 +25,12 @@ let totalPages;
 
 const Content = () => {
     const { flashSaleRef } = useContext(Context);
-    const { t } = useTranslation();
     const [currentPage, setCurrentPage] = useState(0);
     const { suggestItems } = useContext(Context);
     const mainCategoryRef = useRef();
     const categoryItemsRef = useRef();
     const [moreItems, setMoreItems] = useState();
+    const [carouselItems, setCarouselItems] = useState([]);
 
     function normalizeName(name) {
         return name
@@ -74,6 +75,36 @@ const Content = () => {
     const transform = {
         transform: `translateX(-${currentPage * ((100 / visibleItems) * (visibleItems - 12))}%)`,
     };
+
+    useEffect(() => {
+        CarouselItemsService.getListCarouselItems()
+            .then((res) => {
+                const updateData = res.data.map((item) => {
+                    return {
+                        ...item,
+                    };
+                });
+                setCarouselItems(updateData);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, []);
+
+    const salePicture = (
+        <div className={cx('salePicture')}>
+            <a href="https://shopee.vn/m/shopee-thoi-trang" className={cx('salePicture-link')}>
+                <div>
+                    <img src="https://cf.shopee.vn/file/vn-50009109-a9c08cdd5ec196e6499ef3551d9c6c91_xhdpi" alt="" />
+                </div>
+            </a>
+            <a href="https://shopee.vn/m/shopee-thoi-trang" className={cx('salePicture-link')}>
+                <div>
+                    <img src="https://cf.shopee.vn/file/vn-50009109-c7ceec027a9b5673f877f0fb8f004861_xhdpi" alt="" />
+                </div>
+            </a>
+        </div>
+    );
 
     const promotionalIconsWrapper = (
         <div className={cx('wrapper__promotional-icon')}>
@@ -155,7 +186,7 @@ const Content = () => {
 
     return (
         <>
-            <Carousels />
+            <Carousels dataCarousel={carouselItems} salePicture={salePicture} />
             <div className={cx('wrapper')}>
                 {promotionalIconsWrapper}
                 <div className={cx('category__main-wrapper')} style={{ backgroundColor: '#f5f5f5' }}>
@@ -178,7 +209,7 @@ const Content = () => {
                     </div>
                     <div className={cx('btn-see-more')}>
                         <Button large className={cx('btn-more')} onClick={() => handleAddMoreItems()}>
-                            <p style={{ fontWeight: '300', marginTop: '6px' }}>Xem thêm</p>
+                            <p style={{ fontWeight: '300', marginTop: '6px' }}>{t('SEE_MORE')}</p>
                         </Button>
                     </div>
                 </div>

@@ -1,29 +1,11 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment } from 'react';
 import Button from '~/components/Button';
 import classNames from 'classnames/bind';
 import styles from './Carousels.module.scss';
-import CarouselItemsService from '~/ItemService/CarouselItemsService';
 
 const cx = classNames.bind(styles);
 
-function Carousels() {
-    const [carouselItems, setCarouselItems] = useState([]);
-
-    useEffect(() => {
-        CarouselItemsService.getListCarouselItems()
-            .then((res) => {
-                const updateData = res.data.map((item) => {
-                    return {
-                        ...item,
-                    };
-                });
-                setCarouselItems(updateData);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
-
+const Carousels = (props) => {
     const carouselContainer = (
         <div className={cx('carouselContainer')}>
             <div
@@ -33,7 +15,7 @@ function Carousels() {
                 data-bs-pause="hover"
             >
                 <ol className={cx('carousel-indicators')}>
-                    {[...Array(carouselItems.length + 1).keys()].map((index) => (
+                    {[...Array(props.dataCarousel.length + 1).keys()].map((index) => (
                         <li
                             key={index}
                             data-bs-target="#carouselId"
@@ -45,7 +27,7 @@ function Carousels() {
                     ))}
                 </ol>
                 <div className={cx('carousel-inner')} role="listbox">
-                    {carouselItems.map((item) => {
+                    {props.dataCarousel.map((item) => {
                         let classFirstSlide = null;
 
                         if (item.id === 1) {
@@ -57,7 +39,14 @@ function Carousels() {
                         return (
                             <Fragment key={item.id}>
                                 <div className={classFirstSlide}>
-                                    <img src={item.img} className={cx('d-block', 'carousel-images')} alt={item.alt} />
+                                    <img
+                                        src={item.img}
+                                        className={cx(
+                                            'd-block',
+                                            props.salePicture ? 'carousel-images' : 'carousel-images-only',
+                                        )}
+                                        alt={item.alt}
+                                    />
                                 </div>
                             </Fragment>
                         );
@@ -81,27 +70,12 @@ function Carousels() {
         </div>
     );
 
-    const salePicture = (
-        <div className={cx('salePicture')}>
-            <a href="https://shopee.vn/m/shopee-thoi-trang" className={cx('salePicture-link')}>
-                <div>
-                    <img src="https://cf.shopee.vn/file/vn-50009109-a9c08cdd5ec196e6499ef3551d9c6c91_xhdpi" alt="" />
-                </div>
-            </a>
-            <a href="https://shopee.vn/m/shopee-thoi-trang" className={cx('salePicture-link')}>
-                <div>
-                    <img src="https://cf.shopee.vn/file/vn-50009109-c7ceec027a9b5673f877f0fb8f004861_xhdpi" alt="" />
-                </div>
-            </a>
-        </div>
-    );
-
     return (
-        <div className={cx('wrapper', 'container-all')}>
+        <div className={cx('wrapper', 'container-all')} style={{ height: props.salePicture ? null : '360px' }}>
             {carouselContainer}
-            {salePicture}
+            {props.salePicture ? props.salePicture : null}
         </div>
     );
-}
+};
 
 export default Carousels;

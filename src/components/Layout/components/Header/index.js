@@ -3,7 +3,7 @@
 import { useState, useContext, useLayoutEffect, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import Tippy from '@tippyjs/react/headless';
@@ -11,7 +11,7 @@ import { faAngleDown, faBars, faCartShopping, faMagnifyingGlass, faShop } from '
 import Button from '~/components/Button';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import SearchKeyWords from '~/components/SearchKeyWords';
-import { removeVietnameseTones, suggestHeaderData } from '~/data';
+import { categoryItems, removeVietnameseTones, suggestHeaderData } from '~/data';
 import Navbar from '../Navbar';
 import Context from '~/store/Context';
 import { useTranslation } from 'react-i18next';
@@ -25,13 +25,15 @@ function Header() {
     const [isTippyVisible, setIsTippyVisible] = useState(false);
     const [showNav, setShowNav] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = useState('vi');
-    const { cartValue, carts } = useContext(Context);
-    const { suggestItems, isLogin } = useContext(Context);
+    const { suggestItems, isLogin, setIsLogin, cartValue, carts } = useContext(Context);
     const userName = localStorage.getItem('userName');
     const { i18n, t } = useTranslation();
     const currentLanguage = locales[i18n.language];
     const { faBell, faCircleQuestion } = require('@fortawesome/free-regular-svg-icons');
     const { faGlobe } = require('@fortawesome/free-solid-svg-icons');
+    const [showLogout, setShowLogout] = useState(false);
+
+    const navigate = useNavigate();
 
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
@@ -46,6 +48,19 @@ function Header() {
             setSelectedLanguage(savedLanguage);
         }
     }, [i18n]);
+
+    useLayoutEffect(() => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        setIsLogin(isLoggedIn);
+    }, []);
+
+    const handleLogout = () => {
+        setShowLogout(false);
+        localStorage.removeItem('userName');
+        localStorage.setItem('isLoggedIn', 'false');
+        setIsLogin(false);
+        navigate('/login');
+    };
 
     // Navbar support data
     const supportNav = [
@@ -78,9 +93,18 @@ function Header() {
     }, [searchResult]);
 
     const changeInput = (e) => {
+        const allItemsFiltered = [
+            ...suggestItems.map((item) => ({ ...item, id: `suggest-${item.id}` })),
+            ...categoryItems.flatMap((item) =>
+                item.itemCorresponding
+                    ? item.itemCorresponding.map((cor) => ({ ...cor, id: `category-${cor.id}` }))
+                    : [],
+            ),
+        ];
+        console.log(allItemsFiltered);
         let inputValue = e.target.value;
         setSearchKeyWords(e.target.value);
-        const suggestItem = suggestItems.map((item) => item.name.toLowerCase());
+        const suggestItem = allItemsFiltered.map((item) => item.name.toLowerCase());
         if (!inputValue.trim()) {
             setSearchResult([]);
         } else {
@@ -138,6 +162,25 @@ function Header() {
         </div>
     );
 
+    const AccountInfoWrapper = ({ show }) => {
+        if (!show) {
+            return null;
+        }
+        return (
+            <div className={cx('navbar-account-drawer__content')}>
+                <div className={cx('popover_arrow3')}>
+                    <div className={cx('popover_arrow-inner3')}></div>
+                </div>
+                <div className={cx('navbar-account-drawer_btn')}>
+                    <span>{t('MY_ACCOUNT')}</span>
+                </div>
+                <Button className={cx('logout')} tabIndex="0" onClick={() => handleLogout()}>
+                    <span>{t('LOGOUT')}</span>
+                </Button>
+            </div>
+        );
+    };
+
     const notifyNavbar = (
         <ul className={cx('navbar__links', 'd-flex', 'justify-content-between')}>
             {supportNav.map((item, index) => {
@@ -147,39 +190,69 @@ function Header() {
 
                 if (index === 0) {
                     classNames = cx('navbar__link', 'd-flex', 'notify-navbar', 'mt-1');
-                    notifyPopover = (
-                        <div className={cx('notify-popover-wrapper')}>
-                            <div className={cx('popover_arrow')}>
-                                <div className={cx('popover_arrow-inner')}></div>
-                            </div>
-                            <div className={cx('notify-description')}>
-                                <div className={cx('notify-wrapper')}>
-                                    <div className={cx('notify')}>
-                                        <div className={cx('notify__image-wrapper')}>
-                                            <img
-                                                src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/99e561e3944805a023e87a81d4869600.png"
-                                                alt=""
-                                                className={cx('notify__image')}
-                                            />
-                                        </div>
-                                        <p className={cx('notify-warn')}>{t('LOGIN_NOTIFY')}</p>
-                                    </div>
-                                    <div className={cx('d-flex')}>
-                                        <NavLink to="/register" className={cx('notify__register')}>
-                                            <Button className={cx('notify__register')} tabIndex="-1">
-                                                <div tabIndex="0">{t('REGISTER')}</div>
-                                            </Button>
-                                        </NavLink>
-                                        <NavLink to="/login" className={cx('notify__login')}>
-                                            <Button className={cx('notify__login')} tabIndex="-1">
-                                                <div tabIndex="0">{t('LOGIN')}</div>
-                                            </Button>
-                                        </NavLink>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    );
+                    !isLogin
+                        ? (notifyPopover = (
+                              <div className={cx('notify-popover-wrapper')}>
+                                  <div className={cx('popover_arrow')}>
+                                      <div className={cx('popover_arrow-inner')}></div>
+                                  </div>
+                                  <div className={cx('notify-description')}>
+                                      <div className={cx('notify-wrapper')}>
+                                          <div className={cx('notify')}>
+                                              <div className={cx('notify__image-wrapper')}>
+                                                  <img
+                                                      src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/99e561e3944805a023e87a81d4869600.png"
+                                                      alt=""
+                                                      className={cx('notify__image')}
+                                                  />
+                                              </div>
+                                              <p className={cx('notify-warn')}>{t('LOGIN_NOTIFY')}</p>
+                                          </div>
+                                          <div className={cx('d-flex')}>
+                                              <NavLink to="/register" className={cx('notify__register')}>
+                                                  <Button className={cx('notify__register')} tabIndex="-1">
+                                                      <div tabIndex="0">{t('REGISTER')}</div>
+                                                  </Button>
+                                              </NavLink>
+                                              <NavLink to="/login" className={cx('notify__login')}>
+                                                  <Button className={cx('notify__login')} tabIndex="-1">
+                                                      <div tabIndex="0">{t('LOGIN')}</div>
+                                                  </Button>
+                                              </NavLink>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          ))
+                        : (notifyPopover = (
+                              <div className={cx('notify-popover-wrapper')}>
+                                  <div className={cx('new-notify-popover')}>
+                                      <div className={cx('new-notify-wrapper')}>{t('NEW_NOTIFY')}</div>
+                                      <div>
+                                          <div className={cx('notify-wrapper')}>
+                                              <div className={cx('notify-image-wrapper')}>
+                                                  <div className={cx('notify-image')}>
+                                                      <img
+                                                          src="https://down-vn.img.susercontent.com/file/sg-11134004-7rcd1-lscjfrbqpiu844_tn"
+                                                          alt="notify"
+                                                      ></img>
+                                                  </div>
+                                              </div>
+                                              <div className={cx('notify-desc-wrapper')}>
+                                                  <div className={cx('notify-desc-wrapper-header')}>
+                                                      CUỐI NGÀY SALE HẾT - Bạn CHỐT ĐƠN CHƯA?
+                                                  </div>
+                                                  <div className={cx('noptify-desc')}>
+                                                      🚀Livestream độc quyền cùng Hannah Olala 🔥Mã giảm 50% tung hàng
+                                                      loạt 🎉Điện tử, Thời trang, Mỹ phẩm 💖Vài tiếng sale cuối - Chốt
+                                                      hết đơn thôi
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          ));
                 } else if (index === 2) {
                     classNames = cx('navbar__link', 'd-flex', 'langues', 'mt-1');
                     languesWrapper = (
@@ -228,10 +301,15 @@ function Header() {
             })}
             {isLogin ? (
                 <div className={cx('navbar-link__account')}>
-                    <div className={cx('stardust-popover')}>
+                    <div
+                        className={cx('stardust-popover')}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => setShowLogout((prev) => !prev)}
+                    >
                         <div className={cx('stardust-popover__target')}>
                             <div className={cx('navbar-link__account-container')}>
                                 <div className={cx('shopee-avatar')}>
+                                    <AccountInfoWrapper show={showLogout} />
                                     <div className={cx('shopee-avatar__placeholder')}>
                                         <svg
                                             enableBackground="new 0 0 15 15"

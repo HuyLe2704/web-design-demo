@@ -3,10 +3,11 @@ import styles from './Voucher.module.scss';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { cartVouchers } from '~/data';
 import { useForm } from 'react-hook-form';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { t } from 'i18next';
+import VoucherService from '~/ItemService/VoucherService';
 
 const cx = classNames.bind(styles);
 
@@ -16,11 +17,16 @@ const Voucher = ({ show, onClose, totalPrice, setPriceAfterDiscount }) => {
     const { register, handleSubmit, reset } = useForm();
     const [vouchers, setVouchers] = useState([]);
 
-    const handleResetRadio = () => {
-        reset({
-            voucher: '',
+    const getVoucher = () => {
+        Promise.all([VoucherService.getVouchers()]).then((data) => {
+            console.log(data);
+            setVouchers(data[0].data);
         });
     };
+
+    useEffect(() => {
+        getVoucher();
+    }, []);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -41,10 +47,6 @@ const Voucher = ({ show, onClose, totalPrice, setPriceAfterDiscount }) => {
     function formatNumberCost(num) {
         return num >= 1000 ? (num / 1000).toFixed(0) + 'K' : num.toString();
     }
-
-    useEffect(() => {
-        setVouchers(cartVouchers);
-    }, []);
 
     const moreVoucher = () => {
         const updatedVouchers = vouchers.map((voucher) => {
@@ -87,7 +89,7 @@ const Voucher = ({ show, onClose, totalPrice, setPriceAfterDiscount }) => {
                                         <div className={cx('vc_logo_imageLogo')}>
                                             <img src={item.img} className={cx('vc-Logo-logo')} alt="voucher-img" />
                                         </div>
-                                        <div className={cx('vc_IconText_iconText')}>{item.name}</div>
+                                        <div className={cx('vc_IconText_iconText')}>{t(item.name)}</div>
                                     </div>
                                     <div
                                         className={cx('voucher-standard-template_mid')}
@@ -95,17 +97,17 @@ const Voucher = ({ show, onClose, totalPrice, setPriceAfterDiscount }) => {
                                     >
                                         <div className={cx('voucher-standard-template_mid-content')}></div>
                                         <div className={cx('vc_main-title-wrapper')}>
-                                            <div className={cx('vc_main-title')}>{`Giảm tối đa ₫${formatNumberCost(
-                                                item.maxDiscount,
-                                            )}`}</div>
+                                            <div className={cx('vc_main-title')}>{`${t(
+                                                'SHIPPING_FEE_UP_TO',
+                                            )} ₫${formatNumberCost(item.maxDiscount)}`}</div>
                                         </div>
-                                        <div className={cx('vc_sub-title')}>{`Đơn tối thiểu ₫${formatNumberCost(
+                                        <div className={cx('vc_sub-title')}>{`${t('MIN_SPEND')} ₫${formatNumberCost(
                                             item.minPrice,
                                         )}`}</div>
                                         <div className={cx('vc-label')}>
                                             <div className={cx('shopee-wallet-label')}>
                                                 <div className={cx('shopee-wallet-label-content')}>
-                                                    {item.description}
+                                                    {t(item.description)}
                                                 </div>
                                             </div>
                                         </div>
@@ -113,7 +115,7 @@ const Voucher = ({ show, onClose, totalPrice, setPriceAfterDiscount }) => {
                                             <div className={cx('progressbar-expiry')}>
                                                 <div className={cx('progressbar-expiry_usage-limited')}>
                                                     <span className={cx('progressbar-expiry_capitalize')}>
-                                                        {`Sắp hết hạn: Còn ${item.timeDiscount} giờ `}
+                                                        {`${t('EXPIRE')}: Còn ${item.timeDiscount} giờ `}
                                                     </span>
                                                 </div>
                                             </div>
@@ -142,7 +144,7 @@ const Voucher = ({ show, onClose, totalPrice, setPriceAfterDiscount }) => {
                                                 alt="lazyload"
                                                 className="me-2"
                                             />
-                                            <span>Sản phẩm bạn chọn chưa đủ điều kiện để sử dụng Mã giảm giá này</span>
+                                            <span>{t('NOT_ELIGIBLE_TO_USE')}</span>
                                         </>
                                     </div>
                                 </div>
@@ -153,7 +155,7 @@ const Voucher = ({ show, onClose, totalPrice, setPriceAfterDiscount }) => {
             <div className={cx('stardust-dropdown')} onClick={() => moreVoucher()} ref={stardustDropdownRef}>
                 <div className={cx('stardust-dropdown__item-header')}>
                     <div tabIndex={0}>
-                        <span>Xem thêm</span>
+                        <span>{t('SEE_MORE')}</span>
                         <FontAwesomeIcon icon={faChevronDown} className={cx('ms-2')} />
                     </div>
                 </div>
@@ -181,12 +183,12 @@ const Voucher = ({ show, onClose, totalPrice, setPriceAfterDiscount }) => {
                         <div className={cx('shopee-popup-form')}>
                             <div className={cx('shopee-popup-form__header')}>
                                 <div className={cx('shopee-popup-form__title')}>
-                                    <span tabIndex={0}>Chọn Shopee Voucher</span>
+                                    <span tabIndex={0}>{t('SELECT')} Shopee Voucher</span>
                                 </div>
                                 <div className={cx('p-relative')} tabIndex={0}>
                                     <div>
                                         <div className={cx('stardust-popover__target')}>
-                                            Hỗ trợ
+                                            {t('HELP')}
                                             <svg
                                                 width={12}
                                                 height={12}
@@ -207,7 +209,7 @@ const Voucher = ({ show, onClose, totalPrice, setPriceAfterDiscount }) => {
                             <div className={cx('shopee-popup-form__main')}>
                                 <div className={cx('shopee-popup-form__main-container')}>
                                     <div className={cx('shopee-popup-form__main-content')}>
-                                        <span tabIndex={0}>Mã Voucher</span>
+                                        <span tabIndex={0}>{t('VOUCHER_CODE')}</span>
                                         <div style={{ flex: '1' }}>
                                             <div className={cx('p-relative', 'ms-3')}>
                                                 <div className={cx('input-with-validator')}>
@@ -216,13 +218,13 @@ const Voucher = ({ show, onClose, totalPrice, setPriceAfterDiscount }) => {
                                             </div>
                                         </div>
                                         <Button tabIndex="0" className={cx('stardust-button')}>
-                                            <span>Áp dụng</span>
+                                            <span>{t('APPLY')}</span>
                                         </Button>
                                     </div>
                                     <div className={cx('shopee-voucher-wrapper')}>
                                         <div className={cx('shopee-voucher__code-wrapper')}>
-                                            <span tabIndex={0}>Mã miễn phí vận chuyển</span>
-                                            <span tabIndex={0}>Có thể chọn 1 Voucher</span>
+                                            <span tabIndex={0}>{t('FREE_SHIPPING_CODE')}</span>
+                                            <span tabIndex={0}>{t('CAN_SELECT')} 1 Voucher</span>
                                         </div>
                                         {voucherItems}
                                     </div>
@@ -238,7 +240,7 @@ const Voucher = ({ show, onClose, totalPrice, setPriceAfterDiscount }) => {
                                         // handleResetRadio();
                                     }}
                                 >
-                                    <span tabIndex={-1}>Trở lại</span>
+                                    <span tabIndex={-1}>{t('BACK')}</span>
                                 </Button>
                                 <Button
                                     type="submit"

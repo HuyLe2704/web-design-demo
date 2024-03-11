@@ -14,6 +14,7 @@ import { flashSaleCategoryItems } from '~/data';
 import Button from '~/components/Button';
 import Context from '~/store/Context';
 import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 const cx = classNames.bind(styles);
 const total_items = 16;
@@ -23,7 +24,6 @@ let totalPages;
 function FlashSaleListItems(props) {
     const { flashSaleRef } = useContext(Context);
     const itemWidthRef = useRef();
-    const { t } = useTranslation();
 
     const [hours, setHours] = useState('12');
     const [minutes, setMinutes] = useState('00');
@@ -128,7 +128,7 @@ function FlashSaleListItems(props) {
                                                 <div className={cx('sale-status-position')}>
                                                     <div className={cx('sale-status-wrapper')}>
                                                         <div className={cx('sale-status')}>
-                                                            <span>Yêu thích</span>
+                                                            <span>{t('PREFERRED')}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -162,7 +162,7 @@ function FlashSaleListItems(props) {
                                                             className={cx('position-relative', 'w-100')}
                                                             style={{ height: '16px' }}
                                                         >
-                                                            <div className={cx('sold')}>{item.sold}</div>
+                                                            <div className={cx('sold')}>{t(item.sold)}</div>
                                                             <div
                                                                 className={cx('sold-progress')}
                                                                 style={{ width: `${item.progress}%` }}

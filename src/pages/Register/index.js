@@ -5,6 +5,7 @@ import Button from '~/components/Button';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import UsersRegisterService from '~/ItemService/UsersRegisterService';
+import { t } from 'i18next';
 
 const cx = classNames.bind(styles);
 
@@ -25,6 +26,7 @@ const Register = () => {
 
     // Register
     const onSubmit = async (data) => {
+        console.log(data);
         try {
             setHasUserMessage('');
 
@@ -39,12 +41,12 @@ const Register = () => {
             if (response.status === 200) {
                 reset();
                 navigate('/login');
-            } else {
-                setHasUserMessage('Đã xảy ra lỗi khi đăng ký.');
             }
         } catch (error) {
             console.error('Lỗi đăng ký:', error);
-            setHasUserMessage(' Đăng ký không thành công do tài khoản đã tồn tại.');
+            setHasUserMessage(t('SIGN_UP_ERROR'));
+
+            // setHasUserMessage(t('ACCOUNT_EXISTS_ERROR'));
         }
     };
 
@@ -55,7 +57,7 @@ const Register = () => {
                     <div className={cx('register-submit-left')}></div>
                     <div className={cx('register-submit-right')}>
                         <div className={cx('register-desc-wrapper')}>
-                            <div className={cx('register-desc')}>Đăng ký</div>
+                            <div className={cx('register-desc')}>{t('SIGN_UP')}</div>
                         </div>
                         <div className={cx('register-submit-content')}>
                             <form onSubmit={handleSubmit(onSubmit)}>
@@ -63,7 +65,7 @@ const Register = () => {
                                     <input
                                         {...register('userName', { required: true, minLength: 8, maxLength: 16 })}
                                         className={cx('register-input')}
-                                        placeholder="Tên đăng nhập"
+                                        placeholder={t('USERNAME')}
                                     />
                                 </div>
                                 <div className={cx('register-username-wrapper')}>
@@ -71,16 +73,21 @@ const Register = () => {
                                         type="password"
                                         {...register('password', {
                                             required: true,
-                                            minLength: { value: 8, message: 'Mật khẩu cần ít nhất 8 kí tự' },
-                                            maxLength: { value: 16, message: 'Mật khẩu tối đa 16 kí tự' },
+                                            minLength: {
+                                                value: 8,
+                                                message: `${t('PASSWORD_AT_LEAST')} 8 ${t('CHARACTERS')}`,
+                                            },
+                                            maxLength: {
+                                                value: 16,
+                                                message: `${t('PASSWORD_MAXIMUM')} 16 ${t('CHARACTERS')}`,
+                                            },
                                             pattern: {
                                                 value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                                                message:
-                                                    'Trong mật khẩu phải có chữ cái viết hoa, viết thường và chữ số',
+                                                message: t('PASSWORD_REQUIRED'),
                                             },
                                         })}
                                         className={cx('register-input')}
-                                        placeholder="Mật khẩu"
+                                        placeholder={t('PASSWORD')}
                                     />
                                 </div>
                                 {errors.password && <p className={cx('error')}>{errors.password.message}</p>}
@@ -89,11 +96,10 @@ const Register = () => {
                                         type="password"
                                         {...register('repassword', {
                                             required: true,
-                                            validate: (value) =>
-                                                value === watchPassword || 'Mật khẩu nhập lại không khớp',
+                                            validate: (value) => value === watchPassword || t('RE_ENTER_NOT_MATCH'),
                                         })}
                                         className={cx('register-input')}
-                                        placeholder="Nhập lại mật khẩu"
+                                        placeholder={t('REPASSWORD')}
                                     />
                                 </div>
                                 {errors.repassword && <p className={cx('error')}>{errors.repassword.message}</p>}
@@ -101,10 +107,10 @@ const Register = () => {
                                     <input
                                         {...register('email', {
                                             required: true,
-                                            pattern: { value: /^\S+@\S+$/i, message: 'Không đúng định dạng Email' },
+                                            pattern: { value: /^\S+@\S+$/i, message: t('INCORRECT_EMAIL_FORMAT') },
                                         })}
                                         className={cx('register-input')}
-                                        placeholder="Nhập Email"
+                                        placeholder={t('ENTER_EMAIL')}
                                     />
                                 </div>
                                 {errors.email && <p className={cx('error')}>{errors.email.message}</p>}
@@ -115,7 +121,7 @@ const Register = () => {
                                     style={{ width: '340px', height: '40px' }}
                                     disabled={!allFieldsFilled}
                                 >
-                                    <span style={{ fontWeight: '300', fontSize: '14px' }}>TIẾP THEO</span>
+                                    <span style={{ fontWeight: '300', fontSize: '14px' }}>{t('NEXT')}</span>
                                 </Button>
                             </form>
                         </div>

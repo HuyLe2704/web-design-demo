@@ -7,3 +7,6 @@ export const CAROUSEL_ITEMS_REST_API_URL = 'http://localhost:8883/api/carousel_i
 // Users Register and Login
 export const USERS_RESGISTER_REST_API_URL = 'http://localhost:8883/api/users_register';
 export const USERS_LOGIN_REST_API_URL = 'http://localhost:8883/api/users_register/login';
+
+// Cart Vouchers
+export const CART_VOUCHERS_REST_API_URL = 'http://localhost:8883/api/cart_vouchers';
