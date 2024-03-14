@@ -101,7 +101,6 @@ function Header() {
                     : [],
             ),
         ];
-        console.log(allItemsFiltered);
         let inputValue = e.target.value;
         setSearchKeyWords(e.target.value);
         const suggestItem = allItemsFiltered.map((item) => item.name.toLowerCase());
@@ -174,6 +173,11 @@ function Header() {
                 <div className={cx('navbar-account-drawer_btn')}>
                     <span>{t('MY_ACCOUNT')}</span>
                 </div>
+                <Link to="/purchase">
+                    <div className={cx('navbar-account-drawer_btn')}>
+                        <span>{t('PURCHASE')}</span>
+                    </div>
+                </Link>
                 <Button className={cx('logout')} tabIndex="0" onClick={() => handleLogout()}>
                     <span>{t('LOGOUT')}</span>
                 </Button>

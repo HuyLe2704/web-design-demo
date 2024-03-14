@@ -14,8 +14,16 @@ import ToastSuccessfull from '~/components/ToastModalShowSuccessfull';
 const cx = classNames.bind(styles);
 
 const Carts = () => {
-    const { carts, handleAddValueItem, setCartValue, setCarts, handleMinusValueItem, handleRemoveCarts } =
-        useContext(Context);
+    const {
+        carts,
+        handleAddValueItem,
+        setCartValue,
+        cartValue,
+        setCarts,
+        handleMinusValueItem,
+        handleRemoveCarts,
+        setItemsBoughtHistory,
+    } = useContext(Context);
     const { t } = useTranslation();
 
     const [isItemChecked, setIsItemChecked] = useState([]);
@@ -38,6 +46,7 @@ const Carts = () => {
 
     const handleCheckboxItemChange = (item) => {
         const newCheckedState = [...isItemChecked];
+
         const index = newCheckedState.indexOf(item.id);
 
         if (index > -1) {
@@ -51,7 +60,6 @@ const Carts = () => {
 
     const handleShowToastBuying = () => {
         setShowToast((prev) => !prev);
-
         if (isCheckedAll || isItemChecked.length > 1) {
             setMessageToast(t('SURE_BUY_ITEMS'));
             // eslint-disable-next-line eqeqeq
@@ -64,18 +72,46 @@ const Carts = () => {
 
     const handleConfirmToast = () => {
         setShowToast((prev) => !prev);
+        if (isItemChecked.length > 0) {
+            const checkedItems = carts.filter((cartItem) => isItemChecked.includes(cartItem.id));
+            const currentTime = new Date();
+            const formattedTime = currentTime.toLocaleString();
+            const checkedItemsWithDiscount = checkedItems.map((item) => ({
+                ...item,
+                newPrice: priceAfterDiscount !== 0 ? priceAfterDiscount : item.price * item.quantity,
+                buyTime: formattedTime,
+            }));
 
-        setMessageToastSuccessfull(
-            <>
-                <p>Mua hàng thành công!</p>
-                <br />
-                <p>Sản phẩm sẽ nhanh chóng được chuyển đến cho bạn!</p>
-                <br />
-                <p>Bạn có thể xem lại sản phẩm đã mua trong phần Đơn mua</p>
-            </>,
-        );
+            let currentHistory = [];
+            try {
+                currentHistory = JSON.parse(localStorage.getItem('itemsBoughtHistory')) || [];
+            } catch (error) {
+                console.error('Error parsing itemsBoughtHistory from localStorage:', error);
+                currentHistory = [];
+            }
 
-        setShowToastSuccessfull(true);
+            checkedItemsWithDiscount.forEach((item) => currentHistory.unshift(item));
+
+            localStorage.setItem('itemsBoughtHistory', JSON.stringify(currentHistory));
+
+            const totalQuantityCheckedItems = checkedItems.reduce((total, item) => total + item.quantity, 0);
+            setCartValue(cartValue - totalQuantityCheckedItems);
+            setIsItemChecked([]);
+
+            setMessageToastSuccessfull(
+                <>
+                    <p>Mua hàng thành công!</p>
+                    <br />
+                    <p>Sản phẩm sẽ nhanh chóng được chuyển đến cho bạn!</p>
+                    <br />
+                    <p>Bạn có thể xem lại sản phẩm đã mua trong phần Đơn mua</p>
+                </>,
+            );
+            setShowToastSuccessfull(true);
+            setCarts([]);
+        } else {
+            setShowToastSuccessfull(false);
+        }
     };
 
     // Đóng wrapper voucher khi nhấn ra ngoài

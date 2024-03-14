@@ -10,3 +10,6 @@ export const USERS_LOGIN_REST_API_URL = 'http://localhost:8883/api/users_registe
 
 // Cart Vouchers
 export const CART_VOUCHERS_REST_API_URL = 'http://localhost:8883/api/cart_vouchers';
+
+// Categories
+export const CATEGORIES_REST_API_URL = 'http://localhost:8883/api/categories';

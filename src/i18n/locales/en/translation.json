@@ -11,6 +11,7 @@
     "LOGOUT": "Logout",
     "NEW_NOTIFY": "New notification received",
     "MY_ACCOUNT": "My account",
+    "PURCHASE": "My purchase",
     "SHOPEE_FREE_SHIP_SEARCH": "Shopee free ship 0Đ - Register now!",
     "RECENTLY_ADDED_PRODUCTS": "Recently added products",
     "VIEW_SHOPPING_CART": "View My Shopping Cart",
@@ -149,5 +150,13 @@
     "SURE_BUY_ITEMS": "Are you sure to buy these products yet?",
     "SURE_BUY_ITEM": "Are you sure to buy this product yet?",
     "NO_ITEM_NOT_SURE_BUY": "Sorry, you have not selected any products to buy from your shopping cart.",
-    "CONFIRM": "Confirm"
+    "CONFIRM": "Confirm",
+
+    "PURCHASE_SEARCH_PLACEHOLDER": "You can search by Seller Name, Order ID or Product name",
+    "ORDER_BEING_DELIVERED": "Order is being delivered",
+
+    "QUANTITY_BUY": "Quantity purchased",
+    "COMPLETED": "COMPLETED",
+    "TIME_BUY": "You ordered the product on",
+    "NO_ITEMS_FOUND": "No items found."
 }

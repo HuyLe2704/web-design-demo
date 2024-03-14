@@ -9,6 +9,7 @@ import Products from '~/pages/Products';
 import Carts from '~/pages/Carts';
 import Login from '~/pages/Login';
 import ProductSale from '~/pages/ProductSale';
+import Purchase from '~/pages/Purchase';
 
 // Public routes
 const publicRoutes = [
@@ -16,6 +17,7 @@ const publicRoutes = [
     { path: '/category/:id/:categoryName', component: CategoryPage },
     { path: '/products/:id', component: Products },
     { path: '/carts', component: Carts },
+    { path: '/purchase', component: Purchase },
     { path: '/productSale/:productName', component: ProductSale },
     { path: '/register/', component: Register, layout: NewHeader },
     { path: '/login/', component: Login, layout: NewHeader },

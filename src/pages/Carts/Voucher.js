@@ -19,7 +19,6 @@ const Voucher = ({ show, onClose, totalPrice, setPriceAfterDiscount }) => {
 
     const getVoucher = () => {
         Promise.all([VoucherService.getVouchers()]).then((data) => {
-            console.log(data);
             setVouchers(data[0].data);
         });
     };

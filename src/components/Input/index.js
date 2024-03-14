@@ -15,6 +15,7 @@ function Input({
     setValue,
     quantity,
     tabIndex,
+    onKeyPress,
     disabled = false,
 }) {
     const handleOnChange = (e) => {
@@ -30,6 +31,12 @@ function Input({
                     setValue(1);
                 }
             }
+        }
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && onKeyPress) {
+            onKeyPress(e);
         }
     };
 
@@ -53,6 +60,7 @@ function Input({
             style={style}
             tabIndex={tabIndex}
             disabled={disabled}
+            onKeyPress={handleKeyPress}
         ></Comp>
     );
 }

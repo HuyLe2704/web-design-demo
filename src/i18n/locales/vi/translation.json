@@ -6,6 +6,7 @@
     "NOTIFY": "Thông báo",
     "HELP": "Hỗ trợ",
     "MY_ACCOUNT": "Tài khoản của tôi",
+    "PURCHASE": "Đơn mua",
     "LOGIN_NOTIFY": "Đăng nhập để xem thông báo",
     "REGISTER": "Đăng ký",
     "LOGIN": "Đăng nhập",
@@ -149,5 +150,13 @@
     "SURE_BUY_ITEMS": "Bạn đã chắc chắn mua những sản phẩm này chưa?",
     "SURE_BUY_ITEM": "Bạn đã chắc chắn mua sản phẩm này chưa?",
     "NO_ITEM_NOT_SURE_BUY": "Rất tiếc, bạn chưa chọn mua sản phẩm nào từ giỏ hàng.",
-    "CONFIRM": "Xác nhận"
+    "CONFIRM": "Xác nhận",
+
+    "PURCHASE_SEARCH_PLACEHOLDER": "Bạn có thể tìm kiếm theo tên Shop, ID đơn hàng hoặc Tên Sản phẩm",
+    "ORDER_BEING_DELIVERED": "Đơn hàng đang được giao",
+
+    "QUANTITY_BUY": "Số lượng mua",
+    "COMPLETED": "HOÀN THÀNH",
+    "TIME_BUY": "Bạn đã đặt mua sản phẩm vào ngày",
+    "NO_ITEMS_FOUND": "Không có sản phẩm nào được tìm thấy."
 }
