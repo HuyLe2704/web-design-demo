@@ -27,7 +27,7 @@
 
 1. Đầu tiên, ta cần phải chạy file `project-reactjs-java` đi kèm bên trong file đồ án (Với IntelliJ, Webstorm, Netbean,...)
 2. Cài đặt phiên bản React 18, sau đó là npm hoặc yarn
-3. Trong terminal, sử dụng câu lệnh sau để mở dự án trên web:
+3. Trong terminal của thư mục shopee-ui, sử dụng câu lệnh sau để mở dự án trên web:
 
 -   npm
 
