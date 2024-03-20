@@ -20,13 +20,39 @@
 -   Bootstrap
 -   ClassNames
 -   Tippy
+-   React-Hook-Form
+-   i18n
 
 ### Cách sử dụng:
 
-1. Cài đặt phiên bản React 18, npm hoặc yarn
-2. Trong terminal, sử dụng câu lệnh sau để mở dự án trên web:
+1. Đầu tiên, ta cần phải chạy file `project-reactjs-java` đi kèm bên trong file đồ án (Với IntelliJ, Webstorm, Netbean,...)
+2. Cài đặt phiên bản React 18, sau đó là npm hoặc yarn
+3. Trong terminal, sử dụng câu lệnh sau để mở dự án trên web:
 
 -   npm
-    ```sh
-    npm start
-    ```
+
+```sh
+npm install
+```
+
+Câu lệnh trên để cài đặt các thư viện có trong dự án về máy
+
+```sh
+npm start
+```
+
+Câu lệnh trên dùng để khởi động và chạy dự án
+
+Hoặc nếu bạn dùng yarn:
+
+-   yarn
+
+```sh
+yarn install
+```
+
+```sh
+yarn start
+```
+
+Sau khi câu lệnh được chạy, một tab trình duyệt với đường dẫn http://localhost:3000 sẽ được mở lên.
