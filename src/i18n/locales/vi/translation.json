@@ -158,5 +158,6 @@
     "QUANTITY_BUY": "Số lượng mua",
     "COMPLETED": "HOÀN THÀNH",
     "TIME_BUY": "Bạn đã đặt mua sản phẩm vào ngày",
-    "NO_ITEMS_FOUND": "Không có sản phẩm nào được tìm thấy."
+    "NO_ITEMS_FOUND": "Không có sản phẩm nào được tìm thấy.",
+    "ORDER_TOTAL": "Tổng đơn"
 }

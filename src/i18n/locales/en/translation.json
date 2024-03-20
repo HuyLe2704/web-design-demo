@@ -158,5 +158,6 @@
     "QUANTITY_BUY": "Quantity purchased",
     "COMPLETED": "COMPLETED",
     "TIME_BUY": "You ordered the product on",
-    "NO_ITEMS_FOUND": "No items found."
+    "NO_ITEMS_FOUND": "No items found.",
+    "ORDER_TOTAL": "Order total"
 }

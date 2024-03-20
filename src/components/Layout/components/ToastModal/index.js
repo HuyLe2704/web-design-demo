@@ -10,7 +10,11 @@ const ToastModal = (props) => {
     console.log(props);
 
     const handleCancelToast = () => {
-        props.setShowToast((prev) => !prev);
+        if (props.handleCancelToast) {
+            props.handleCancelToast();
+        } else {
+            props.setShowToast((prev) => !prev);
+        }
     };
 
     return (

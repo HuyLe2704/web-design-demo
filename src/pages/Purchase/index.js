@@ -217,7 +217,7 @@ const Purchase = () => {
                                                             <svg></svg>
                                                         </div>
                                                     </span>
-                                                    <label className={cx('label-order')}>Order Total:</label>
+                                                    <label className={cx('label-order')}>{t('ORDER_TOTAL')}:</label>
                                                     <div tabIndex={0} className={cx('order-total-price')}>
                                                         ₫{item.newPrice.toLocaleString('VI-vn')}
                                                     </div>

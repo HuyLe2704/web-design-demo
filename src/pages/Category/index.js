@@ -30,8 +30,8 @@ function CategoryPage() {
         if (num >= 1000) {
             const mainPart = Math.floor(num / 1000);
             const remainder = num % 1000;
-            const remainderPart = remainder > 0 ? remainder.toString().replace(/0+$/, '') : '';
-            return `${mainPart}k${remainderPart}`;
+            const remainderPart = remainder > 0 ? ',' + (remainder / 1000).toString().substring(2, 3) : '';
+            return `${mainPart}${remainderPart}k`;
         }
         return num.toString();
     }

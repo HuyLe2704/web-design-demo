@@ -239,6 +239,7 @@ function Products() {
                 setShowToast={setShowToast}
                 confirm={t('CONFIRM')}
                 handleConfirmToast={handleConfirmToastBuy}
+                handleCancelToast={handleCancelToastBuy}
             />
         );
     };
@@ -256,6 +257,10 @@ function Products() {
             </>,
         );
         setShowToastSuccessfull(true);
+    };
+
+    const handleCancelToastBuy = () => {
+        setShowToastBuy(false);
     };
 
     return (
