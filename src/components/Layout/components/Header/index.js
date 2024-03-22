@@ -11,11 +11,12 @@ import { faAngleDown, faBars, faCartShopping, faMagnifyingGlass, faShop } from '
 import Button from '~/components/Button';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import SearchKeyWords from '~/components/SearchKeyWords';
-import { categoryItems, removeVietnameseTones, suggestHeaderData } from '~/data';
+import { removeVietnameseTones, suggestHeaderData } from '~/data';
 import Navbar from '../Navbar';
 import Context from '~/store/Context';
 import { useTranslation } from 'react-i18next';
 import { locales } from '~/i18n/i18n';
+import CategoriesService from '~/ItemService/CategoriesService';
 
 const cx = classNames.bind(styles);
 
@@ -32,6 +33,18 @@ function Header() {
     const { faBell, faCircleQuestion } = require('@fortawesome/free-regular-svg-icons');
     const { faGlobe } = require('@fortawesome/free-solid-svg-icons');
     const [showLogout, setShowLogout] = useState(false);
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        CategoriesService.getListCategories()
+            .then((res) => {
+                setCategories(res.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const navigate = useNavigate();
 
@@ -95,12 +108,13 @@ function Header() {
     const changeInput = (e) => {
         const allItemsFiltered = [
             ...suggestItems.map((item) => ({ ...item, id: `suggest-${item.id}` })),
-            ...categoryItems.flatMap((item) =>
+            ...categories.flatMap((item) =>
                 item.itemCorresponding
                     ? item.itemCorresponding.map((cor) => ({ ...cor, id: `category-${cor.id}` }))
                     : [],
             ),
         ];
+        console.log(allItemsFiltered);
         let inputValue = e.target.value;
         setSearchKeyWords(e.target.value);
         const suggestItem = allItemsFiltered.map((item) => item.name.toLowerCase());
@@ -418,9 +432,6 @@ function Header() {
                             </span>
                             <h4 className={cx('search-title')}>Tìm shop "{searchKeyWords}"</h4>
                         </div>
-                        {/* {searchResult2.map((result) => (
-                                                <SearchKeyWords key={result.id} data={result} />
-                                            ))} */}
                         <SearchKeyWords searchResult={searchResult} navlinkHidden={navlinkHidden} />
                     </PopperWrapper>
                 </div>

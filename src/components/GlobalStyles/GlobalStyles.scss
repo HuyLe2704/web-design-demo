@@ -50,3 +50,98 @@ input,
     color: red;
     font-size: 14px;
 }
+
+.p-toast {
+    max-width: 400px;
+    opacity: 1;
+}
+
+.p-component {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.p-toast .p-toast-message.p-toast-message-success {
+    background: rgba(228, 248, 240, 0.7);
+    border: solid #1ea97c;
+    border-width: 0 0 0 6px;
+    color: #1ea97c;
+}
+
+.p-toast .p-toast-message {
+    margin: 0 0 16px 0;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+}
+
+.p-toast-message-enter-done {
+    transform: none;
+}
+
+.p-toast-message {
+    backdrop-filter: blur(10px);
+}
+
+.p-toast .p-toast-message .p-toast-message-content {
+    padding: 16px;
+    border-width: 0 0 0 6px;
+}
+
+.p-toast-message-content {
+    display: flex;
+    align-items: flex-start;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-message-icon.p-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
+    color: #1ea97c;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-message-icon {
+    font-size: 32px;
+}
+
+svg.p-icon {
+    pointer-events: auto;
+}
+
+.p-toast-message-icon {
+    flex-shrink: 0;
+}
+
+.p-icon {
+    display: inline-block;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-message-text {
+    margin: 0 0 0 16px;
+}
+
+.p-toast-message-text {
+    flex: 1 1 auto;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-summary {
+    font-weight: 700;
+}
+
+.p-toast-summary,
+.p-toast-detail {
+    overflow-wrap: anywhere;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
+    margin: 0.5rem 0 0 0;
+}
+
+.p-toast .p-toast-message.p-toast-message-error {
+    background: rgba(255, 231, 230, 0.7);
+    border: solid #ff5757;
+    border-width: 0 0 0 6px;
+    color: #ff5757;
+}

@@ -4,26 +4,19 @@ import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Context from '~/store/Context';
 import Voucher from './Voucher';
 import { useTranslation } from 'react-i18next';
 import ToastModalShow from '~/components/ToastModalShow';
-import ToastSuccessfull from '~/components/ToastModalShowSuccessfull';
+import { Toast } from 'primereact/toast';
+import OrderService from '~/ItemService/OrderService';
 
 const cx = classNames.bind(styles);
 
 const Carts = () => {
-    const {
-        carts,
-        handleAddValueItem,
-        setCartValue,
-        cartValue,
-        setCarts,
-        handleMinusValueItem,
-        handleRemoveCarts,
-        setItemsBoughtHistory,
-    } = useContext(Context);
+    const { carts, handleAddValueItem, setCartValue, cartValue, setCarts, handleMinusValueItem, handleRemoveCarts } =
+        useContext(Context);
     const { t } = useTranslation();
 
     const [isItemChecked, setIsItemChecked] = useState([]);
@@ -31,11 +24,10 @@ const Carts = () => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [showToast, setShowToast] = useState(false);
     const [messageToast, setMessageToast] = useState('');
-    const [showToastSuccessfull, setShowToastSuccessfull] = useState(false);
-    const [messageToastSuccessfull, setMessageToastSuccessfull] = useState('');
     const [voucher, setVoucher] = useState(false);
     const [closeVoucher, setCloseVoucher] = useState(false);
     const [priceAfterDiscount, setPriceAfterDiscount] = useState(0);
+    const toast = useRef(null);
 
     const handleCheckboxAllChange = (isCheckedAll) => {
         setIsCheckedAll(isCheckedAll);
@@ -70,7 +62,7 @@ const Carts = () => {
         }
     };
 
-    const handleConfirmToast = () => {
+    const handleConfirmToast = async () => {
         setShowToast((prev) => !prev);
         if (isItemChecked.length > 0) {
             const checkedItems = carts.filter((cartItem) => isItemChecked.includes(cartItem.id));
@@ -82,35 +74,63 @@ const Carts = () => {
                 buyTime: formattedTime,
             }));
 
-            let currentHistory = [];
+            const orderData = {
+                customer: JSON.parse(localStorage.getItem('customerInfo')),
+                orderDetails: checkedItems.map((item) => ({
+                    quantityOrder: item.quantity,
+                    price: item.price,
+                    newPrice: priceAfterDiscount !== 0 ? priceAfterDiscount : item.price * item.quantity,
+                    buyTime: formattedTime,
+                    img: item.img,
+                    productName: item.name,
+                })),
+            };
+
+            console.log(orderData);
+
             try {
-                currentHistory = JSON.parse(localStorage.getItem('itemsBoughtHistory')) || [];
+                const response = await OrderService.createOrder(orderData);
+                console.log(response.data);
+                toast.current.show({
+                    severity: 'success',
+                    summary: 'Mua hàng thành công!',
+                    detail: 'Sản phẩm sẽ nhanh chóng được chuyển đến cho bạn. Bạn có thể xem lại sản phẩm đã mua trong phần Đơn mua',
+                    life: 3000,
+                });
+
+                let currentHistory = [];
+                try {
+                    currentHistory = JSON.parse(localStorage.getItem('itemsBoughtHistory')) || [];
+                } catch (error) {
+                    console.error('Error parsing itemsBoughtHistory from localStorage:', error);
+                    currentHistory = [];
+                }
+
+                checkedItemsWithDiscount.forEach((item) => currentHistory.unshift(item));
+
+                localStorage.setItem('itemsBoughtHistory', JSON.stringify(currentHistory));
+
+                const totalQuantityCheckedItems = checkedItems.reduce((total, item) => total + item.quantity, 0);
+                setCartValue(cartValue - totalQuantityCheckedItems);
+                setIsItemChecked([]);
+
+                setCarts([]);
             } catch (error) {
-                console.error('Error parsing itemsBoughtHistory from localStorage:', error);
-                currentHistory = [];
+                console.error('Error creating order:', error);
+                toast.current.show({
+                    severity: 'error',
+                    summary: 'Thông báo',
+                    detail: 'Có lỗi xảy ra trong quá trình mua hàng, vui lòng thử lại sau.',
+                    life: 3000,
+                });
             }
-
-            checkedItemsWithDiscount.forEach((item) => currentHistory.unshift(item));
-
-            localStorage.setItem('itemsBoughtHistory', JSON.stringify(currentHistory));
-
-            const totalQuantityCheckedItems = checkedItems.reduce((total, item) => total + item.quantity, 0);
-            setCartValue(cartValue - totalQuantityCheckedItems);
-            setIsItemChecked([]);
-
-            setMessageToastSuccessfull(
-                <>
-                    <p>Mua hàng thành công!</p>
-                    <br />
-                    <p>Sản phẩm sẽ nhanh chóng được chuyển đến cho bạn!</p>
-                    <br />
-                    <p>Bạn có thể xem lại sản phẩm đã mua trong phần Đơn mua</p>
-                </>,
-            );
-            setShowToastSuccessfull(true);
-            setCarts([]);
         } else {
-            setShowToastSuccessfull(false);
+            toast.current.show({
+                severity: 'info',
+                summary: 'Thông báo',
+                detail: 'Không có sản phẩm nào được chọn để mua.',
+                life: 3000,
+            });
         }
     };
 
@@ -333,6 +353,7 @@ const Carts = () => {
 
     return (
         <>
+            <Toast ref={toast} />
             <ToastModalShow
                 show={showToast}
                 message={messageToast}
@@ -345,11 +366,6 @@ const Carts = () => {
                 onClose={() => setCloseVoucher(true)}
                 totalPrice={totalPrice}
                 setPriceAfterDiscount={setPriceAfterDiscount}
-            />
-            <ToastSuccessfull
-                show={showToastSuccessfull}
-                message={messageToastSuccessfull}
-                setShowToastSuccessfull={setShowToastSuccessfull}
             />
             <div style={{ backgroundColor: '#f5f5f5', marginTop: '-30px' }}>
                 <div className={cx('wrapper', 'container-all')}>

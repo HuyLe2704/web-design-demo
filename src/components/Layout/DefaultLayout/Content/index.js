@@ -31,6 +31,7 @@ const Content = () => {
     const categoryItemsRef = useRef();
     const [moreItems, setMoreItems] = useState();
     const [carouselItems, setCarouselItems] = useState([]);
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
 
     function normalizeName(name) {
         return name
@@ -45,9 +46,11 @@ const Content = () => {
     }
 
     useEffect(() => {
-        visibleItems = (mainCategoryRef.current.clientWidth / categoryItemsRef.current.clientWidth) * 2;
-        totalPages = Math.ceil(total_items / visibleItems);
-    }, [mainCategoryRef]);
+        if (isDataLoaded && categoryItemsRef.current) {
+            visibleItems = (mainCategoryRef.current.clientWidth / categoryItemsRef.current.clientWidth) * 2;
+            totalPages = Math.ceil(total_items / visibleItems);
+        }
+    }, [isDataLoaded]);
 
     const handleNext = () => {
         if (currentPage < totalPages - 1) {
@@ -148,7 +151,10 @@ const Content = () => {
                                     />
                                     <div className={cx('image-carousel__item-list-wrapper')} style={transform}>
                                         <ul className={cx('image-carousel__item-list')}>
-                                            <CategoryListItems ref={categoryItemsRef} />
+                                            <CategoryListItems
+                                                itemRef={categoryItemsRef}
+                                                setIsDataLoaded={setIsDataLoaded}
+                                            />
                                         </ul>
                                     </div>
                                     <Button

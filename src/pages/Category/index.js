@@ -12,7 +12,18 @@ const cx = classNames.bind(styles);
 function CategoryPage() {
     const { id } = useParams();
     const { t } = useTranslation();
-    const [categories, setCategories] = useState();
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        CategoriesService.getListCategories()
+            .then((res) => {
+                setCategories(res.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     function normalizeName(name) {
         return name
@@ -36,10 +47,6 @@ function CategoryPage() {
         return num.toString();
     }
 
-    useEffect(() => {
-        CategoriesService.getListCategories().then((res) => setCategories(res.data));
-    }, []);
-
     return (
         <div className={cx('wrapper', 'container-all')}>
             <Carousels dataCarousel={categoryCarousel} />
@@ -50,28 +57,27 @@ function CategoryPage() {
                     </div>
                     <div className={cx('container_mall-items')}>
                         <div className={cx('image-wrapper')}>
-                            {categories &&
-                                categories.map(
-                                    (item, index) =>
-                                        // eslint-disable-next-line eqeqeq
-                                        item.categoryId == id && (
-                                            <ul key={index} className={cx('image-wraper_item-list')}>
-                                                {item.mallItems.map((mallItem) => (
-                                                    <li key={mallItem.id} className="image_item">
-                                                        <div className={cx('image-item-column')}>
-                                                            <div className={cx('ofs-image-item')}>
-                                                                <div className={cx('image-shop__cover-image')}>
-                                                                    <div className={cx('position-relative')}>
-                                                                        <img src={mallItem.img} alt="shopee-mall" />
-                                                                    </div>
+                            {categories.map(
+                                (item, index) =>
+                                    // eslint-disable-next-line eqeqeq
+                                    item.categoryId == id && (
+                                        <ul key={index} className={cx('image-wraper_item-list')}>
+                                            {item.mallItems.map((mallItem) => (
+                                                <li key={mallItem.id} className="image_item">
+                                                    <div className={cx('image-item-column')}>
+                                                        <div className={cx('ofs-image-item')}>
+                                                            <div className={cx('image-shop__cover-image')}>
+                                                                <div className={cx('position-relative')}>
+                                                                    <img src={mallItem.img} alt="shopee-mall" />
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        ),
-                                )}
+                                                    </div>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    ),
+                            )}
                         </div>
                     </div>
                 </div>
@@ -97,250 +103,246 @@ function CategoryPage() {
                             <div className={cx('stardust-tabs-panels')}>
                                 <section className={cx('stardust-tabs-panels__panel')}>
                                     <div className={cx('stardust-tabs-panels-wrapper')}>
-                                        {categories &&
-                                            categories.map(
-                                                (item) =>
-                                                    // eslint-disable-next-line eqeqeq
-                                                    item.categoryId == id &&
-                                                    !item.hidden &&
-                                                    item.itemCorresponding.map((cor) => (
-                                                        <div key={cor.id} className={cx('panel-items')}>
-                                                            <div className={cx('shopee_ic')}>
-                                                                <div className={cx('panel-items-active')}>
-                                                                    <div className={cx('panel-items-border')}>
-                                                                        <NavLink
-                                                                            to={`/products/${normalizeName(cor.name)}`}
+                                        {categories.map(
+                                            (item) =>
+                                                // eslint-disable-next-line eqeqeq
+                                                item.categoryId == id &&
+                                                !item.hidden &&
+                                                item.itemCorresponding.map((cor) => (
+                                                    <div key={cor.id} className={cx('panel-items')}>
+                                                        <div className={cx('shopee_ic')}>
+                                                            <div className={cx('panel-items-active')}>
+                                                                <div className={cx('panel-items-border')}>
+                                                                    <NavLink
+                                                                        to={`/products/${normalizeName(cor.name)}`}
+                                                                    >
+                                                                        <div
+                                                                            className={cx(
+                                                                                'border-shopee-black9',
+                                                                                'bg-white',
+                                                                            )}
                                                                         >
                                                                             <div
-                                                                                className={cx(
-                                                                                    'border-shopee-black9',
-                                                                                    'bg-white',
-                                                                                )}
+                                                                                className={cx('flex-column', 'd-flex')}
                                                                             >
                                                                                 <div
                                                                                     className={cx(
-                                                                                        'flex-column',
-                                                                                        'd-flex',
+                                                                                        'shopee_itemcard__panel',
                                                                                     )}
                                                                                 >
                                                                                     <div
                                                                                         className={cx(
-                                                                                            'shopee_itemcard__panel',
+                                                                                            'shopee_itemcard__content',
                                                                                         )}
                                                                                     >
-                                                                                        <div
+                                                                                        <img src={cor.img} alt="" />
+                                                                                    </div>
+                                                                                    <div
+                                                                                        className={cx(
+                                                                                            'shopee_itemcard__promotion_overlay',
+                                                                                        )}
+                                                                                    >
+                                                                                        <img
+                                                                                            src={cor.imgBackground}
+                                                                                            alt=""
+                                                                                        />
+                                                                                    </div>
+                                                                                    <div
+                                                                                        className={cx(
+                                                                                            'shopee_itemcard__discount-wrapper',
+                                                                                        )}
+                                                                                    >
+                                                                                        <span aria-label="promotion"></span>
+                                                                                        <span
                                                                                             className={cx(
-                                                                                                'shopee_itemcard__content',
+                                                                                                'shopee_itemcard__discount',
                                                                                             )}
                                                                                         >
-                                                                                            <img src={cor.img} alt="" />
-                                                                                        </div>
+                                                                                            {`-${cor.discount}%`}
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    {cor.liked && (
                                                                                         <div
                                                                                             className={cx(
-                                                                                                'shopee_itemcard__promotion_overlay',
+                                                                                                'shopee_itemcard-flag_container',
                                                                                             )}
                                                                                         >
-                                                                                            <img
-                                                                                                src={cor.imgBackground}
-                                                                                                alt=""
-                                                                                            />
-                                                                                        </div>
-                                                                                        <div
-                                                                                            className={cx(
-                                                                                                'shopee_itemcard__discount-wrapper',
-                                                                                            )}
-                                                                                        >
-                                                                                            <span aria-label="promotion"></span>
-                                                                                            <span
-                                                                                                className={cx(
-                                                                                                    'shopee_itemcard__discount',
-                                                                                                )}
-                                                                                            >
-                                                                                                {`-${cor.discount}%`}
-                                                                                            </span>
-                                                                                        </div>
-                                                                                        {cor.liked && (
                                                                                             <div
                                                                                                 className={cx(
-                                                                                                    'shopee_itemcard-flag_container',
+                                                                                                    'shopee_itemcard-flag_wrapper',
                                                                                                 )}
                                                                                             >
                                                                                                 <div
                                                                                                     className={cx(
-                                                                                                        'shopee_itemcard-flag_wrapper',
+                                                                                                        'shopee_itemcard-flag',
                                                                                                     )}
-                                                                                                >
-                                                                                                    <div
-                                                                                                        className={cx(
-                                                                                                            'shopee_itemcard-flag',
-                                                                                                        )}
-                                                                                                        style={{
-                                                                                                            backgroundImage:
-                                                                                                                'url(https://down-vn.img.susercontent.com/file/76c36bd87ff2eb5887d9ad3516111869)',
-                                                                                                        }}
-                                                                                                    ></div>
-                                                                                                </div>
+                                                                                                    style={{
+                                                                                                        backgroundImage:
+                                                                                                            'url(https://down-vn.img.susercontent.com/file/76c36bd87ff2eb5887d9ad3516111869)',
+                                                                                                    }}
+                                                                                                ></div>
                                                                                             </div>
-                                                                                        )}
+                                                                                        </div>
+                                                                                    )}
 
+                                                                                    <div
+                                                                                        className={cx(
+                                                                                            'shopee_itemcard__badge',
+                                                                                        )}
+                                                                                    >
                                                                                         <div
                                                                                             className={cx(
-                                                                                                'shopee_itemcard__badge',
+                                                                                                'shopee_itemcard-badge-ad',
+                                                                                            )}
+                                                                                        >
+                                                                                            Ad
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    className={cx(
+                                                                                        'shopee_itemcard__info',
+                                                                                    )}
+                                                                                >
+                                                                                    <div
+                                                                                        className={cx(
+                                                                                            'shopee_itemcard',
+                                                                                        )}
+                                                                                    >
+                                                                                        <div
+                                                                                            className={cx(
+                                                                                                'shopee_itemcard-name-wrapper',
+                                                                                            )}
+                                                                                        >
+                                                                                            {cor.name}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        className={cx(
+                                                                                            'mb-2',
+                                                                                            'shopee_itemcard-discount-wrapper',
+                                                                                        )}
+                                                                                    >
+                                                                                        <div
+                                                                                            className={cx(
+                                                                                                'shopee_itemcard__promotion_label-wrapper',
                                                                                             )}
                                                                                         >
                                                                                             <div
                                                                                                 className={cx(
-                                                                                                    'shopee_itemcard-badge-ad',
+                                                                                                    'shopee_itemcard__promotion_label',
                                                                                                 )}
                                                                                             >
-                                                                                                Ad
+                                                                                                {cor.discountPrime && (
+                                                                                                    <div
+                                                                                                        className={cx(
+                                                                                                            'nt-medium',
+                                                                                                        )}
+                                                                                                    >
+                                                                                                        <svg
+                                                                                                            viewBox="-0.5 -0.5 4 16"
+                                                                                                            className={cx(
+                                                                                                                'svg-wrapper-left',
+                                                                                                            )}
+                                                                                                        >
+                                                                                                            <path
+                                                                                                                d="M4 0h-3q-1 0 -1 1a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3q0 1 1 1h3"
+                                                                                                                strokeWidth="1"
+                                                                                                                stroke="currentColor"
+                                                                                                                fill="rgb(246, 145, 19)"
+                                                                                                            />
+                                                                                                        </svg>
+                                                                                                        <div
+                                                                                                            className={cx(
+                                                                                                                'shopee_itemcard__promotion-discount',
+                                                                                                            )}
+                                                                                                        >
+                                                                                                            10% giảm
+                                                                                                        </div>
+                                                                                                        <svg
+                                                                                                            viewBox="-0.5 -0.5 4 16"
+                                                                                                            className={cx(
+                                                                                                                'svg-wrapper-right',
+                                                                                                            )}
+                                                                                                        >
+                                                                                                            <path
+                                                                                                                d="M4 0h-3q-1 0 -1 1a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3q0 1 1 1h3"
+                                                                                                                strokeWidth="1"
+                                                                                                                stroke="currentColor"
+                                                                                                                fill="rgb(246, 145, 19)"
+                                                                                                            />
+                                                                                                        </svg>
+                                                                                                    </div>
+                                                                                                )}
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div
                                                                                         className={cx(
-                                                                                            'shopee_itemcard__info',
+                                                                                            'shopee_itemcard__promotion-price-wrapper',
                                                                                         )}
                                                                                     >
                                                                                         <div
                                                                                             className={cx(
-                                                                                                'shopee_itemcard',
+                                                                                                'shopee_itemcard__promotion',
                                                                                             )}
                                                                                         >
                                                                                             <div
                                                                                                 className={cx(
-                                                                                                    'shopee_itemcard-name-wrapper',
-                                                                                                )}
-                                                                                            >
-                                                                                                {cor.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div
-                                                                                            className={cx(
-                                                                                                'mb-2',
-                                                                                                'shopee_itemcard-discount-wrapper',
-                                                                                            )}
-                                                                                        >
-                                                                                            <div
-                                                                                                className={cx(
-                                                                                                    'shopee_itemcard__promotion_label-wrapper',
+                                                                                                    'shopee_itemcard__promotion-container',
                                                                                                 )}
                                                                                             >
                                                                                                 <div
                                                                                                     className={cx(
-                                                                                                        'shopee_itemcard__promotion_label',
+                                                                                                        'shopee_itemcard__promotion-price',
                                                                                                     )}
                                                                                                 >
-                                                                                                    {cor.discountPrime && (
-                                                                                                        <div
-                                                                                                            className={cx(
-                                                                                                                'nt-medium',
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            <svg
-                                                                                                                viewBox="-0.5 -0.5 4 16"
-                                                                                                                className={cx(
-                                                                                                                    'svg-wrapper-left',
-                                                                                                                )}
-                                                                                                            >
-                                                                                                                <path
-                                                                                                                    d="M4 0h-3q-1 0 -1 1a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3q0 1 1 1h3"
-                                                                                                                    strokeWidth="1"
-                                                                                                                    stroke="currentColor"
-                                                                                                                    fill="rgb(246, 145, 19)"
-                                                                                                                />
-                                                                                                            </svg>
-                                                                                                            <div
-                                                                                                                className={cx(
-                                                                                                                    'shopee_itemcard__promotion-discount',
-                                                                                                                )}
-                                                                                                            >
-                                                                                                                10% giảm
-                                                                                                            </div>
-                                                                                                            <svg
-                                                                                                                viewBox="-0.5 -0.5 4 16"
-                                                                                                                className={cx(
-                                                                                                                    'svg-wrapper-right',
-                                                                                                                )}
-                                                                                                            >
-                                                                                                                <path
-                                                                                                                    d="M4 0h-3q-1 0 -1 1a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3q0 1 1 1h3"
-                                                                                                                    strokeWidth="1"
-                                                                                                                    stroke="currentColor"
-                                                                                                                    fill="rgb(246, 145, 19)"
-                                                                                                                />
-                                                                                                            </svg>
-                                                                                                        </div>
-                                                                                                    )}
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div
-                                                                                            className={cx(
-                                                                                                'shopee_itemcard__promotion-price-wrapper',
-                                                                                            )}
-                                                                                        >
-                                                                                            <div
-                                                                                                className={cx(
-                                                                                                    'shopee_itemcard__promotion',
-                                                                                                )}
-                                                                                            >
-                                                                                                <div
-                                                                                                    className={cx(
-                                                                                                        'shopee_itemcard__promotion-container',
-                                                                                                    )}
-                                                                                                >
-                                                                                                    <div
-                                                                                                        className={cx(
-                                                                                                            'shopee_itemcard__promotion-price',
-                                                                                                        )}
-                                                                                                    >
-                                                                                                        <span aria-label="current price"></span>
-                                                                                                        <span
-                                                                                                            className={cx(
-                                                                                                                'text-xs',
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            ₫
-                                                                                                        </span>
-                                                                                                        <span
-                                                                                                            className={cx(
-                                                                                                                'text-base',
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            {cor.price.toLocaleString(
-                                                                                                                'vi-VN',
-                                                                                                            )}
-                                                                                                        </span>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div
-                                                                                                    className={cx(
-                                                                                                        'shopee_itemcard__sold-wrapper',
-                                                                                                    )}
-                                                                                                >
+                                                                                                    <span aria-label="current price"></span>
                                                                                                     <span
                                                                                                         className={cx(
-                                                                                                            'shopee_itemcard__sold',
+                                                                                                            'text-xs',
                                                                                                         )}
                                                                                                     >
-                                                                                                        {`Đã bán ${convertNumberToShortForm(
-                                                                                                            cor.sold,
-                                                                                                        )}`}
+                                                                                                        ₫
+                                                                                                    </span>
+                                                                                                    <span
+                                                                                                        className={cx(
+                                                                                                            'text-base',
+                                                                                                        )}
+                                                                                                    >
+                                                                                                        {cor.price.toLocaleString(
+                                                                                                            'vi-VN',
+                                                                                                        )}
                                                                                                     </span>
                                                                                                 </div>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                className={cx(
+                                                                                                    'shopee_itemcard__sold-wrapper',
+                                                                                                )}
+                                                                                            >
+                                                                                                <span
+                                                                                                    className={cx(
+                                                                                                        'shopee_itemcard__sold',
+                                                                                                    )}
+                                                                                                >
+                                                                                                    {`Đã bán ${convertNumberToShortForm(
+                                                                                                        cor.sold,
+                                                                                                    )}`}
+                                                                                                </span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </NavLink>
-                                                                    </div>
+                                                                        </div>
+                                                                    </NavLink>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    )),
-                                            )}
+                                                    </div>
+                                                )),
+                                        )}
                                     </div>
                                 </section>
                             </div>

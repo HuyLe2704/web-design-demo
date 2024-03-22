@@ -7,14 +7,17 @@ import reportWebVitals from './reportWebVitals';
 import GlobalStyles from '~/components/GlobalStyles';
 import { StoreProvider } from './store';
 import 'src/i18n/i18n';
+import { PrimeReactProvider } from 'primereact/api';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <StoreProvider>
-        <GlobalStyles>
-            <App />
-        </GlobalStyles>
-    </StoreProvider>,
+    <PrimeReactProvider>
+        <StoreProvider>
+            <GlobalStyles>
+                <App />
+            </GlobalStyles>
+        </StoreProvider>
+    </PrimeReactProvider>,
 );
 
 reportWebVitals();

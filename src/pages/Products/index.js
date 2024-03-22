@@ -13,18 +13,30 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Input from '~/components/Input';
 import Context from '~/store/Context';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ToastModal from '~/components/Layout/components/ToastModal';
 import { t } from 'i18next';
-import { categoryItems } from '~/data';
 import ToastModalShow from '~/components/ToastModalShow';
 import ToastSuccessfull from '~/components/ToastModalShowSuccessfull';
+import CategoriesService from '~/ItemService/CategoriesService';
 
 const cx = classNames.bind(styles);
 
 function Products() {
     const { suggestItems } = useContext(Context);
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        CategoriesService.getListCategories()
+            .then((res) => {
+                setCategories(res.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     function normalizeName(name) {
         return name
@@ -217,7 +229,7 @@ function Products() {
 
     const combinedItems = [
         ...suggestItems.map((item) => ({ ...item, id: `suggest-${item.id}` })),
-        ...categoryItems.flatMap((item) =>
+        ...categories.flatMap((item) =>
             item.itemCorresponding ? item.itemCorresponding.map((cor) => ({ ...cor, id: `category-${cor.id}` })) : [],
         ),
     ];

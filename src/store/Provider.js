@@ -2,6 +2,7 @@
 import SuggestItemsService from '~/ItemService/SuggestItemsService';
 import Context from './Context';
 import { useRef, useState, useEffect } from 'react';
+import CategoriesService from '~/ItemService/CategoriesService';
 
 function Provider({ children }) {
     const flashSaleRef = useRef();

@@ -13,3 +13,9 @@ export const CART_VOUCHERS_REST_API_URL = 'http://localhost:8883/api/cart_vouche
 
 // Categories
 export const CATEGORIES_REST_API_URL = 'http://localhost:8883/api/categories';
+
+// Order info
+export const ORDER_INFO_REST_API_URL = 'http://localhost:8883/api/users_register';
+
+// Orders
+export const ORDER_REST_API_URL = 'http://localhost:8883/api/orders';

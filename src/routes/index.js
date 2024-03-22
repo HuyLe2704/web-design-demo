@@ -10,6 +10,7 @@ import Carts from '~/pages/Carts';
 import Login from '~/pages/Login';
 import ProductSale from '~/pages/ProductSale';
 import Purchase from '~/pages/Purchase';
+import OrderInfo from '~/pages/OrderInfo';
 
 // Public routes
 const publicRoutes = [
@@ -18,6 +19,7 @@ const publicRoutes = [
     { path: '/products/:id', component: Products },
     { path: '/carts', component: Carts },
     { path: '/purchase', component: Purchase },
+    { path: '/orderInfo', component: OrderInfo },
     { path: '/productSale/:productName', component: ProductSale },
     { path: '/register/', component: Register, layout: NewHeader },
     { path: '/login/', component: Login, layout: NewHeader },
